@@ -1,0 +1,29 @@
+.settings {
+
+    .icons {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+
+        i {
+            // display: flex;
+            // justify-content: center;
+            font-size: 40px;
+
+            &.icon-toggle-left {
+                color: $red;
+            }
+
+            &.icon-toggle-right {
+                color: $green;
+            }
+        }
+    }
+
+    .form-group {
+        &.l {
+          display: flex;
+          flex-direction: row;
+        }
+    }
+}

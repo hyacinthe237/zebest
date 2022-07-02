@@ -1,0 +1,19 @@
+._tree-menu {
+    .label-wrapper {
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+        transform: translateZ(75px);
+        float: left;
+
+        .has-children {
+            cursor: pointer;
+        }
+    }
+
+    .tree-item {
+        display: inline;
+        list-style-type: none;
+        padding-right: 20px;
+        float: left;
+    }
+}

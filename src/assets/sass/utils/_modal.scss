@@ -1,0 +1,341 @@
+
+._modal {
+    &.lg {
+        .modal-dialog {
+            width: 1024px;
+        }
+    }
+
+    .modal-content {
+        background-color: white;
+        border-radius: 2px;
+        @include box-shadow;
+        border: none;
+        height: auto;
+        max-height: calc(100vh - 80px);
+
+        .modal-heading {
+            padding: 20px;
+            border-bottom: 1px solid $formBorderColor;
+            color: $brand-secondary;
+
+            .bottom {
+                background-color: $brand-dark;
+                color: white;
+                padding: 10px;
+            }
+
+            ._close {
+                i {
+                    font-size: 18px;
+                }
+            }
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+    }
+
+    &.upload {
+        .modal-content {
+            .dropbox {
+                outline: 2px dashed grey; /* the dash box */
+                outline-offset: -10px;
+                background: #fff;
+                color: dimgray;
+                padding: 10px 10px;
+                min-height: 100px; /* minimum height */
+                position: relative;
+                cursor: pointer;
+
+                &:hover {
+                    background: #fff; /* when mouse over to the drop zone, change color */
+                }
+
+                p {
+                    font-size: 1.2em;
+                    text-align: center;
+                    padding: 50px 0;
+                }
+            }
+
+            .input-file {
+                opacity: 0; /* invisible but it's there! */
+                width: 100%;
+                height: 100px;
+                position: absolute;
+                cursor: pointer;
+            }
+        }
+    }
+
+    ._loading-modal-content {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+._side-modal {
+    @media (min-width: 768px) {
+        .modal-dialog {
+            min-width: 680px;
+            width: 50%;
+            margin: 0;
+            position: absolute;
+            right: 0;
+            height: 100vh;
+            box-shadow: 1px 0 15px 10px rgba(0, 0, 0, 0.1);
+        }
+    }
+
+    .modal-content {
+        box-shadow: none;
+        border:none;
+        border-radius: 0;
+        height: 100vh;
+        overflow-y: scroll;
+
+        .bandeau {
+            width: 100%;
+            background-color: $brand-secondary;
+            color: white;
+            padding: 10px;
+            margin-bottom: 30px;
+        }
+    }
+}
+
+._preview-modal {
+    width: 595px;
+    height: 842px;
+    overflow: auto;
+    background-color: rgba(74, 93, 125, 0.7);
+
+    ._preview-dialog {
+        width: 100%;
+        height: 100%;
+
+        ._preview-content {
+            box-shadow: none;
+            border:none;
+            border-radius: 0;
+            width: 595px;
+            height: 842px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            padding-top: 20px;
+            padding-bottom: 20px;
+
+            .close {
+                text-align: right;
+                background-color: $brand-teal;
+                color: white;
+                border-radius: 50%;
+                padding: 5px;
+                cursor: pointer;
+                margin-bottom: -60px;
+                z-index: 1px;
+            }
+
+            img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+    }
+}
+
+._vocal-modal {
+    width: 100%;
+    height: 100vh;
+    overflow: auto;
+    background-color:white;
+
+    ._vocal-dialog {
+        width: 100%;
+        height: 100%;
+
+        ._vocal-content {
+            box-shadow: none;
+            border:none;
+            border-radius: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            padding-right: 20px;
+
+            .body {
+                padding-top: 10%;
+                display: flex;
+                flex-direction: column;
+                color: $brand-teal;
+                font-size: 3em;
+                font-weight: bold;
+                align-items: center;
+                justify-content: center;
+
+                .message {
+                    padding-right: 20px;
+
+                    &.line {
+                        font-size: 14px;
+                        color: #000;
+                        text-align: justify;
+                    }
+                }
+
+                .icon {
+                    width: 150px;
+                    height: 150px;
+                    border: .3px solid $brand-teal;
+                    border-radius: 75px;
+                    text-align: center;
+                    padding-top: 35px;
+                    color: $red;
+
+                    &:hover {
+                        cursor: pointer;
+                        color: $red;
+                        background-color: rgba(119, 181, 254, 0.1);
+                    }
+                }
+            }
+
+            .close {
+                text-align: right;
+                background-color: $brand-teal;
+                color: white;
+                border-radius: 50%;
+                padding: 5px;
+                cursor: pointer;
+                margin-bottom: -60px;
+                z-index: 1px;
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: 480px) {
+  ._preview-modal {
+      width: 100%;
+      height: 100%;
+      padding: 0;
+  }
+}
+
+.modal-backdrop {
+    background-color: rgba(74, 93, 125, 0.7);
+}
+
+._modal-content {
+    padding: 20px;
+
+    &.bg-grey { background-color: #f5f7fa }
+    &.bg-white { background-color: white }
+    &.bordered {  border-top: 1px solid #e8ecf3; border-bottom: 1px solid #e8ecf3 }
+    p { font-size: 16px }
+    table {
+        font-size: 14px;
+        color: $brand-dark;
+
+        ._item-name {
+            img {
+                width: 25px;
+                height: 25px;
+                min-height: 25px;
+            }
+        }
+    }
+
+    .location-row,
+    .user-row,
+    .module-row {
+        color: $brand-secondary;
+
+        ._icon {
+            float: left;
+            margin-right: 20px;
+            margin-top: -10px;
+
+            i { font-size: 50px }
+        }
+
+        ._name {
+            font-weight: 500;
+            font-size: 1.5em;
+        }
+
+        ._position {
+            color: $brand-dark;
+            font-size: 13px;
+        }
+
+        ._pp {
+            width: 120px;
+            height: 120px;
+            float: left;
+            margin-right: 20px;
+
+            img { width: 100% }
+        }
+
+        table {
+            margin-top: 10px;
+            font-size: 14px;
+            width: 60%
+        }
+    }
+
+
+    ._upload {
+        margin-top: 20px;
+
+        ._icon {
+            font-size: 60px;
+            text-align: center;
+        }
+
+        ._table {
+            height: 200px;
+            overflow: auto;
+
+            table {
+                margin-bottom: 20px;
+            }
+
+            table td {
+                max-width: 0;
+                white-space: normal;
+            }
+
+            table tr td:first-child {
+                width: 65%;
+                overflow-wrap: break-word;
+            }
+
+            table tr td:nth-child(2) {
+                width: 20%;
+            }
+
+            table tr td:nth-child(3) {
+                width: 10%;
+            }
+
+            table tr td:nth-child(4) {
+                width: 5%;
+            }
+
+            table th, table td {
+                padding: 0.1rem;
+            }
+        }
+    }
+}

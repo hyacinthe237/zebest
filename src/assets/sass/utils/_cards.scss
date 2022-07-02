@@ -1,0 +1,61 @@
+.card-counter {
+    box-shadow: 2px 2px 10px #DADADA;
+    margin: 5px;
+    padding: 20px 10px;
+    color: white;
+    background-color: $brand-primary;
+    height: 100px;
+    border-radius: 5px;
+    transition: .3s linear all;
+    margin-bottom: 20px;
+
+    &.bg { background-color: $brand-secondary }
+    &.card-teal { background-color: $brand-teal }
+    &.card-danger { background-color: $brand-danger }
+    &.card-success { background-color: $brand-success }
+    &.card-secondary { background-color: $brand-secondary }
+
+    &:hover{
+      box-shadow: 4px 4px 20px #DADADA;
+      transition: .3s linear all;
+    }
+
+    i {
+      font-size: 2em;
+      opacity: 0.8;
+    }
+
+    .count-numbers {
+      position: absolute;
+      right: 35px;
+      top: 20px;
+      font-size: 23px;
+      display: block;
+    }
+
+    .count-name {
+      position: absolute;
+      right: 35px;
+      top: 65px;
+      text-transform: capitalize;
+      opacity: 0.9;
+      display: block;
+      font-size: 16px;
+    }
+  }
+
+  @media (min-width: 768px) {
+      .card-counter {
+          width: 100%;
+
+          .count-name {
+            position: absolute;
+            right: 35px;
+            top: 65px;
+            text-transform: capitalize;
+            opacity: 0.8;
+            display: block;
+            font-size: 16px;
+          }
+      }
+  }

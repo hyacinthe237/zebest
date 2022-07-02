@@ -1,0 +1,16 @@
+.btn {
+    font-size: 20px;
+    height: 50px;
+    color: $brand-dark;
+    border-radius: 100px;
+    font-weight: bold;
+    &:hover {
+      color: $brand-dark;
+    }
+
+    &.btn-lg {
+        padding: 12px 40px;
+        border-radius: 4px;
+        font-size: 16px;
+    }
+}

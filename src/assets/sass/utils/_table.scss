@@ -1,0 +1,113 @@
+
+
+table {
+    border-spacing: 1;
+}
+
+
+.table-striped {
+    > tbody {
+        > tr {
+            font-size: 15px;
+            padding: 15px;
+            line-height: 30px;
+
+            &:nth-of-type(odd) {
+                background-color: #f5f8fa;
+            }
+        }
+    }
+}
+
+.table {
+    margin: 0;
+
+    th {
+        border-top: none;
+    }
+
+    th.w10 { width: 10%; }
+    th.w20 { width: 20%; }
+    th.w70 { width: 70%; }
+
+    td {
+        color: $primaryFontColour;
+
+        i { font-size: 18px }
+    }
+
+    td.w10 {width: 10%; }
+    td.w20 { width: 20%; overflow-wrap: break-word; overflow: auto; }
+    td.w70 { width: 70%; overflow-wrap: break-word; overflow: auto; }
+
+    &.table-no-border {
+        > thead {
+            > tr {
+                border: none;
+                > th { border: none }
+            }
+        }
+        > tbody {
+            > tr {
+                &:hover {
+                    cursor: auto;
+                }
+
+                td, th {
+                    border: 0;
+                }
+            }
+        }
+    }
+
+    td.attribute {
+        text-align: right;
+        color: $brand-greyer;
+    }
+
+    &.table-form {
+        .form-control {
+            border: none;
+            outline: none;
+            box-shadow: none;
+
+            &:focus {
+                outline: none;
+                background-color: #edf1f7;
+            }
+        }
+
+        .btn-hover { visibility: hidden }
+
+        tr:hover, tr:focus {
+            .btn-hover { visibility: visible }
+            .form-control { background-color: #edf1f7 }
+        }
+
+        /* enable absolute positioning */
+        .inner-addon {
+            position: relative;
+        }
+
+        /* style icon */
+        .inner-addon .glyphicon {
+            position: absolute;
+            padding: 10px;
+            padding-top: 7px;
+            pointer-events: none;
+            font-size: 16px;
+            color: $brand-primary;
+        }
+
+        /* align icon */
+        .left-addon .glyphicon  { left:  0px;}
+        .right-addon .glyphicon { right: 0px;}
+
+        /* add padding  */
+        .left-addon input  { padding-left:  35px; }
+        .right-addon input { padding-right: 35px; }
+
+        .left-addon select  { padding-left:  35px; }
+        .right-addon select { padding-right: 35px; }
+    }
+}

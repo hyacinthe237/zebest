@@ -1,0 +1,23 @@
+.btn-paginate {
+    .pagination {
+        justify-content: center;
+
+        .page-link {
+            display: inline-block;
+            font-size: 20px;
+            color: $primary;
+            font-weight: 500;
+            background-color: white;
+
+            &.pages-btns {
+                color: white;
+                background-color: $secondary;
+            }
+        }
+    }
+
+    .offset{
+      width: 500px !important;
+      margin: 20px auto;
+    }
+}

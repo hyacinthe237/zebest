@@ -1,0 +1,38 @@
+._checkbox {
+    width: 100%;
+    background-color: $brand-primary;
+    border-radius: 5px;
+    display: block;
+    color: white;
+    height: 60px;
+    margin-bottom: 10px;
+
+    .check {
+        float: left;
+        height: 60px;
+        width: 70px;
+        text-align: center;
+        font-size: 30px;
+        line-height: 32px;
+        background-color: #523b71;
+        padding-top: 12px;
+        border-radius: 5px 5px 0;
+    }
+
+    .checkbox-content {
+        padding-top: 12px;
+        text-align: left;
+        padding-left: 90px;
+    }
+
+    &._checbox-secondary {
+        background-color: $brand-secondary;
+        .check { background-color: #1d345f }
+    }
+
+    &._checkbox-teal {
+        background-color: $brand-teal;
+        color: white;
+        .check { background-color: #4a5465 }
+    }
+}

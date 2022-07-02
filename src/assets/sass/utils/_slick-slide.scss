@@ -1,0 +1,123 @@
+._slide-content {
+    margin-left: 10px;
+    margin-right: 10px;
+
+    .slick-slide {
+        border: 10px solid $brand-teal;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    .details {
+        text-align: center;
+
+        ._page_head {
+            max-width: 95%;
+            padding-top: 10px;
+            text-align: center;
+
+            .doc_name {
+                max-width: 90%;
+                color: $primary;
+                display: inline-block;
+                word-wrap: break-word;
+                overflow: hidden;
+                max-height: 1.4em;
+                line-height: 1.4em;
+                text-align: center;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                font-size: 12px;
+
+                p {
+                    margin-bottom: 0;
+                }
+            }
+
+            .parent_name {
+                color: $secondary;
+                margin-top: -10px;
+                font-size: 10px;
+
+                span {
+                    color: $brand-teal;
+                }
+            }
+        }
+
+        ._doc_body {
+            margin: 0 20px;
+            cursor: pointer;
+
+            iframe {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+                max-width: 650px;
+                height: 100vh;
+                max-height: 830px;
+                border: none;
+                overflow: scroll;
+            }
+
+            .bg-image {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+                height: 100vh;
+                background-position: center;
+                background-repeat:no-repeat;
+                background-size: contain;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                }
+
+                .overlay {
+                    width: 100%;
+                    height: 100vh;
+                    background-color: rgba(0,0,0,.1);
+                    z-index: 1;
+                }
+            }
+        }
+
+        ._page_number {
+            color: $brand-teal;
+            text-align: center;
+        }
+    }
+
+    .slick-prev,
+    .slick-next {
+      width: 30px;
+      height: 30px;
+    }
+
+    .slick-prev:before,
+    .slick-next:before {
+      font-size: 30px;
+      color: $brand-teal;
+    }
+
+    .slick-prev {
+      left: -30px;
+    }
+
+    .slick-next {
+      right: -30px;
+    }
+}
+
+.pc {
+    overflow-x: scroll;
+
+    img {
+        width: 100%;
+    }
+}

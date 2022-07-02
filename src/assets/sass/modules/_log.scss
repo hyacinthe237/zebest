@@ -1,0 +1,25 @@
+.noClick {
+    pointer-events: none;
+}
+
+.btn-paginate {
+    button.page-link {
+        display: inline-block;
+    }
+
+    button.page-link {
+        font-size: 20px;
+        color: $brand-primary;
+        font-weight: 500;
+        background-color: #f5f5f5;
+
+        &.pages-btns {
+            background-color: #e4e9f2;
+        }
+    }
+
+    .offset{
+        width: 500px !important;
+        margin: 20px auto;
+    }
+}

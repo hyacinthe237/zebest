@@ -1,0 +1,32 @@
+.breadcrumb {
+    padding: 0;
+    margin: 0;
+    margin-bottom: 0;
+    padding-top: 5px;
+    background-color: transparent;
+    border-radius: none;
+    max-width: 768px;
+    white-space: nowrap;
+    max-height: 1.4em;
+    line-height: 1.4em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    > li {
+        cursor: pointer;
+        color: $primary;
+
+        &.active {
+            cursor: auto;
+            pointer-events:none
+        }
+    }
+}
+
+.crumb {
+    display:inline;
+    
+    .crumb-item {
+
+    }
+}
