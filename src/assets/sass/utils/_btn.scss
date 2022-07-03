@@ -15,6 +15,14 @@
         background-color: $brand-primary;
     }
 
+    &.btn-outline {
+        border: 2px solid $brand-primary;
+        background-color: transparent;
+        color: $brand-dark;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
     img {
         width: 30px;
         height: 30px;

@@ -1,0 +1,34 @@
+.donateurs {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    .d-heading {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+
+       .th-40 { width: 40%; }
+       .th-20 { width: 20%; }
+    }
+
+    .d-body {
+        display: flex;
+        flex-direction: column;
+
+       .d-line {
+         padding: 20px;
+         display: flex;
+         flex-direction: row;
+         justify-content: space-between;
+         align-items: center;
+         margin-bottom: 10px;
+         background-color: white;
+         box-shadow: 0 10px 48px rgba(30, 107, 174, 0.1), 0 1px 1px rgba(255, 248, 254, 0.61);
+
+         .td-40 { width: 40%; }
+         .td-20 { width: 20%; }
+       }
+    }
+}

@@ -45,9 +45,11 @@ import logoPlaceholder from '@/assets/images/placeholder.png'
 export default {
 
     data: () => ({
-      logoTiktok,logoFete,logoPlaceholder
-
+      logoTiktok,
+      logoFete,
+      logoPlaceholder
     }),
+
     props: {},
 
     watch: {},
@@ -55,9 +57,11 @@ export default {
     methods: {
         copy () {
             this.closeAllModals()
+            this.go('liste-donateurs')
         },
         tiktok () {
             this.closeAllModals()
+            this.go('liste-donateurs')
         },
     }
 }

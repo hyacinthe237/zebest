@@ -70,6 +70,20 @@ h5 { font-size: 1.1em }
 .text-right { text-align: right }
 .capitalize { text-transform: capitalize }
 ._error-message { font-size: 14px; color: red; }
+.circle {
+    color: $brand-primary;
+    background-color: $brand-dark;
+    border-radius: 100px;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    i {
+      font-size: 50px;
+    }
+}
 
 .grey { color: $brand-grey }
 .teal { color: $brand-teal }
