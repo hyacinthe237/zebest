@@ -1,10 +1,10 @@
 <template lang="html">
     <div class="">
       <section class="_header">
-          <div class="logo">zebest</div>
+          <div class="logo pointer" @click="go('home')">zebest</div>
           <div class="buttons">
             <button
-                @click.prevent="subscribe()"
+                @click="go('signup')"
                 class="btn btn-block btn-primary"
                 :disabled="isLoading"
             >{{ t('Inscription') }}</button>
@@ -19,23 +19,21 @@
           </p>
 
           <form class="_form mt-20" @submit.prevent="signin()">
-             <div class="input-group">
-                 <!-- <div class="inner-addon left-addon"> -->
-                 <div class="input-group-append">
-                   <span class="input-group-text">zebest.com/</span>
+             <div class="form-group mt-20">
+                 <div class="content">
+                     <div class="dark">zebest.com/</div>
+                     <input type="url"
+                         name="url"
+                         placeholder="tonnomdecreateur"
+                         class="form-control form-control-lg dark no-white"
+                         v-model="ghost.url"
+                         v-validate="'required|min:6'"
+                     >
                  </div>
-                <input type="url"
-                    name="url"
-                    placeholder="tonnomdecreateur"
-                    class="form-control form-control-lg"
-                    v-model="ghost.url"
-                    v-validate="'required|min:6'"
-                >
-                  <span class="has-error">{{ errors.first('url') }}</span>
-                 <!-- </div> -->
+                 <span class="has-error">{{ errors.first('url') }}</span>
              </div>
 
-             <div class="mt-20">
+             <div class="mt-10">
                  <button class="btn btn-block btn-primary">
                      Créer ma page
                  </button>
@@ -69,6 +67,8 @@
 // import { mapGetters } from 'vuex'
 
 export default {
+    name: 'Home',
+
     data: () => ({
         payload: {}
     }),

@@ -75,7 +75,7 @@ export default {
         * @params String name
         * @return void
         */
-        n (name) {
+        go (name) {
             this.$router.push({ name }) // equivaut a { name: name}
         },
 

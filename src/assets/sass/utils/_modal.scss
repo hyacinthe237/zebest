@@ -238,6 +238,13 @@
 ._modal-content {
     padding: 20px;
 
+    ._head {
+        display: flex;
+        justify-content: center;
+        flex-direction: row;
+        align-items: center;
+    }
+
     &.bg-grey { background-color: #f5f7fa }
     &.bg-white { background-color: white }
     &.bordered {  border-top: 1px solid #e8ecf3; border-bottom: 1px solid #e8ecf3 }

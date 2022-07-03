@@ -24,7 +24,8 @@ a { text-decoration: none; color: $linkColour }
 
 body {
     margin: 0;
-    padding: 0;
+    padding-left: 60px;
+    padding-right: 60px;
     font-family: 'Open Sans', sans-serif;
     background-color: $body-bg;
     font-size: 18px;
@@ -77,12 +78,14 @@ h5 { font-size: 1.1em }
 .wise { color: $brand-wise }
 .primary { color: $brand-primary }
 .secondary { color: $brand-secondary }
+.underline { text-decoration: underline; }
 
 .bg-month { background-color: $brand-primary }
 .bg-quarter { background-color: $brand-secondary }
 .bg-semester { background-color: $brand-success }
 .bg-annual { background-color: $brand-info }
 .bg-unlimited { background-color: $brand-warning }
+.bg-white { background-color: white }
 
 .btn-teal { background-color: $brand-teal; color: white }
 .btn-dark { background-color: $brand-dark; color: white }
@@ -157,54 +160,39 @@ h5 { font-size: 1.1em }
     color: $fontColour;
 }
 
-.sad-block {
-    text-align: center;
-    margin-top: 60px;
-    color: $brand-info;
+.content-profile-photo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
-    i {
-        font-size: 8em;
-        line-height: 1;
+    .photo {
+      border-radius: 100px;
+      height: 100px;
+      width: 100px;
+      border: 2px solid $brand-primary;
+      color: $brand-primary;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      i {
+        font-size: 30px;
+      }
     }
-}
 
-ul.unstyled {
-    list-style: none;
-}
+    img {
+      border-radius: 100px;
+      height: 100px;
+      width: 100px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
 
-.status-pill {
-    width: auto;
-    padding: 5px 20px;
-    font-size: 15px;
-    color: white;
-    border-radius: 500px;
-    display: inline-block;
-    background-color:$brand-grey;
-
-    &.Active, &.active { background-color: $brand-success }
-    &.Inactive, &.inactive { background-color: $brand-danger }
-}
-
-.tree-menu {
-    .label-wrapper {
-        padding-bottom: 10px;
-        margin-bottom: 10px;
-        border-bottom: 1px solid #ccc;
-
-        .has-children {
-            cursor: pointer;
-        }
+      i {
+        font-size: 30px;
+      }
     }
-}
-
-.success {
-    color: $brand-success;
-    font-size: 16px;
-    margin-top: 5px;
-}
-
-._actions {
-    overflow-y: auto;
-    max-height: 250px;
-    width: 100%;
 }
