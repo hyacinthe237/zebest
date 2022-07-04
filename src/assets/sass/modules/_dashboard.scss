@@ -19,4 +19,38 @@
            background-color: $brand-secondary;
          }
     }
+
+    .recaps {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        width: 100%;
+        background-color: $brand-secondary;
+        border-radius: 10px;
+        padding: 20px;
+
+        .recap-line {
+            display: flex;
+            justify-content: flex-start;
+            flex-direction: row;
+            align-items: center;
+
+            .label {
+                flex: 50%;
+                color: $brand-teal;
+            }
+            .value {
+                flex: auto;
+                color: $brand-dark;
+                text-align: left;
+            }
+        }
+
+        .divider {
+            border-bottom: 1px solid $brand-dark;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+    }
 }

@@ -52,7 +52,7 @@
              </div>
 
              <div class="mt-20">
-                 <button class="btn btn-block btn-primary" @click="openConfirm()">
+                 <button class="btn btn-block btn-primary br-100" @click="openConfirm()">
                      Valider
                  </button>
              </div>
@@ -60,7 +60,7 @@
         </div>
       </section>
 
-      <ConfirmModal></ConfirmModal>
+      <ConfirmModal :nature="'page'"></ConfirmModal>
     </div>
 </template>
 

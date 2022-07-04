@@ -14,10 +14,10 @@
           <h2 class="mt-10">Bonjour, <span class="bold">Hyacinthe</span></h2>
 
           <div class="mt-20">
-              <button class="btn btn-primary mr-20">
+              <button class="btn btn-primary mr-20 br-100" @click="go('faire-un-retrait')">
                   Faire un retrait
               </button>
-              <button class="btn btn-outline">
+              <button class="btn btn-outline br-100">
                   Voir mes stats
               </button>
           </div>
@@ -51,7 +51,7 @@
                   </div>
               </div>
           </div>
-          <div class="circle elevated mt-20"><i class="feather icon-users"></i></div>
+          <div class="circle elevated mt-20 pointer" @click="go('faire-un-retrait')"><i class="feather icon-users"></i></div>
         </div>
       </section>
     </div>

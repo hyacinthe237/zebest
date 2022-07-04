@@ -7,34 +7,62 @@
 
       <section class="home">
         <div class="block">
-          <div class="content-profile-photo">
-              <img :src="logoPlaceholder">
-              <span class="mt-10">Hyacinthe ABANDA</span>
-          </div>
-          <h2 class="mt-10">Bonjour, <span class="bold">Hyacinthe</span></h2>
+          <h2 class="mt-10">faire un retrait</h2>
 
-          <div class="mt-20">
-              <button class="btn btn-primary mr-10">
-                  Faire un retrait
+          <div class="btns-block mt-20">
+              <button class="btn btn-outline b-r br-10">
+                  200 &euro;
               </button>
-              <button class="btn btn-outline">
-                  Voir mes stats
+              <button class="rond">
+                  <i class="feather icon-repeat"></i>
+              </button>
+              <button class="btn btn-outline b-l br-10">
+                  130817,39 FCFA
+              </button>
+          </div>
+
+          <p class="mt-20">1.00 &euro; = 657.17 FCFA <br/> *Le taux de change varie en fonction du mode d'envoi et de paiement.</p>
+          <div class="recaps">
+              <div class="recap-line">
+                  <div class="label">Frais de transfert</div>
+                  <div class="value">+ 1.90 EUR</div>
+              </div>
+              <div class="recap-line">
+                  <div class="label">Total du transfert</div>
+                  <div class="value">201.9 EUR</div>
+              </div>
+              <div class="recap-line">
+                  <div class="label">Total dle bénéficiaire reçoit</div>
+                  <div class="value">132681 FCFA</div>
+              </div>
+              <div class="divider"></div>
+              <div class="recap-line">
+                  <div class="label">Disponibilité</div>
+                  <div class="value">En quelques minutes</div>
+              </div>
+          </div>
+          <div class="mt-20">
+              <button class="btn btn-block btn-primary br-100" @click="reussite()">
+                  Valider
               </button>
           </div>
         </div>
       </section>
+
+      <ConfirmModal :nature="'reussite'"></ConfirmModal>
     </div>
 </template>
 
 <script>
 import logoPlaceholder from '@/assets/images/placeholder.png'
+import ConfirmModal from './modals/confirm'
 
 export default {
     data: () => ({
       logoPlaceholder
     }),
 
-    components: { },
+    components: { ConfirmModal },
 
     mounted () {},
 
@@ -82,9 +110,9 @@ export default {
                 }
         },
 
-        resetpassword () {
-            window.eventBus.$emit('reset', 'password')
-            window.$('#resetUserModal').modal('show')
+        reussite () {
+            window.eventBus.$emit('open', 'confirm')
+            window.$('#confirmModal').modal('show')
         }
 
     }

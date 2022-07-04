@@ -85,6 +85,38 @@ h5 { font-size: 1.1em }
     }
 }
 
+.btns-block {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+
+  .b-r {
+      margin-right: -10px
+  }
+  .b-l {
+      margin-left: -10px
+  }
+  .rond {
+      color: white;
+      background-color: $brand-primary;
+      border-radius: 30px;
+      border: 1px solid $brand-primary;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+
+      i {
+        font-size: 18px;
+      }
+  }
+}
+
+
+
 .grey { color: $brand-grey }
 .teal { color: $brand-teal }
 .dark { color: $brand-dark }

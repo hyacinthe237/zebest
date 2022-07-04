@@ -5,7 +5,7 @@
           <div class="buttons">
             <button
                 @click="go('signup')"
-                class="btn btn-block btn-primary"
+                class="btn btn-block btn-primary br-100"
                 :disabled="isLoading"
             >{{ t('Inscription') }}</button>
           </div>
@@ -34,7 +34,7 @@
              </div>
 
              <div class="mt-10">
-                 <button class="btn btn-block btn-primary">
+                 <button class="btn btn-block btn-primary br-100">
                      Créer ma page
                  </button>
              </div>

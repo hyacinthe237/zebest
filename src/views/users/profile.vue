@@ -65,7 +65,7 @@
              </div>
 
              <div class="mt-20">
-                 <button class="btn btn-block btn-primary" @click="go('choix-devise')">
+                 <button class="btn btn-block btn-primary br-100" @click="go('choix-devise')">
                      Continuer
                  </button>
              </div>

@@ -5,7 +5,7 @@
           <div class="buttons">
             <button
                 @click="go('signin')"
-                class="btn btn-block btn-primary"
+                class="btn btn-block btn-primary br-100"
                 :disabled="isLoading"
             >{{ t('Se connecter') }}</button>
           </div>
@@ -52,7 +52,7 @@
              </div>
 
              <div class="mt-20">
-                 <button class="btn btn-block btn-primary" @click="go('profile')">
+                 <button class="btn btn-block btn-primary br-100" @click="go('profile')">
                      Valider mon inscription
                  </button>
              </div>

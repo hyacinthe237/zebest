@@ -1,58 +1,41 @@
-<template lang="html">
-    <section class="signin-page">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-4 m-auto">
+<div class="">
+  <section class="_header"></section>
+  <section class="home">
+    <div class="block">
+      <h2>Connexion zebest</h2>
 
-                    <div class="login-form">
-                        <div class="logo-name text-center">IzySearch</div>
-                        <!-- <div class="title text-center" v-translate>Sign in</div> -->
+      <form class="_form mt-20" @submit.prevent="signin()">
+         <div class="form-group">
+            <input type="email"
+                name="email"
+                placeholder="email"
+                class="form-control form-control-lg input"
+                v-model="ghost.email"
+                v-validate="'required|min:6'"
+            >
+              <span class="has-error">{{ errors.first('email') }}</span>
+         </div>
 
-                         <form class="_form mt-20" @submit.prevent="signin()" id="signinForm">
-                            <div class="form-group">
-                                <div class="inner-addon left-addon">
-                                    <i class="glyphicon feather icon-user"></i>
+         <div class="form-group">
+            <input type="password"
+                name="password"
+                placeholder="mot de passe"
+                class="form-control form-control-lg input"
+                v-model="ghost.password"
+                v-validate="'required|min:6'"
+            >
+              <span class="has-error">{{ errors.first('password') }}</span>
+         </div>
 
-                                    <input type="username"
-                                        name="username"
-                                        :placeholder="t('Username')"
-                                        class="form-control form-control-lg input-white"
-                                        v-model="ghost.username"
-                                        v-validate="'required|min:6'"
-                                    >
-                                    <span class="has-error">{{ errors.first('username') }}</span>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="inner-addon left-addon">
-                                    <i class="glyphicon feather icon-lock"></i>
-
-                                    <input type="password"
-                                        name="password"
-                                        :placeholder="t('Password')"
-                                        :data-vv-as="t('Password')"
-                                        v-validate="'required|min:6'"
-                                        v-model="ghost.password"
-                                        class="form-control form-control-lg input-white"
-                                    >
-                                    <span class="has-error">{{ errors.first('password') }}</span>
-                                </div>
-                            </div>
-
-                            <div class="mt-20">
-                                <izy-btn :loading="isLoading" :size="'lg'" block>
-                                    <i class="feather icon-arrow-right pull-right"></i>
-                                    {{ t('Sign in') }}
-                                </izy-btn>
-                            </div>
-                       </form>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </section>
+         <div class="mt-20">
+             <button class="btn btn-block btn-primary br-100" @click="go('home')">
+                 Connexion
+             </button>
+         </div>
+       </form>
+    </div>
+  </section>
+</div>
 </template>
 
 <script>
