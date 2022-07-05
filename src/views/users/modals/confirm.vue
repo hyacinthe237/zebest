@@ -30,7 +30,7 @@
                     </div>
                 </div>
 
-                <div class="_modal-content text-center" v-if="nature == 'reussite'">
+                <div class="_modal-content" v-if="nature == 'reussite'">
                   <span class="_icon"><i class="feather icon-check"></i></span>
                   <h2 class="mt-40">transaction réussie</h2>
 
