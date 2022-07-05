@@ -53,4 +53,58 @@
             width: 100%;
         }
     }
+
+    .list-ronds {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      .rond-item {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background-color: $brand-dark;
+          color: white;
+          height: 70px;
+          width: 70px;
+          border-radius: 70px;
+          margin-left: 20px;
+          cursor: pointer;
+
+          &.active {
+              background-color: $brand-primary;
+              color: $brand-dark;
+          }
+      }
+    }
+
+    .diviseur {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        margin-top: 40px;
+        width: 100%;
+
+        .divider {
+            border-bottom: 1px solid $brand-dark;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        .rond {
+            width: 70px;
+            height: 70px;
+            border-radius: 70px;
+            background-color: white;
+            color: $brand-dark;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            padding: 20px;
+        }
+    }
 }

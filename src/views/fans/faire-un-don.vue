@@ -8,16 +8,16 @@
           <h1>faire un don à "nom de créateur"</h1>
 
           <div class="list-ronds mt-20">
-              <div class="rond-item">50 &euro;</div>
-              <div class="rond-item">100 &euro;</div>
-              <div class="rond-item">250 &euro;</div>
-              <div class="rond-item">500 &euro;</div>
+              <div :class="['rond-item', montant == 50 ? 'active' : '']" @click="selectMontant(50)">50 &euro;</div>
+              <div :class="['rond-item', montant == 100 ? 'active' : '']" @click="selectMontant(100)">100 &euro;</div>
+              <div :class="['rond-item', montant == 250 ? 'active' : '']" @click="selectMontant(250)">250 &euro;</div>
+              <div :class="['rond-item', montant == 500 ? 'active' : '']" @click="selectMontant(500)">500 &euro;</div>
           </div>
 
           <div class="diviseur">
-              <div class="l-gauche"></div>
+              <div class="divider"></div>
               <div class="rond">Ou</div>
-              <div class="l-droite"></div>
+              <div class="divider"></div>
           </div>
 
           <form class="_form mt-20" @submit.prevent>
@@ -53,7 +53,7 @@
 
              <div class="mt-10">
                  <button class="btn btn-block btn-primary br-100">
-                     Ovations de 100 &euro;
+                     Ovations de {{ montant }} &euro;
                  </button>
              </div>
            </form>
@@ -72,7 +72,8 @@ export default {
     name: 'Home',
 
     data: () => ({
-        payload: {}
+        payload: {},
+        montant: 100
     }),
 
     computed: {
@@ -82,6 +83,10 @@ export default {
 
     mounted () {},
 
-    methods: {}
+    methods: {
+        selectMontant (montant) {
+            this.montant = montant
+        }
+    }
 }
 </script>
