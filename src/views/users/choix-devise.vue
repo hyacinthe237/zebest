@@ -9,7 +9,7 @@
         <div class="block">
           <h1>choix de la devise</h1>
 
-          <form class="_form mt-20 dark" @submit.prevent="signin()">
+          <form class="_form mt-20 dark" @submit.prevent>
              <div class="form-group mt-20">
                 <label for="devise">En quelle devise souhaiterai-tu être payé(e) ?</label>
                 <select

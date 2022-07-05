@@ -9,7 +9,7 @@
         <div class="block">
           <h1>compléter mon profil</h1>
 
-          <form class="_form mt-20 dark" @submit.prevent="signin()">
+          <form class="_form mt-20 dark" @submit.prevent>
               <div class="content-profile-photo">
                   <div class="photo"><i class="feather icon-camera"></i></div>
                   <span>Ajouter une photo</span>

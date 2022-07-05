@@ -31,7 +31,7 @@
                 </div>
 
                 <div class="_modal-content text-center" v-if="nature == 'reussite'">
-                  <div class="_icon"><i class="feather icon-check"></i></div>
+                  <span class="_icon"><i class="feather icon-check"></i></span>
                   <h2 class="mt-40">transaction réussie</h2>
 
                     <p>Tu peux voir les détails dans <a @click="go('liste-donateurs')">Transactions</a></p>

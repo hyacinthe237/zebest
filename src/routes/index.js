@@ -5,6 +5,7 @@ import UserProfile from '@/views/users/profile'
 import ChoixDevise from '@/views/users/choix-devise'
 import ListeDonateurs from '@/views/users/liste-donateurs'
 import FaireUnRetrait from '@/views/users/faire-un-retrait'
+import FaireUnDon from '@/views/fans/faire-un-don'
 
 import Guard from '@/services/middleware'
 import AuthSignin from '@/views/auth/signin'
@@ -24,6 +25,7 @@ export default new Router({
         { path: '/choix/devise', name: 'choix-devise', component: ChoixDevise, beforeEnter: Guard.guest  },
         { path: '/liste/donateurs', name: 'liste-donateurs', component: ListeDonateurs, beforeEnter: Guard.guest  },
         { path: '/faire/un/retrait', name: 'faire-un-retrait', component: FaireUnRetrait, beforeEnter: Guard.guest  },
+        { path: '/faire/un/don', name: 'faire-un-don', component: FaireUnDon, beforeEnter: Guard.guest  },
         { path: '/password-forgot', name: 'password-forgot', component: AuthPasswordForgot, beforeEnter: Guard.guest  },
     ]
 })

@@ -14,7 +14,7 @@
         <div class="block">
           <h1>créer mon compte</h1>
 
-          <form class="_form mt-20" @submit.prevent="signin()">
+          <form class="_form mt-20" @submit.prevent>
              <div class="form-group">
                 <input type="email"
                     name="email"
