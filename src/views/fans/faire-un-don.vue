@@ -58,7 +58,7 @@
              </div>
            </form>
         </div>
-        <confirmModal :nature="nature"></confirmModal>
+        <confirmModal :nature="'paie'"></confirmModal>
       </section>
     </div>
 </template>
@@ -72,7 +72,7 @@ export default {
     data: () => ({
         payload: {},
         montant: 100,
-        nature: ''
+        // nature: ''
     }),
 
     components: { confirmModal },
@@ -87,8 +87,7 @@ export default {
         },
 
         confirm () {
-            // window.eventBus.$emit('open', 'confirm')
-            this.nature = 'paie'
+            window.eventBus.$emit('open', 'confirm')
             window.$('#confirmModal').modal('show')
         }
     }

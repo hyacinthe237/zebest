@@ -4,26 +4,10 @@
 @import "utils/feathericons";
 @import 'bootstrap/scss/bootstrap.scss';
 @import "utils/mixins";
-@import "utils/animate";
 @import "utils/default";
-@import "utils/dropzone";
-@import "utils/breadcrumb";
-@import "utils/block";
 @import "utils/form";
-@import "utils/alert";
-@import "utils/datepicker";
-@import "utils/icheck";
 @import "utils/modal";
-@import "utils/table";
 @import "utils/btn";
-@import "utils/vue-context";
-@import "utils/tabs";
-@import "utils/pagination";
-@import "utils/select";
-@import "utils/progress";
-@import "utils/slick-slide";
-@import "utils/cards";
-@import "utils/checkbox";
 
 @include paddingAll;
 @include paddingTop;
@@ -39,17 +23,8 @@
 @include fontWeight;
 @include fontSizes;
 
-@import "modules/auth";
 @import "modules/footer";
-@import "modules/sidebar";
 @import "modules/header";
 @import "modules/dashboard";
-@import "modules/main";
 @import "modules/home";
-@import "modules/metadata";
-@import "modules/log";
-@import "modules/indexer";
-@import "modules/search";
-@import "modules/settings";
-@import "modules/viewers";
 @import "modules/donateurs";
