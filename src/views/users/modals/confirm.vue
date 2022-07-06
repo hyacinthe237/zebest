@@ -3,6 +3,54 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <!-- Uninstalling -->
+                <div class="_modal-content text-center" v-if="nature == 'paie'">
+                    <div class="_img">
+                      <img :src="logoPlaceholder">
+                    </div>
+
+                    <h2 class="mt-20">faire un don à "nom de créateur"</h2>
+
+                    <form class="_form mt-20" @submit.prevent>
+                      <div class="form-group mt-20">
+                         <input type="email"
+                             name="email"
+                             placeholder="Email"
+                             class="form-control form-control-lg input"
+                             v-model="ghost.email"
+                             v-validate="'required|min:6'"
+                         >
+                           <span class="has-error">{{ errors.first('email') }}</span>
+                      </div>
+
+                      <div class="form-group mt-20">
+                         <input type="number"
+                             name="cardId"
+                             placeholder="Numéro de carte bancaire"
+                             class="form-control form-control-lg input"
+                             v-model="ghost.cardId"
+                         >
+                           <span class="has-error">{{ errors.first('cardId') }}</span>
+                      </div>
+
+                      <div class="form-group mt-20">
+                         <input type="text"
+                             name="name"
+                             placeholder="Nom du titulaire de la carte"
+                             class="form-control form-control-lg input"
+                             v-model="ghost.name"
+                             v-validate="'required|min:6'"
+                         >
+                           <span class="has-error">{{ errors.first('name') }}</span>
+                      </div>
+
+                       <div class="mt-10">
+                           <button class="btn btn-block btn-primary br-100" @click="payer()">
+                               Payer
+                           </button>
+                       </div>
+                     </form>
+                </div>
+
                 <div class="_modal-content text-center" v-if="nature == 'page'">
                     <div class="_head">
                       <h2 class="mr-10">félicitations</h2>
@@ -32,9 +80,7 @@
 
                 <div class="_modal-content" v-if="nature == 'reussite'">
                   <span class="_icon"><i class="feather icon-check"></i></span>
-                  <h2 class="mt-40">transaction réussie</h2>
-
-                    <p>Tu peux voir les détails dans <a @click="go('liste-donateurs')">Transactions</a></p>
+                  <h2 class="mt-40">merci pour votre donation</h2>
 
                     <div class="mt-20">
                       <button class="btn btn-block btn-primary mr-20 br-100" @click="goHome()">
@@ -42,11 +88,22 @@
                       </button>
                     </div>
                 </div>
+
+                <div class="_modal-content" v-if="nature == 'donation'">
+                  <span class="_icon"><i class="feather icon-check"></i></span>
+                  <h2 class="mt-40">transaction réussie</h2>
+
+                    <div class="mt-20">
+                      <button class="btn btn-block btn-primary mr-20 br-100" @click="goDonation()">
+                          Faire une nouvelle donation
+                      </button>
+                    </div>
+                </div>
             </div>
         </div>
-        <div v-show="isLoading" class="mt-40 pb-40 text-center">
+        <!-- <div v-show="isLoading" class="mt-40 pb-40 text-center">
             <izy-hollow-loading loading />
-        </div>
+        </div> -->
     </div>
 </template>
 
@@ -79,9 +136,20 @@ export default {
             this.closeAllModals()
             this.go('home')
         },
+
         tiktok () {
             this.closeAllModals()
             this.go('liste-donateurs')
+        },
+
+        goDonation () {
+            this.closeAllModals()
+            // this.go('faire-un-don')
+        },
+
+        payer () {
+            this.closeAllModals()
+            // this.go('faire-un-don')
         },
     }
 }

@@ -1,7 +1,7 @@
 <template>
     <div class="_modal modal fadeIn" id="loadingModal">
         <div class="_loading-modal-content">
-            <izy-hollow-loading loading :colour="'#ffffff'"/>
+            <izy-hollow-loading loading :colour="'#46D465'"/>
         </div>
     </div>
 </template>

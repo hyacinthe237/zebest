@@ -52,32 +52,30 @@
             </div>
 
              <div class="mt-10">
-                 <button class="btn btn-block btn-primary br-100">
+                 <button class="btn btn-block btn-primary br-100" @click="confirm()">
                      Ovations de {{ montant }} &euro;
                  </button>
              </div>
            </form>
         </div>
-
+        <confirmModal :nature="nature"></confirmModal>
       </section>
     </div>
 </template>
 
 <script>
-// import _ from 'lodash'
-// import AuthService from '@/services/auth'
-// import { mapGetters } from 'vuex'
+import confirmModal from '../users/modals/confirm'
 
 export default {
     name: 'Home',
 
     data: () => ({
         payload: {},
-        montant: 100
+        montant: 100,
+        nature: ''
     }),
 
-    computed: {
-    },
+    components: { confirmModal },
 
     watch: {},
 
@@ -86,6 +84,12 @@ export default {
     methods: {
         selectMontant (montant) {
             this.montant = montant
+        },
+
+        confirm () {
+            // window.eventBus.$emit('open', 'confirm')
+            this.nature = 'paie'
+            window.$('#confirmModal').modal('show')
         }
     }
 }

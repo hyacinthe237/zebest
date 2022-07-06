@@ -4,7 +4,7 @@
             <router-view />
         </vue-page-transition>
 
-        <LoadingModal />
+        <!-- <LoadingModal /> -->
 
         <OfflineFooter></OfflineFooter>
     </div>
@@ -12,7 +12,7 @@
 
 <script>
 // import AuthService from '@/services/auth'
-import LoadingModal from '@/components/commons/loaders/modal'
+// import LoadingModal from '@/components/commons/loaders/modal'
 // import { mapGetters } from 'vuex'
 // import moment from 'moment'
 // import _ from 'lodash'
@@ -24,12 +24,12 @@ export default {
         interval: null
     }),
 
-    components: { LoadingModal },
+    // components: { LoadingModal },
 
     created () { },
 
     mounted () {
-        this.listenToEvents()
+        // this.listenToEvents()
     },
 
     watch: {},
