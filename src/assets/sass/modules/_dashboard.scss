@@ -20,6 +20,19 @@
          }
     }
 
+    .block-img {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        background-color: transparent;
+
+         img {
+           width: 100%;
+           height: 80vh;
+         }
+    }
+
     .recaps {
         display: flex;
         justify-content: center;
@@ -105,6 +118,21 @@
             align-items: center;
             z-index: 999;
             padding: 20px;
+        }
+    }
+}
+
+@media (max-width: 560px) {
+    .home {
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        .block {
+            width: 100%;
+            height: auto;
         }
     }
 }

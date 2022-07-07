@@ -18,7 +18,7 @@
             Acceptez des donations de vos fans directement sur vos compte Orange Money, Mobile Money, Free Money et bien plus.
           </p>
 
-          <form class="_form mt-20" @submit.prevent="signin()">
+          <form class="_form mt-20" @submit.prevent>
              <div class="form-group mt-20">
                  <div class="content">
                      <div class="dark">zebest.com/</div>
@@ -41,8 +41,6 @@
            </form>
         </div>
 
-      <div class="mt-100"></div>
-
       <div class="block bg">
           <h1>pour les créateurs de contenu en Afrique</h1>
 
@@ -50,6 +48,10 @@
             Zebest c'est la façon la plus simple pour les createurs de contenu en Afrique de recevoir des donations de leurs fans.
             En quelques clics, vous recevez le paiement de vos fans sur vos comptes mobile préférés.
           </p>
+      </div>
+
+      <div class="block-img">
+          <img :src="fondFooter">
       </div>
 
       </section>
@@ -65,12 +67,14 @@
 // import _ from 'lodash'
 // import AuthService from '@/services/auth'
 // import { mapGetters } from 'vuex'
+import fondFooter from '@/assets/images/fond.png'
 
 export default {
     name: 'Home',
 
     data: () => ({
-        payload: {}
+        payload: {},
+        fondFooter
     }),
 
     computed: {

@@ -42,6 +42,34 @@ h1, h2 {
     text-align: center;
 }
 
+@media (max-width: 560px) {
+    body {
+        padding-left: 20px;
+        padding-right: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    h1 {
+        font-family: 'Ambit Black', 'Monument Extended Bold', Avenir, Calibri, sans-serif;
+        color: $brand-dark;
+        font-weight: 700;
+        font-size: 2.4em;
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    h2 {
+        font-family: 'Ambit Black', 'Monument Extended Bold', Avenir, Calibri, sans-serif;
+        color: $brand-dark;
+        font-weight: 700;
+        font-size: 2em;
+        text-transform: uppercase;
+        text-align: center;
+    }
+}
+
 p {
     font-size: 16px;
     color: $brand-darker;

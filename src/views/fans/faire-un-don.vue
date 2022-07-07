@@ -58,13 +58,14 @@
              </div>
            </form>
         </div>
-        <confirmModal :nature="'paie'"></confirmModal>
+
+        <!-- <confirmModal :nature="'paie'"></confirmModal> -->
       </section>
     </div>
 </template>
 
 <script>
-import confirmModal from '../users/modals/confirm'
+// import confirmModal from '../users/modals/confirm'
 
 export default {
     name: 'Home',
@@ -75,7 +76,7 @@ export default {
         // nature: ''
     }),
 
-    components: { confirmModal },
+    // components: { confirmModal },
 
     watch: {},
 
