@@ -64,7 +64,7 @@
                   <span class="has-error">{{ errors.first('link') }}</span>
              </div>
 
-             <div class="mt-20">
+             <div class="mt-20 mb-20">
                  <button class="btn btn-block btn-primary br-100" @click="go('choix-devise')">
                      Continuer
                  </button>

@@ -51,21 +51,21 @@
                  <span class="has-error">{{ errors.first('about') }}</span>
             </div>
 
-             <div class="mt-10">
+             <div class="mt-10 mb-20">
                  <button class="btn btn-block btn-primary br-100" @click="confirm()">
                      Ovations de {{ montant }} &euro;
                  </button>
              </div>
            </form>
         </div>
-
-        <!-- <confirmModal :nature="'paie'"></confirmModal> -->
       </section>
+
+      <confirmModal></confirmModal>
     </div>
 </template>
 
 <script>
-// import confirmModal from '../users/modals/confirm'
+import confirmModal from './modals/confirm'
 
 export default {
     name: 'Home',
@@ -73,10 +73,9 @@ export default {
     data: () => ({
         payload: {},
         montant: 100,
-        // nature: ''
     }),
 
-    // components: { confirmModal },
+    components: { confirmModal },
 
     watch: {},
 
@@ -88,8 +87,8 @@ export default {
         },
 
         confirm () {
-            window.eventBus.$emit('open', 'confirm')
-            window.$('#confirmModal').modal('show')
+            // window.eventBus.$emit('open', 'confirm')
+            window.$('#confirmDonModal').modal('show')
         }
     }
 }

@@ -66,12 +66,12 @@
 
                     <div class="primary underline mt-60">zebest.com/tonnomcréateur</div>
 
-                    <div class="mt-20">
-                      <button class="btn btn-primary mr-20 br-100" @click="copy()">
+                    <div class="mt-20 btns">
+                      <button class="btn btn-primary mr-20 br-100 mt-10" @click="copy()">
                           <i class="feather icon-copy"></i>
                           Copier le lien
                       </button>
-                      <button class="btn btn-dark br-100" @click="tiktok()">
+                      <button class="btn btn-dark br-100 mt-10" @click="tiktok()">
                           <img :src="logoTiktok">
                           Tiktok
                       </button>

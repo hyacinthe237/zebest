@@ -49,20 +49,20 @@
         </div>
       </section>
 
-      <ConfirmModal :nature="'reussite'"></ConfirmModal>
+      <!-- <ConfirmModal :nature="'reussite'"></ConfirmModal> -->
     </div>
 </template>
 
 <script>
 import logoPlaceholder from '@/assets/images/placeholder.png'
-import ConfirmModal from './modals/confirm'
+// import ConfirmModal from './modals/confirm'
 
 export default {
     data: () => ({
       logoPlaceholder
     }),
 
-    components: { ConfirmModal },
+    // components: { ConfirmModal },
 
     mounted () {},
 

@@ -32,11 +32,8 @@
                  </div>
                  <span class="has-error">{{ errors.first('url') }}</span>
              </div>
-
              <div class="mt-10">
-                 <button class="btn btn-block btn-primary br-100">
-                     Créer ma page
-                 </button>
+                 <button class="btn btn-block btn-primary br-100">Créer ma page</button>
              </div>
            </form>
         </div>

@@ -103,6 +103,13 @@
     justify-content: center;
     flex-direction: column;
 
+    .btns {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+
     ._head {
         display: flex;
         justify-content: center;
@@ -192,51 +199,6 @@
             margin-top: 10px;
             font-size: 14px;
             width: 60%
-        }
-    }
-
-
-    ._upload {
-        margin-top: 20px;
-
-        ._icon {
-            font-size: 60px;
-            text-align: center;
-        }
-
-        ._table {
-            height: 200px;
-            overflow: auto;
-
-            table {
-                margin-bottom: 20px;
-            }
-
-            table td {
-                max-width: 0;
-                white-space: normal;
-            }
-
-            table tr td:first-child {
-                width: 65%;
-                overflow-wrap: break-word;
-            }
-
-            table tr td:nth-child(2) {
-                width: 20%;
-            }
-
-            table tr td:nth-child(3) {
-                width: 10%;
-            }
-
-            table tr td:nth-child(4) {
-                width: 5%;
-            }
-
-            table th, table td {
-                padding: 0.1rem;
-            }
         }
     }
 }
