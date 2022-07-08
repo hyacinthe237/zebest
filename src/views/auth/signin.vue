@@ -1,8 +1,20 @@
+<template lang="html">
 <div class="">
-  <section class="_header"></section>
+  <section class="_header">
+      <div class="block">
+          <div class="logo pointer">zebest</div>
+          <div class="buttons">
+            <button
+                @click="go('signup')"
+                class="btn btn-primary br-100"
+                :disabled="isLoading"
+            >{{ t('Inscription') }}</button>
+          </div>
+      </div>
+  </section>
   <section class="home">
     <div class="block">
-      <h2>Connexion zebest</h2>
+      <h2>Connectez-vous</h2>
 
       <form class="_form mt-20" @submit.prevent="signin()">
          <div class="form-group">

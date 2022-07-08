@@ -20,10 +20,12 @@
     &.btn-default {
         color: $brand-dark;
         background-color: transparent;
+        border: none;
 
         &:hover {
             color: $brand-dark;
             background-color: $body-bg;
+            border: none;
         }
     }
 
