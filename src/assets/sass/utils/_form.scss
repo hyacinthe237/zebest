@@ -6,13 +6,24 @@
     color: #495c80;
 }
 
+@media (max-width: 560px) {
+  ._form {
+     width: 560px;
+     max-width: 100%;
+
+     .form-group {
+       .content {
+           display: flex;
+           flex-direction: column;
+           justify-content: center;
+           align-items: center;
+        }
+     }
+  }
+}
 
 ._form {
-    min-width: 50%;
-
-    @media (max-width: 560px) {
-      width: 100%;
-    }
+    min-width: 560px;
 
     .content-profile-photo {
         display: flex;
@@ -56,11 +67,20 @@
             align-items: center;
             border-radius: 100px;
             border: 1px solid $brand-primary;
-            padding-top: 10px;
-            padding-bottom: 10px;
-            padding-left: 20px;
-            padding-right: 20px;
-            height: 50px;
+            padding: 15px;
+            min-height: 50px;
+            background-color: white;
+            font-size: 24px;
+            font-weight: bold;
+
+
+            &.bs {
+              box-shadow: 0 10px 48px rgba(30, 107, 174, 0.1), 0 1px 1px rgba(255, 248, 254, 0.61);
+            }
+
+            .submit {
+
+            }
 
             .flex-50 {
                 flex: 50%;
@@ -95,6 +115,8 @@
                 border: none;
                 padding:0;
                 margin:0;
+                font-size: 24px;
+                font-weight: bold;
 
                 &:focus {
                   border: none;

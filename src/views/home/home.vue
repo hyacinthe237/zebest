@@ -4,6 +4,12 @@
           <div class="logo pointer" @click="go('home')">zebest</div>
           <div class="buttons">
             <button
+                @click="go('signin')"
+                class="btn btn-block btn-primary br-100 mr-10"
+                :disabled="isLoading"
+            >{{ t('se connecter') }}</button>
+            
+            <button
                 @click="go('signup')"
                 class="btn btn-block btn-primary br-100"
                 :disabled="isLoading"
@@ -20,7 +26,7 @@
 
           <form class="_form mt-20" @submit.prevent>
              <div class="form-group mt-20">
-                 <div class="content">
+                 <div class="content bs">
                      <div class="dark">zebest.com/</div>
                      <input type="url"
                          name="url"
@@ -29,15 +35,14 @@
                          v-model="ghost.url"
                          v-validate="'required|min:6'"
                      >
+                     <button class="btn btn-block btn-primary br-100">Créer ma page</button>
                  </div>
                  <span class="has-error">{{ errors.first('url') }}</span>
              </div>
-             <div class="mt-10">
-                 <button class="btn btn-block btn-primary br-100">Créer ma page</button>
-             </div>
            </form>
         </div>
-
+      </section>
+      <section class="home bg-primary">
       <div class="block bg">
           <h1>pour les créateurs de contenu en Afrique</h1>
 

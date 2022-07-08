@@ -24,8 +24,6 @@ a { text-decoration: none; color: $linkColour }
 
 body {
     margin: 0;
-    padding-left: 60px;
-    padding-right: 60px;
     font-family: 'Open Sans', sans-serif;
     background-color: $body-bg;
     font-size: 18px;
@@ -37,7 +35,7 @@ h1, h2 {
     font-family: 'Ambit Black', 'Monument Extended Bold', Avenir, Calibri, sans-serif;
     color: $brand-dark;
     font-weight: 700;
-    font-size: 5em;
+    font-size: 64px;
     text-transform: uppercase;
     text-align: center;
 }
@@ -71,7 +69,7 @@ h1, h2 {
 }
 
 p {
-    font-size: 16px;
+    font-size: 22px;
     color: $brand-darker;
     text-align: center;
     padding: 20px;

@@ -5,6 +5,11 @@
     justify-content: center;
     flex-direction: column;
     align-items: center;
+    min-width: 560px;
+
+    &.bg-primary {
+      background-color: $brand-secondary;
+    }
 
     .block {
         display: flex;
@@ -12,12 +17,8 @@
         flex-direction: column;
         align-items: center;
         min-height: 100vh;
-        width: 100%;
+        width: 50%;
         background-color: transparent;
-
-         &.bg {
-           background-color: $brand-secondary;
-         }
     }
 
     .btns-block {
@@ -160,6 +161,7 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
+        width: 560px;
 
         .block {
             width: 100%;
