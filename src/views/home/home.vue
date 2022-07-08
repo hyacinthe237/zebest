@@ -23,7 +23,7 @@
           <h1>recevez le soutien de vos fans.</h1>
 
           <p class="mt-20">
-            Acceptez des donations de vos fans directement sur vos compte Orange Money, Mobile Money, Free Money et bien plus.
+            Acceptez des donations de vos fans directement sur vos comptes Orange Money, Mobile Money, Free Money et bien plus.
           </p>
 
           <form class="_form mt-20" @submit.prevent>
