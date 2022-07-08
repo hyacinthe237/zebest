@@ -61,8 +61,14 @@
       </section>
 
       <div class="footer pointer">
-          <div class="ressources">Ressources</div>
-          <div class="termes">Termes de confidentialité</div>
+          <div class="left">
+            <div class="item">A propos</div>
+            <div class="item">Aide</div>
+            <div class="item">Resources</div>
+          </div>
+          <div class="right">
+            <div class="item">©ZeBest</div>
+          </div>
       </div>
     </div>
 </template>

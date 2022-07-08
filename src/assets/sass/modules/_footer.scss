@@ -6,11 +6,26 @@
     height: 10vh;
     text-align: center;
     padding: 10px 0;
-    color: #333;
+    color: $brand-dark;
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content:space-around;
+    justify-content:space-between;
+    padding-left: 80px;
+    padding-right: 80px;
+    font-size: 18px;
+    font-weight: bold;
+
+    .left, .right {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content:space-around;
+
+        .item {
+            padding-right: 30px;
+        }
+    }
 }
 
 // @media (max-width: 768px) {
