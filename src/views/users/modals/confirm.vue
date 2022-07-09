@@ -1,60 +1,13 @@
 <template lang="html">
-    <div class="modal animated fadeIn upload" id="confirmModal">
+    <div class="modal animated fadeIn modal-backdrop" tabindex="-1" role="dialog" id="confirmModal">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <!-- Uninstalling -->
-                <div class="_close" @click="closeAllModals()">
-                    <i class="feather icon-x"></i>
+                <div class="text-right">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="feather icon-x"></i>
+                    </button>
                 </div>
-                <div class="_modal-content text-center" v-if="nature == 'paie'">
-                    <div class="_img">
-                      <img :src="logoPlaceholder">
-                    </div>
-
-                    <h2 class="mt-20">faire un don à "nom de créateur"</h2>
-
-                    <form class="_form mt-20" @submit.prevent>
-                      <div class="form-group mt-20">
-                         <input type="email"
-                             name="email"
-                             placeholder="Email"
-                             class="form-control form-control-lg input"
-                             v-model="ghost.email"
-                             v-validate="'required|min:6'"
-                         >
-                           <span class="has-error">{{ errors.first('email') }}</span>
-                      </div>
-
-                      <div class="form-group mt-20">
-                         <input type="number"
-                             name="cardId"
-                             placeholder="Numéro de carte bancaire"
-                             class="form-control form-control-lg input"
-                             v-model="ghost.cardId"
-                         >
-                           <span class="has-error">{{ errors.first('cardId') }}</span>
-                      </div>
-
-                      <div class="form-group mt-20">
-                         <input type="text"
-                             name="name"
-                             placeholder="Nom du titulaire de la carte"
-                             class="form-control form-control-lg input"
-                             v-model="ghost.name"
-                             v-validate="'required|min:6'"
-                         >
-                           <span class="has-error">{{ errors.first('name') }}</span>
-                      </div>
-
-                       <div class="mt-10">
-                           <button class="btn btn-block btn-primary br-100" @click="payer()">
-                               Payer
-                           </button>
-                       </div>
-                     </form>
-                </div>
-
-                <div class="_modal-content text-center" v-if="nature == 'page'">
+                <div class="modal-body">
                     <div class="_head">
                       <h2 class="mr-10">félicitations</h2>
                       <img :src="logoFete" width="30px" height="30px">
@@ -69,8 +22,8 @@
 
                     <div class="primary underline mt-60">zebest.com/tonnomcréateur</div>
 
-                    <div class="mt-20 btns">
-                      <button class="btn btn-primary mr-20 br-100 mt-10" @click="copy()">
+                    <div class="mt-20 buttons mb-20">
+                      <button class="btn btn-primary mr-20 br-100" @click="copy()">
                           <i class="feather icon-copy"></i>
                           Copier le lien
                       </button>
@@ -80,33 +33,40 @@
                       </button>
                     </div>
                 </div>
-
-                <div class="_modal-content" v-if="nature == 'reussite'">
-                  <span class="_icon"><i class="feather icon-check"></i></span>
-                  <h2 class="mt-40">merci pour votre donation</h2>
-
-                    <div class="mt-20">
-                      <button class="btn btn-block btn-primary mr-20 br-100" @click="goHome()">
-                          Revenir à l'accueil
-                      </button>
-                    </div>
-                </div>
-
-                <div class="_modal-content" v-if="nature == 'donation'">
-                  <span class="_icon"><i class="feather icon-check"></i></span>
-                  <h2 class="mt-40">transaction réussie</h2>
-
-                    <div class="mt-20">
-                      <button class="btn btn-block btn-primary mr-20 br-100" @click="goDonation()">
-                          Faire une nouvelle donation
-                      </button>
-                    </div>
-                </div>
             </div>
+
+            <!-- <div class="modal-content" v-if="nature == 'reussite'">
+              <div class="text-right">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <i class="feather icon-x"></i>
+                  </button>
+              </div>
+                <span class="_icon"><i class="feather icon-check"></i></span>
+                <h2 class="mt-40">merci pour votre donation</h2>
+
+                  <div class="mt-20">
+                    <button class="btn btn-block btn-primary mr-20 br-100" @click="goHome()">
+                        Revenir à l'accueil
+                    </button>
+                  </div>
+            </div>
+
+            <div class="modal-content" v-if="nature == 'donation'">
+              <div class="text-right">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <i class="feather icon-x"></i>
+                  </button>
+              </div>
+              <span class="_icon"><i class="feather icon-check"></i></span>
+              <h2 class="mt-40">transaction réussie</h2>
+
+                <div class="mt-20 buttons">
+                  <button class="btn btn-block btn-primary mr-20 br-100" @click="goDonation()">
+                      Faire une nouvelle donation
+                  </button>
+                </div>
+            </div> -->
         </div>
-        <!-- <div v-show="isLoading" class="mt-40 pb-40 text-center">
-            <izy-hollow-loading loading />
-        </div> -->
     </div>
 </template>
 
@@ -132,7 +92,7 @@ export default {
     methods: {
         copy () {
             this.closeAllModals()
-            this.go('liste-donateurs')
+            // this.go('liste-donateurs')
         },
 
         goHome () {
@@ -142,7 +102,7 @@ export default {
 
         tiktok () {
             this.closeAllModals()
-            this.go('liste-donateurs')
+            // this.go('liste-donateurs')
         },
 
         goDonation () {

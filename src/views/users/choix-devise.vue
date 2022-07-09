@@ -59,12 +59,12 @@
         </div>
       </section>
 
-      <ConfirmModal :nature="'page'"></ConfirmModal>
+      <!-- <ConfirmModal></ConfirmModal> -->
     </div>
 </template>
 
 <script>
-import ConfirmModal from './modals/confirm'
+// import ConfirmModal from './modals/confirm'
 
 export default {
     name: 'ChoixDevise',
@@ -72,7 +72,7 @@ export default {
     data: () => ({
       devises: []
     }),
-    components: { ConfirmModal },
+    // components: { ConfirmModal },
 
     mounted () {
       this.initDevises()
@@ -132,7 +132,7 @@ export default {
         },
 
         openConfirm () {
-            window.eventBus.$emit('open', 'confirm')
+            // window.eventBus.$emit('open', 'confirm')
             window.$('#confirmModal').modal('show')
         }
 

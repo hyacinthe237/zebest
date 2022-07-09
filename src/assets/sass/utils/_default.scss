@@ -54,7 +54,7 @@ h1, h2 {
         color: $brand-dark;
         font-weight: 700;
         font-size: 2.4em;
-        text-transform: uppercase;
+        text-transform:capitalize;
         text-align: center;
     }
 
@@ -62,8 +62,8 @@ h1, h2 {
         font-family: 'Ambit Black', 'Monument Extended Bold', Avenir, Calibri, sans-serif;
         color: $brand-dark;
         font-weight: 700;
-        font-size: 2em;
-        text-transform: uppercase;
+        font-size: 1.6em;
+        text-transform: capitalize;
         text-align: center;
     }
 }
@@ -83,6 +83,7 @@ h4 { font-size: 1.4em }
 h5 { font-size: 1.1em }
 
 .bold { font-weight: bold }
+.mb-20 { margin-bottom: 20px; }
 .elevated { box-shadow: 2px 8px 20px rgba(0, 0, 0, 0.2) }
 .w-100 { width: 100px }
 .w-150 { width: 150px }
@@ -99,15 +100,15 @@ h5 { font-size: 1.1em }
 .circle {
     color: $brand-primary;
     background-color: $brand-dark;
-    border-radius: 100px;
-    width: 100px;
-    height: 100px;
+    border-radius: 50px;
+    width: 50px;
+    height: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
 
     i {
-      font-size: 50px;
+      font-size: 20px;
     }
 }
 
