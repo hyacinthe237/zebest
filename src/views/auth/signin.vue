@@ -1,6 +1,6 @@
 <template lang="html">
 <div class="">
-  <section class="_header">
+  <section class="_header padding">
       <div class="block">
           <div class="logo pointer">zebest</div>
           <div class="buttons">

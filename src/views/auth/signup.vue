@@ -1,13 +1,15 @@
 <template lang="html">
     <div class="">
-      <section class="_header">
-          <div class="logo pointer" @click="go('home')">zebest</div>
-          <div class="buttons">
-            <button
-                @click="go('signin')"
-                class="btn btn-block btn-primary br-100"
-                :disabled="isLoading"
-            >{{ t('Se connecter') }}</button>
+      <section class="_header padding">
+          <div class="block">
+              <div class="logo pointer" @click="go('home')">zebest</div>
+              <div class="buttons">
+                <button
+                    @click="go('signin')"
+                    class="btn btn-block btn-primary br-100"
+                    :disabled="isLoading"
+                >{{ t('Se connecter') }}</button>
+              </div>
           </div>
       </section>
       <section class="home">
