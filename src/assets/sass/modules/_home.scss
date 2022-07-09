@@ -5,11 +5,13 @@
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    min-width: 560px;
+    // min-width: 560px;
 
     &.bg-primary {
       background-color: $brand-secondary;
     }
+
+    .button { display: none; }
 
     .block {
         display: flex;
@@ -163,7 +165,9 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
-        width: 560px;
+        width: 100%;
+
+        .button { display: block; }
 
         .block {
             width: 100%;

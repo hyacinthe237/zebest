@@ -1,6 +1,6 @@
 <template lang="html">
     <div class="">
-      <section class="_header">
+      <section class="_header padding">
           <div class="block">
               <div class="logo pointer" @click="go('home')">zebest</div>
               <div class="buttons">
@@ -40,6 +40,9 @@
                      <button class="btn btn-block btn-primary br-100">Créer ma page</button>
                  </div>
                  <span class="has-error">{{ errors.first('url') }}</span>
+                 <div class="button mt-20">
+                    <button class="btn btn-block btn-primary br-100">Créer ma page</button>
+                 </div>
              </div>
            </form>
         </div>
