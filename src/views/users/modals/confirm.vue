@@ -3,6 +3,9 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <!-- Uninstalling -->
+                <div class="_close" @click="closeAllModals()">
+                    <i class="feather icon-x"></i>
+                </div>
                 <div class="_modal-content text-center" v-if="nature == 'paie'">
                     <div class="_img">
                       <img :src="logoPlaceholder">

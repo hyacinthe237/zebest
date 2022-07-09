@@ -1,7 +1,7 @@
 <template lang="html">
     <div class="">
       <section class="_header padding">
-          <div class="block">
+          <div class="block bg" id="sticky">
               <div class="logo pointer" @click="go('home')">zebest</div>
               <div class="buttons">
                 <button
@@ -19,7 +19,7 @@
           </div>
       </section>
       <section class="home">
-        <div class="block">
+        <div class="block mt-60">
           <h1>recevez le soutien de vos fans.</h1>
 
           <p class="mt-20">
@@ -28,7 +28,7 @@
 
           <form class="_form mt-20" @submit.prevent>
              <div class="form-group mt-20">
-                 <div class="content bs">
+                 <div class="content bs pl-100">
                      <div class="dark">zebest.com/</div>
                      <input type="url"
                          name="url"
@@ -37,28 +37,34 @@
                          v-model="ghost.url"
                          v-validate="'required|min:6'"
                      >
-                     <button class="btn btn-block btn-primary br-100">Créer ma page</button>
+                     <button class="btn btn-url btn-primary br-100">Créer ma page</button>
                  </div>
                  <span class="has-error">{{ errors.first('url') }}</span>
-                 <div class="button mt-20">
+                 <div class="text-center button mt-20">
                     <button class="btn btn-block btn-primary br-100">Créer ma page</button>
                  </div>
              </div>
            </form>
         </div>
       </section>
-      <section class="home bg-primary">
-      <div class="block bg">
+      <section class="home bg-primary mt-20">
+      <div class="block">
           <h1>pour les créateurs de contenu en Afrique</h1>
 
           <p class="mt-20">
             Zebest c'est la façon la plus simple pour les createurs de contenu en Afrique de recevoir des donations de leurs fans.
             En quelques clics, vous recevez le paiement de vos fans sur vos comptes mobile préférés.
           </p>
-      </div>
 
-      <div class="block-img">
-          <img :src="fondFooter">
+          <div class="social-icons">
+              <ul>
+                  <li><a class="pointer" href="#" target="_blank"><i class="feather icon-facebook"></i></a></li>
+                  <li><a class="pointer" href="#" target="_blank"><i class="feather icon-twitter"></i></a></li>
+                  <li><a class="pointer" href="#" target="_blank"><i class="feather icon-instagram"></i></a></li>
+                  <li><a class="pointer" href="#" target="_blank"><i class="feather icon-linkedin"></i></a></li>
+                  <li><a class="pointer" href="mailto:infos@zebest.com"><i class="feather icon-mail"></i></a></li>
+              </ul>
+          </div>
       </div>
 
       </section>

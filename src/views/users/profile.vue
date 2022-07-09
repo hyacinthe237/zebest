@@ -1,11 +1,11 @@
 <template lang="html">
     <div class="">
-      <section class="_header">
+      <section class="_header padding">
           <div class="block" @click="go('home')"><div class="logo pointer" @click="go('home')">zebest</div></div>
       </section>
 
       <section class="home">
-        <div class="block">
+        <div class="block mt-40">
           <h1>compléter mon profil</h1>
 
           <form class="_form mt-20 dark" @submit.prevent>

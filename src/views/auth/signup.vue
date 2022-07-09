@@ -13,7 +13,7 @@
           </div>
       </section>
       <section class="home">
-        <div class="block">
+        <div class="block mt-60">
           <h1>créer mon compte</h1>
 
           <form class="_form mt-20" @submit.prevent>

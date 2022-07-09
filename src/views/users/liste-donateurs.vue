@@ -1,15 +1,14 @@
 <template lang="html">
-    <div class="bg-white">
-      <section class="_header">
-          <div class="logo pointer" @click="go('home')">zebest</div>
-
+    <div class="">
+      <section class="_header padding">
+          <div class="block" @click="go('home')"><div class="logo pointer" @click="go('home')">zebest</div></div>
       </section>
 
       <section class="home">
         <div class="block">
           <div class="content-profile-photo">
               <img :src="logoPlaceholder">
-              <span class="mt-10">Hyacinthe ABANDA</span>
+              <!-- <span class="mt-10">Hyacinthe ABANDA</span> -->
           </div>
           <h2 class="mt-10">Bonjour, <span class="bold">Hyacinthe</span></h2>
 
@@ -24,30 +23,30 @@
 
           <div class="donateurs mt-40">
               <div class="d-heading">
-                  <div class="th-40">Montant</div>
+                  <div class="th-30">Montant</div>
                   <div class="th-40">Donateur</div>
-                  <div class="th-20">Date</div>
+                  <div class="th-30">Date</div>
               </div>
               <div class="d-body mt-20">
                   <div class="d-line">
-                      <div class="td-40">$ 120</div>
+                      <div class="td-30">$ 120</div>
                       <div class="td-40">Anonyme</div>
-                      <div class="td-20">28 juin 2022</div>
+                      <div class="td-30">28 juin 2022</div>
                   </div>
                   <div class="d-line">
-                      <div class="td-40">$ 120</div>
+                      <div class="td-30">$ 120</div>
                       <div class="td-40">Anonyme</div>
-                      <div class="td-20">28 juin 2022</div>
+                      <div class="td-30">28 juin 2022</div>
                   </div>
                   <div class="d-line">
-                      <div class="td-40">$ 120</div>
+                      <div class="td-30">$ 120</div>
                       <div class="td-40">Anonyme</div>
-                      <div class="td-20">28 juin 2022</div>
+                      <div class="td-30">28 juin 2022</div>
                   </div>
                   <div class="d-line">
-                      <div class="td-40">$ 120</div>
+                      <div class="td-30">$ 120</div>
                       <div class="td-40">Anonyme</div>
-                      <div class="td-20">28 juin 2022</div>
+                      <div class="td-30">28 juin 2022</div>
                   </div>
               </div>
           </div>

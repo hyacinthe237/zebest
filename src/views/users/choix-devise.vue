@@ -1,8 +1,7 @@
 <template lang="html">
-    <div class="bg-white">
-      <section class="_header">
-          <div class="logo pointer" @click="go('home')">zebest</div>
-
+    <div class="">
+      <section class="_header padding">
+          <div class="block" @click="go('home')"><div class="logo pointer" @click="go('home')">zebest</div></div>
       </section>
 
       <section class="home">

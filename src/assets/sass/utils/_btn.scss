@@ -12,6 +12,12 @@
         background-color: $brand-dark;
     }
 
+    &.btn-url {
+        max-width: 170px;
+        display: inline-block;
+        width: 100%;
+    }
+
     &.btn-primary {
         color: $brand-dark;
         background-color: $brand-primary;
