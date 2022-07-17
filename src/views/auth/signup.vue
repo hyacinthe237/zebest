@@ -39,7 +39,7 @@
                   <span class="has-error">{{ errors.first('password') }}</span>
              </div>
 
-             <div class="form-group">
+             <!-- <div class="form-group">
                  <div class="content">
                      <input type="url"
                          name="url"
@@ -51,7 +51,7 @@
                      <a class="dark pointer bold">Renvoyer</a>
                  </div>
                  <span class="has-error">{{ errors.first('url') }}</span>
-             </div>
+             </div> -->
 
              <div class="mt-20">
                  <button class="btn btn-block btn-primary br-100" @click="go('profile')">

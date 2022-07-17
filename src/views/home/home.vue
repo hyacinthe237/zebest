@@ -1,22 +1,22 @@
 <template lang="html">
     <div class="">
       <section class="_header padding">
-          <div class="block bg" id="sticky">
-              <div class="logo pointer" @click="go('home')">zebest</div>
-              <div class="buttons">
-                <button
-                    @click="go('signin')"
-                    class="btn btn-default br-100 mr-10"
-                    :disabled="isLoading"
-                >{{ t('Se connecter') }}</button>
+        <div class="block bg" id="navbar">
+            <div class="logo pointer" @click="go('home')">zebest</div>
+            <div class="buttons">
+              <button
+                  @click="go('signin')"
+                  class="btn btn-default br-100 mr-10"
+                  :disabled="isLoading"
+              >{{ t('Se connecter') }}</button>
 
-                <button
-                    @click="go('signup')"
-                    class="btn btn-primary br-100"
-                    :disabled="isLoading"
-                >{{ t('Inscription') }}</button>
-              </div>
-          </div>
+              <button
+                  @click="go('signup')"
+                  class="btn btn-primary br-100"
+                  :disabled="isLoading"
+              >{{ t('Inscription') }}</button>
+            </div>
+        </div>
       </section>
       <section class="home">
         <div class="block mt-60">
@@ -56,13 +56,12 @@
             En quelques clics, vous recevez le paiement de vos fans sur vos comptes mobile préférés.
           </p>
 
-          <div class="social-icons">
+          <div class="social-icons mt-40">
               <ul>
-                  <li><a class="pointer" href="#" target="_blank"><i class="feather icon-facebook"></i></a></li>
-                  <li><a class="pointer" href="#" target="_blank"><i class="feather icon-twitter"></i></a></li>
-                  <li><a class="pointer" href="#" target="_blank"><i class="feather icon-instagram"></i></a></li>
-                  <li><a class="pointer" href="#" target="_blank"><i class="feather icon-linkedin"></i></a></li>
-                  <li><a class="pointer" href="mailto:infos@zebest.com"><i class="feather icon-mail"></i></a></li>
+                  <li><img :src="logOM" alt="" /></li>
+                  <li><img :src="mpesa" alt="" /></li>
+                  <li><img :src="logMTN" alt="" /></li>
+                  <li><img :src="freemoney" alt="" /></li>
               </ul>
           </div>
       </div>
@@ -87,13 +86,21 @@
 // import AuthService from '@/services/auth'
 // import { mapGetters } from 'vuex'
 import fondFooter from '@/assets/images/fond.png'
+import logOM from '@/assets/images/logo-om.png'
+import logMTN from '@/assets/images/logo-mtn.png'
+import mpesa from '@/assets/images/mpesa.jpg'
+import freemoney from '@/assets/images/free_money.png'
 
 export default {
     name: 'Home',
 
     data: () => ({
         payload: {},
-        fondFooter
+        fondFooter,
+        logOM,
+        logMTN,
+        mpesa,
+        freemoney,
     }),
 
     computed: {
@@ -103,6 +110,7 @@ export default {
 
     mounted () {},
 
-    methods: {}
+    methods: {
+    }
 }
 </script>
