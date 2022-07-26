@@ -58,10 +58,10 @@
 
           <div class="social-icons mt-40">
               <ul>
-                  <li><img :src="logOM" alt="" /></li>
-                  <li><img :src="mpesa" alt="" /></li>
-                  <li><img :src="logMTN" alt="" /></li>
-                  <li><img :src="freemoney" alt="" /></li>
+                  <li><img :src="logOM" alt="logo orange money" /></li>
+                  <li><img :src="mpesa" alt="logo mpesa" /></li>
+                  <li><img :src="logMTN" alt="logo mtn mobile money" /></li>
+                  <li><img :src="freemoney" alt="logo free money" /></li>
               </ul>
           </div>
       </div>

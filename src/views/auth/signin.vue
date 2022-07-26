@@ -51,8 +51,8 @@
 </template>
 
 <script>
-// import ApiService from '@/services/api'
-// import AuthService from '@/services/auth'
+import ApiService from '@/services/api'
+import AuthService from '@/services/auth'
 // import _ from 'lodash'
 
 export default {
@@ -73,40 +73,33 @@ export default {
          * @return {void}
          */
         async signin () {
-            // const isValid = await this.$validator.validate()
-            // if (!isValid) return false
-            // this.isLoading = true
-            //
-            // let formData = new FormData()
-            // formData.append('username', this.ghost.username)
-            // formData.append('password', this.ghost.password)
-            //
-            // const response = await this.$api.post('/login', formData)
-            //     .catch(error => {
-            //         this.isLoading = true
-            //         console.log('error => ', error.response.data.error)
-            //         this.$swal.error(this.$translate.text('Login error'), this.$translate.text(error.response.data.error))
-            //     })
-            //
-            // if (response) {
-            //     let data = response.data
-            //     AuthService.setUser(data)
-            //     AuthService.setToken(data.token)
-            //     ApiService.setToken(data.token)
-            //     this.$store.commit('SET_TOGGLE_ICON', true)
-            //     localStorage.setItem(this.$config.get('token'), data.token)
-            //     localStorage.setItem('roleId', data.account.role.id)
-            //     localStorage.setItem('organisation', data.organisation.root_folder)
-            //
-            //     if (!_.isEmpty(this.last_action)) {
-            //         window.open(this.last_action, '_self')
-            //     } else {
-            //         this.n('home')
-            //         window.location.reload()
-            //     }
-            // }
-            //
-            // this.isLoading = false
+            const isValid = await this.$validator.validate()
+            if (!isValid) return false
+            this.isLoading = true
+
+            let formData = new FormData()
+            formData.append('username', this.ghost.username)
+            formData.append('password', this.ghost.password)
+
+            const response = await this.$api.post('/login', formData)
+                .catch(error => {
+                    this.isLoading = true
+                    console.log('error => ', error.response.data.error)
+                    this.$swal.error(this.$translate.text('Login error'), this.$translate.text(error.response.data.error))
+                })
+
+            if (response) {
+                let data = response.data
+                AuthService.setUser(data)
+                AuthService.setToken(data.token)
+                ApiService.setToken(data.token)
+                localStorage.setItem(this.$config.get('token'), data.token)
+
+                this.n('home')
+                window.location.reload()
+            }
+
+            this.isLoading = false
         },
     }
 }

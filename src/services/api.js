@@ -3,7 +3,7 @@ import config from './config'
 import Swal from 'sweetalert2'
 import AuthService from './auth'
 // import StoreService from '../store'
-import _ from 'lodash'
+// import _ from 'lodash'
 
 axios.defaults.baseURL = config.get('base_url')
 
@@ -18,21 +18,6 @@ axios.interceptors.response.use(response => {
 }, error => {
     if (error.response.status === 401) {
         setTimeout(AuthService.logout(), 0)
-
-        // Save Last Action
-        localStorage.setItem('last_action', window.location.href)
-        if (!_.isEmpty(window.last_breadcrumb)) {
-            localStorage.setItem('last_breadcrumb', window.last_breadcrumb)
-        }
-        if (!_.isEmpty(window.last_parent)) {
-            localStorage.setItem('last_parent', window.last_parent)
-        }
-        if (!_.isEmpty(window.last_filecontent)) {
-            localStorage.setItem('last_filecontent', window.last_filecontent)
-        }
-        if (!_.isEmpty(window.last_filecontentitem)) {
-            localStorage.setItem('last_filecontentitem', window.last_filecontentitem)
-        }
 
         Swal.fire({
           icon: 'error',
