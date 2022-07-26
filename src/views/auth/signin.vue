@@ -59,10 +59,7 @@ export default {
     name: 'Signin',
 
     data: () => ({
-        ghost: {
-            username: '',
-            password: ''
-        }
+        ghost: { email: '', password: '' }
     }),
 
     computed: {},
@@ -78,7 +75,7 @@ export default {
             this.isLoading = true
 
             let formData = new FormData()
-            formData.append('username', this.ghost.username)
+            formData.append('email', this.ghost.email)
             formData.append('password', this.ghost.password)
 
             const response = await this.$api.post('/login', formData)

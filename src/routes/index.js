@@ -10,6 +10,7 @@ import FaireUnDon from '@/views/fans/faire-un-don'
 import Guard from '@/services/middleware'
 import AuthSignin from '@/views/auth/signin'
 import Signup from '@/views/auth/signup'
+import Verify from '@/views/auth/verify'
 import AuthPasswordForgot from '@/views/auth/password-forgot'
 
 Vue.use(Router)
@@ -21,6 +22,7 @@ export default new Router({
         { path: '/', name: 'home', component: Home, beforeEnter: Guard.guest },
         { path: '/signin', name: 'signin', component: AuthSignin, beforeEnter: Guard.guest  },
         { path: '/signup', name: 'signup', component: Signup, beforeEnter: Guard.guest  },
+        { path: '/verify', name: 'verify', component: Verify, beforeEnter: Guard.guest  },
         { path: '/profile', name: 'profile', component: UserProfile, beforeEnter: Guard.guest  },
         { path: '/choix/devise', name: 'choix-devise', component: ChoixDevise, beforeEnter: Guard.guest  },
         { path: '/liste/donateurs', name: 'liste-donateurs', component: ListeDonateurs, beforeEnter: Guard.guest  },
