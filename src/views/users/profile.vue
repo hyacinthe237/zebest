@@ -9,8 +9,9 @@
           <h1>compléter mon profil</h1>
 
           <form class="_form mt-20 dark" @submit.prevent>
-              <div class="content-profile-photo">
-                  <div class="photo"><i class="feather icon-camera"></i></div>
+              <div class="center">
+                  <vue-dropzone ref="myVueDropzone" id="dropzone" :options="dropzoneOptions"></vue-dropzone>
+                  <!-- <div class="photo"><i class="feather icon-camera"></i></div> -->
                   <span>Ajouter une photo</span>
               </div>
              <div class="form-group mt-20">
@@ -78,8 +79,21 @@
 // import _ from 'lodash'
 
 export default {
+    name: 'Profile',
 
-    components: { },
+    data: () => ({
+        dropzoneOptions: {
+            url: 'https://httpbin.org/post',
+            thumbnailWidth: 150,
+            maxFilesize: 0.5,
+            maxFiles:1,
+            type: "image/png",
+            headers: { "My-Awesome-Header": "header value" },
+            dictDefaultMessage: "<i class='feather icon-camera'></i>"
+        }
+    }),
+
+    components: {},
 
     mounted () {},
 

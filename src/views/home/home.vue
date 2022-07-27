@@ -1,6 +1,8 @@
 <template lang="html">
     <div class="">
-      <section class="_header padding">
+
+      <VueScrollFixedNavbar>
+        <section class="_header padding">
         <div class="block bg" id="navbar">
             <div class="logo pointer" @click="go('home')">zebest</div>
             <div class="buttons">
@@ -17,7 +19,8 @@
               >{{ t('Inscription') }}</button>
             </div>
         </div>
-      </section>
+        </section>
+      </VueScrollFixedNavbar>
       <section class="home">
         <div class="block mt-60">
           <h1>recevez le soutien de vos fans.</h1>
@@ -90,6 +93,7 @@ import logOM from '@/assets/images/logo-om.png'
 import logMTN from '@/assets/images/logo-mtn.png'
 import mpesa from '@/assets/images/mpesa.jpg'
 import freemoney from '@/assets/images/free_money.png'
+import { VueScrollFixedNavbar } from "vue-scroll-fixed-navbar"
 
 export default {
     name: 'Home',
@@ -103,14 +107,12 @@ export default {
         freemoney,
     }),
 
-    computed: {
-    },
+    components: { VueScrollFixedNavbar },
 
     watch: {},
 
     mounted () {},
 
-    methods: {
-    }
+    methods: {}
 }
 </script>

@@ -12,6 +12,7 @@ import vueAutosize from 'vue-autosize'
 import VueTranslate from 'vue-translate-plugin'
 import VueOffline from 'vue-offline'
 import VuePageTransition from 'vue-page-transition'
+import vue2Dropzone from 'vue2-dropzone'
 
 import datePicker from 'vue-bootstrap-datetimepicker';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -66,6 +67,7 @@ Vue.component('izyPaginate', IzyPaginate)
 Vue.component('Breadcrumb', Breadcrumb)
 Vue.component('Spinners', Spinners)
 Vue.component('izyBack', IzyBack)
+Vue.component('vue-dropzone', vue2Dropzone)
 
 new Vue({
   router,
