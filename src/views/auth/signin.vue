@@ -1,6 +1,6 @@
 <template lang="html">
 <div class="">
-  <section class="_header padding">
+  <section class="_header padding" v-show="!isLoading">
       <div class="block">
           <div class="logo pointer">zebest</div>
           <div class="buttons">
@@ -12,11 +12,11 @@
           </div>
       </div>
   </section>
-  <section class="home">
+  <section class="home" v-show="!isLoading">
     <div class="block mt-60">
       <h2>Connectez-vous</h2>
 
-      <form class="_form mt-20" @submit.prevent="signin()">
+      <form class="_form mt-20" @submit.prevent>
          <div class="form-group">
             <input type="email"
                 name="email"
@@ -40,13 +40,16 @@
          </div>
 
          <div class="mt-20">
-             <button class="btn btn-block btn-primary br-100" @click="go('home')">
+             <button class="btn btn-block btn-primary br-100" @click="signin()">
                  Connexion
              </button>
          </div>
        </form>
     </div>
   </section>
+  <div v-show="isLoading" class="mt-40 pb-40 text-center">
+      <izy-hollow-loading loading />
+  </div>
 </div>
 </template>
 
@@ -92,7 +95,7 @@ export default {
                 ApiService.setToken(data.token)
                 localStorage.setItem(this.$config.get('token'), data.token)
 
-                this.n('home')
+                this.go('home')
                 window.location.reload()
             }
 
