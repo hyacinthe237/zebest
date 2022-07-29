@@ -41,7 +41,7 @@
 
              <div class="form-group">
                 <input type="password"
-                    name="password"
+                    name="password1"
                     placeholder="Mot de passe"
                     class="form-control form-control-lg input"
                     v-model="ghost.password1"
