@@ -47,7 +47,7 @@
        </form>
     </div>
   </section>
-  <div v-show="isLoading" class="mt-40 pb-40 text-center">
+  <div v-show="isLoading" class="mt-60 loading">
       <izy-hollow-loading loading />
   </div>
 </div>
@@ -62,10 +62,9 @@ export default {
     name: 'Signin',
 
     data: () => ({
+        message: 'la façon la plus simple pour les créateurs de contenu en Afrique de recevoir des donations de leurs fans.',
         ghost: { email: '', password: '' }
     }),
-
-    computed: {},
 
     methods: {
         /**
@@ -85,18 +84,17 @@ export default {
                 .catch(error => {
                     this.isLoading = true
                     console.log('error => ', error.response.data.error)
-                    this.$swal.error(this.$translate.text('Login error'), this.$translate.text(error.response.data.error))
+                    this.$swal.error(this.$translate.text('Erreur de connexion'), this.$translate.text(error.response.data.error))
                 })
 
             if (response) {
                 let data = response.data
                 AuthService.setUser(data)
-                AuthService.setToken(data.token)
-                ApiService.setToken(data.token)
-                localStorage.setItem(this.$config.get('token'), data.token)
-
+                AuthService.setToken(data.user_token)
+                ApiService.setToken(data.user_token)
+                // localStorage.setItem(this.$config.get('token'), data.user_token)
+                this.$swal.success('Bienvenue sur Zebest', this.message)
                 this.go('home')
-                window.location.reload()
             }
 
             this.isLoading = false

@@ -29,14 +29,17 @@
              </div>
 
              <div class="form-group">
-                <input type="text"
-                    name="username"
-                    placeholder="Username"
-                    class="form-control form-control-lg input"
-                    v-model="ghost.username"
-                    v-validate="'required|min:6'"
-                >
-                  <span class="has-error">{{ errors.first('username') }}</span>
+                 <div class="content bs pl-100">
+                     <div class="dark">zebest.com/</div>
+                     <input type="text"
+                         name="username"
+                         placeholder="tonnomdecreateur"
+                         class="form-control form-control-lg dark no-white"
+                         v-model="ghost.username"
+                         v-validate="'required|min:6'"
+                     >
+                 </div>
+                 <span class="has-error">{{ errors.first('username') }}</span>
              </div>
 
              <div class="form-group">
@@ -69,7 +72,7 @@
            </form>
         </div>
       </section>
-      <div v-show="isLoading" class="mt-40 pb-40 text-center">
+      <div v-show="isLoading" class="loading mt-60">
           <izy-hollow-loading loading />
       </div>
     </div>
@@ -116,14 +119,20 @@ export default {
                 .catch(error => {
                     this.isLoading = false
                     console.log('erreur => ', error.response.data)
-                    this.$toastr.error(error.response.data[0])
+                    let str = ''
+                    str = error.response.data.email ? error.response.data.email[0] : ''
+                    str = error.response.data.username ? error.response.data.username[0] : ''
+                    str = error.response.data.password1 ? error.response.data.password1[0] : ''
+                    str = error.response.data.password2 ? error.response.data.password2[0] : ''
+                    this.$toastr.error('Erreur création compte', str)
                 })
 
             if (response) {
                 this.isLoading = false
                 this.go('verify')
-                this.$toastr.success(this.message)
-                this.resetGhost()
+                this.$swal.success('Confirmation', this.message)
+                localStorage.setItem(this.$config.get('token'), response.data.key)
+                localStorage.setItem(this.$config.get('user'), response.data)
             }
 
         },

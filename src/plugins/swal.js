@@ -12,7 +12,7 @@ Swal.install = function (Vue) {
                 text: msg ? msg : '',
                 type: 'success',
                 showConfirmButton: false,
-                timer: 2000
+                timer: 5000
             })
         },
 

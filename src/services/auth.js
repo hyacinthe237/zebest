@@ -1,34 +1,35 @@
 import config from './config'
 
 const TOKEN = config.get('token')
+const USER = config.get('user')
 
 export default {
-    user() {
+    user () {
         return this.$store.state.auth
     },
 
     setUser (user) {
-        localStorage.setItem('user', JSON.stringify(user))
+        localStorage.setItem(USER, JSON.stringify(user))
     },
 
     getUser () {
-        return JSON.parse(localStorage.getItem('user'))
+        return JSON.parse(localStorage.getItem(USER))
     },
 
-    getToken() {
+    getToken () {
         return localStorage.getItem(TOKEN)
     },
 
-    setToken(token) {
-        localStorage.setItem('Token', token)
+    setToken (token) {
+        localStorage.setItem(TOKEN, token)
     },
 
-    logout() {
+    logout () {
         localStorage.clear()
         window.setTimeout(location.reload(), 50000)
     },
 
-    check() {
+    check () {
         return localStorage.getItem(TOKEN)
     }
 }

@@ -1,26 +1,25 @@
 <template lang="html">
     <div class="">
-      <section class="_header padding">
+      <section class="_header padding" v-show="!isLoading">
           <div class="block">
               <div class="logo pointer">zebest</div>
           </div>
       </section>
 
-      <section class="home">
+      <section class="home" v-show="!isLoading">
         <div class="block mt-60">
           <h1>vérifier mon compte</h1>
 
           <form class="_form mt-20" @submit.prevent>
              <div class="form-group">
                  <div class="content">
-                     <input type="text"
-                         name="key"
+                     <input type="number"
+                         name="otp"
                          placeholder="coller votre code de vérification"
                          class="form-control form-control-lg no-white"
-                         v-model="ghost.key"
+                         v-model="ghost.otp"
                          v-validate="'required|min:6'"
                      >
-                     <!-- <a class="dark pointer bold">Renvoyer</a> -->
                  </div>
              </div>
              <div class="mt-20">
@@ -31,20 +30,24 @@
            </form>
         </div>
       </section>
+      <div v-show="isLoading" class="loading mt-60">
+          <izy-hollow-loading loading />
+      </div>
     </div>
 </template>
 
 <script>
 // import _ from 'lodash'
 import AuthService from '@/services/auth'
+import ApiService from '@/services/api'
 // import { mapGetters } from 'vuex'
 
 export default {
     name: 'Verify',
 
     data: () => ({
-        message: 'Merci de vérifier votre email. Un code de vérification vous a été envoyé.',
-        ghost: { key: '' }
+        message: 'Votre compte a été vérifié avec succès.',
+        ghost: { otp: '' }
     }),
 
     computed: {
@@ -64,25 +67,21 @@ export default {
             if (!isValid) return false
             this.isLoading = true
 
-            let formData = new FormData()
-            formData.append('key', this.ghost.key)
-
-            const response = await this.$api.post('/auth/registration/verify-email/', formData)
+            const response = await this.$api.post('/user-api/verify-otp', { "otp": this.ghost.otp })
                 .catch(error => {
                     this.isLoading = true
                     console.log('erreur => ', error.response.data.error)
-                    this.$swal.error(this.$translate.text('Création de compte'), this.$translate.text(error.response.data.error))
+                    this.$swal.error('Erreur vérification code', error.response.data)
                 })
 
             if (response) {
-                // let data = response.data
-                // AuthService.setUser(data)
-                // AuthService.setToken(data.token)
-                // ApiService.setToken(data.token)
-                // localStorage.setItem(this.$config.get('token'), data.token)
-
-                this.n('profile')
-                // window.location.reload()
+                let data = response.data
+                this.$swal.success('Confirmation', data.message)
+                AuthService.setUser(data)
+                AuthService.setToken(data.user_token)
+                ApiService.setToken(data.user_token)
+                localStorage.setItem(this.$config.get('token'), data.user_token)
+                this.go('profile')
             }
 
             this.isLoading = false
