@@ -46,7 +46,7 @@ export default {
     name: 'Verify',
 
     data: () => ({
-        message: 'Votre compte a été vérifié avec succès.',
+        message: 'Votre compte a été activé avec succès.',
         ghost: { otp: '' }
     }),
 

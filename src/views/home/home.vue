@@ -21,6 +21,7 @@
         </div>
         </section>
       </VueScrollFixedNavbar>
+
       <section class="home">
         <div class="block mt-60">
           <h1>recevez le soutien de vos fans.</h1>
@@ -33,16 +34,16 @@
              <div class="form-group mt-20">
                  <div class="content bs pl-100">
                      <div class="dark">zebest.com/</div>
-                     <input type="url"
-                         name="url"
+                     <input type="text"
+                         name="username"
                          placeholder="tonnomdecreateur"
                          class="form-control form-control-lg dark no-white"
-                         v-model="ghost.url"
+                         v-model="ghost.username"
                          v-validate="'required|min:6'"
                      >
                      <button class="btn btn-url btn-primary br-100">Créer ma page</button>
                  </div>
-                 <span class="has-error">{{ errors.first('url') }}</span>
+                 <span class="has-error">{{ errors.first('username') }}</span>
                  <div class="text-center button mt-20">
                     <button class="btn btn-block btn-primary br-100">Créer ma page</button>
                  </div>
@@ -55,7 +56,7 @@
           <h1>pour les créateurs de contenu en Afrique</h1>
 
           <p class="mt-20">
-            Zebest c'est la façon la plus simple pour les createurs de contenu en Afrique de recevoir des donations de leurs fans.
+            Zebest c'est la façon la plus simple pour les créateurs de contenu en Afrique de recevoir des donations de leurs fans.
             En quelques clics, vous recevez le paiement de vos fans sur vos comptes mobile préférés.
           </p>
 

@@ -2,7 +2,7 @@
 <div class="">
   <section class="_header padding" v-show="!isLoading">
       <div class="block">
-          <div class="logo pointer">zebest</div>
+          <div class="logo pointer" @click="go('home')">zebest</div>
           <div class="buttons">
             <button
                 @click="go('signup')"

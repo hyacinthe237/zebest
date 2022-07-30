@@ -79,6 +79,9 @@
 </template>
 
 <script>
+import AuthService from '@/services/auth'
+import ApiService from '@/services/api'
+
 export default {
     name: 'SignUp',
 
@@ -86,11 +89,6 @@ export default {
         message: 'Merci de vérifier votre email. Un code de vérification vous a été envoyé.',
         ghost: { email: '', username: '', password1: '', password2: '' }
     }),
-
-    computed: {
-    },
-
-    watch: {},
 
     mounted () {
         this.resetGhost()
@@ -129,12 +127,14 @@ export default {
 
             if (response) {
                 this.isLoading = false
-                this.go('verify')
+                let data = response.data
                 this.$swal.success('Confirmation', this.message)
-                localStorage.setItem(this.$config.get('token'), response.data.key)
-                localStorage.setItem(this.$config.get('user'), response.data)
+                AuthService.setUser(data)
+                AuthService.setToken(data.user_token)
+                ApiService.setToken(data.user_token)
+                // localStorage.setItem(this.$config.get('token'), data.user_token)
+                this.go('verify')
             }
-
         },
     }
 }
