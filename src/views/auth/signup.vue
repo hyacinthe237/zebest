@@ -81,6 +81,7 @@
 <script>
 import AuthService from '@/services/auth'
 import ApiService from '@/services/api'
+import _ from 'lodash'
 
 export default {
     name: 'SignUp',
@@ -94,9 +95,18 @@ export default {
         this.resetGhost()
     },
 
+    computed: {
+        username () { return localStorage.getItem('username') }
+    },
+
     methods: {
         resetGhost () {
-            this.ghost = { email: '', username: '', password1: '', password2: '' }
+            this.ghost = {
+                email: '',
+                username: !_.isEmpty(this.username) ? this.username : '',
+                password1: '',
+                password2: ''
+            }
         },
         /**
          * User signs in
@@ -134,6 +144,7 @@ export default {
                 ApiService.setToken(data.user_token)
                 // localStorage.setItem(this.$config.get('token'), data.user_token)
                 this.go('verify')
+                localStorage.removeItem('username')
             }
         },
     }

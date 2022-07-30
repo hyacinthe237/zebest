@@ -41,11 +41,11 @@
                          v-model="ghost.username"
                          v-validate="'required|min:6'"
                      >
-                     <button class="btn btn-url btn-primary br-100">Créer ma page</button>
+                     <button class="btn btn-url btn-primary br-100" @click="save()">Créer ma page</button>
                  </div>
                  <span class="has-error">{{ errors.first('username') }}</span>
                  <div class="text-center button mt-20">
-                    <button class="btn btn-block btn-primary br-100">Créer ma page</button>
+                    <button class="btn btn-block btn-primary br-100" @click="save()">Créer ma page</button>
                  </div>
              </div>
            </form>
@@ -100,7 +100,7 @@ export default {
     name: 'Home',
 
     data: () => ({
-        payload: {},
+        ghost: { username: '' },
         fondFooter,
         logOM,
         logMTN,
@@ -114,6 +114,11 @@ export default {
 
     mounted () {},
 
-    methods: {}
+    methods: {
+      save () {
+          localStorage.setItem('username', this.ghost.username)
+          this.go('signup')
+      }
+    }
 }
 </script>
