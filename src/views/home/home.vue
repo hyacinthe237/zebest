@@ -5,7 +5,7 @@
         <section class="_header padding">
         <div class="block bg" id="navbar">
             <div class="logo pointer" @click="go('home')">zebest</div>
-            <div class="buttons">
+            <div class="buttons" v-if="!isConnected">
               <button
                   @click="go('signin')"
                   class="btn btn-default br-100 mr-10"
@@ -17,6 +17,19 @@
                   class="btn btn-primary br-100"
                   :disabled="isLoading"
               >{{ t('Inscription') }}</button>
+            </div>
+            <div class="buttons" v-else>
+              <button
+                  @click="logout()"
+                  class="btn btn-default br-100 mr-10"
+                  :disabled="isLoading"
+              >{{ t('Se déconnecter') }}</button>
+
+              <button
+                  @click="go('profile')"
+                  class="btn btn-primary br-100"
+                  :disabled="isLoading"
+              >{{ t('Mon compte') }}</button>
             </div>
         </div>
         </section>
@@ -86,7 +99,7 @@
 </template>
 
 <script>
-// import _ from 'lodash'
+import _ from 'lodash'
 // import AuthService from '@/services/auth'
 // import { mapGetters } from 'vuex'
 import fondFooter from '@/assets/images/fond.png'
@@ -110,15 +123,27 @@ export default {
 
     components: { VueScrollFixedNavbar },
 
-    watch: {},
+    computed: {
+        username () { return localStorage.getItem('username') },
+        user () { return JSON.parse(localStorage.getItem(this.$config.get('user'))) },
+        isConnected () { return !_.isEmpty(this.user) },
+    },
 
-    mounted () {},
+    mounted () {
+        if (!_.isEmpty(this.username)) {
+            localStorage.removeItem('username')
+        }
+    },
 
     methods: {
-      save () {
-          localStorage.setItem('username', this.ghost.username)
-          this.go('signup')
-      }
+        save () {
+            if (this.ghost.username !== '') {
+                localStorage.setItem('username', this.ghost.username)
+                this.go('signup')
+            } else {
+                this.$swal.error('Erreur de validation', 'Votre nom de créateur est vide. Saisissez le et validez à nouveau')
+            }
+        }
     }
 }
 </script>

@@ -30,6 +30,25 @@
 ._form {
     width: 100%;
 
+    input[type="file"] {
+        appearance: none;
+        background-color: initial;
+        cursor: pointer;
+        align-items: baseline;
+        color: inherit;
+        text-overflow: ellipsis;
+        white-space: pre;
+        text-align: start !important;
+        padding: initial;
+        border: initial;
+        overflow: hidden !important;
+
+        height: 100px;
+        width: 100px;
+        border-radius: 100px;
+        border: 2px solid $brand-primary;
+    }
+
     .content-profile-photo {
         display: flex;
         flex-direction: column;

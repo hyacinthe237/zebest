@@ -18,14 +18,14 @@
 
       <form class="_form mt-20" @submit.prevent>
          <div class="form-group">
-            <input type="email"
-                name="email"
-                placeholder="email"
+            <input type="text"
+                name="username"
+                placeholder="Ton nom de créateur"
                 class="form-control form-control-lg input"
-                v-model="ghost.email"
+                v-model="ghost.username"
                 v-validate="'required|min:6'"
             >
-              <span class="has-error">{{ errors.first('email') }}</span>
+              <span class="has-error">{{ errors.first('username') }}</span>
          </div>
 
          <div class="form-group">
@@ -34,7 +34,7 @@
                 placeholder="mot de passe"
                 class="form-control form-control-lg input"
                 v-model="ghost.password"
-                v-validate="'required|min:6'"
+                v-validate="'required|min:8'"
             >
               <span class="has-error">{{ errors.first('password') }}</span>
          </div>
@@ -63,7 +63,7 @@ export default {
 
     data: () => ({
         message: 'la façon la plus simple pour les créateurs de contenu en Afrique de recevoir des donations de leurs fans.',
-        ghost: { email: '', password: '' }
+        ghost: { username: '', password: '' }
     }),
 
     methods: {
@@ -76,22 +76,20 @@ export default {
             if (!isValid) return false
             this.isLoading = true
 
-            let formData = new FormData()
-            formData.append('email', this.ghost.email)
-            formData.append('password', this.ghost.password)
+            const payload = { username: this.ghost.username, password: this.ghost.password }
 
-            const response = await this.$api.post('/login', formData)
+            const response = await this.$api.post('/user-api/login', payload)
                 .catch(error => {
                     this.isLoading = true
-                    console.log('error => ', error.response.data.error)
-                    this.$swal.error(this.$translate.text('Erreur de connexion'), this.$translate.text(error.response.data.error))
+                    console.log('error => ', error.response.data.message)
+                    this.$swal.error(this.$translate.text('Erreur de connexion'), this.$translate.text(error.response.data.message))
                 })
 
             if (response) {
                 let data = response.data
                 AuthService.setUser(data)
-                AuthService.setToken(data.user_token)
-                ApiService.setToken(data.user_token)
+                AuthService.setToken(data.token)
+                ApiService.setToken(data.token)
                 // localStorage.setItem(this.$config.get('token'), data.user_token)
                 this.$swal.success('Bienvenue sur Zebest', this.message)
                 this.go('home')
