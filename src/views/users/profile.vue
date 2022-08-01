@@ -9,25 +9,13 @@
           <h1>compléter mon profil</h1>
 
           <form class="_form mt-20 dark" @submit.prevent>
-              <div class="center">
-                  <div class="file-upload">
-                      <button class="file-upload-btn" type="button" @click="openUpload()">Add Image</button>
-
-                      <div class="image-upload-wrap">
-                          <input class="file-upload-input" type="file" @onchange="readURL(this)" accept="image/*" />
-                          <div class="drag-text">
-                              <h3>Drag and drop a file or select add Image</h3>
-                          </div>
-                      </div>
-                      <div class="file-upload-content">
-                          <img class="file-upload-image" src="#" alt="your image" />
-                          <div class="image-title-wrap">
-                              <button type="button" @click="removeUpload()" class="remove-image">Remove <span class="image-title">Uploaded Image</span></button>
-                          </div>
-                      </div>
+              <div class="content-profile-photo pointer">
+                  <input type="file" name='image' id="fileElem" accept="image/*" style="display:none" @change="handleFile">
+                  <div class="photo" id="fileSelect">
+                      <i class="feather icon-camera" v-if="displayIcon"></i>
+                      <img class="image" src="#" v-else/>
                   </div>
-
-                  <span>Ajouter une photo</span>
+                  <span v-show="displayIcon">Ajouter une photo</span>
               </div>
             <div class="row">
                 <div class="col-sm-6">
@@ -38,7 +26,7 @@
                            placeholder="Nom"
                            class="form-control form-control-lg input"
                            v-model="ghost.last_name"
-                           v-validate="'required|min:6'"
+                           v-validate="'required'"
                        >
                          <span class="has-error">{{ errors.first('last_name') }}</span>
                     </div>
@@ -51,7 +39,7 @@
                            placeholder="Prénom"
                            class="form-control form-control-lg input"
                            v-model="ghost.first_name"
-                           v-validate="'required|min:6'"
+                           v-validate="'required'"
                        >
                          <span class="has-error">{{ errors.first('first_name') }}</span>
                     </div>
@@ -67,7 +55,7 @@
                         placeholder="tonnomdecreateur"
                         class="form-control form-control-lg dark"
                         v-model="ghost.username"
-                        v-validate="'required|min:6'"
+                        v-validate="'required'"
                     >
                     <div class="check"><i class="feather icon-check primary"></i></div>
                 </div>
@@ -77,10 +65,11 @@
              <div class="form-group mt-20">
                 <label for="about">A propos</label>
                     <textarea
-                    name="bio"
-                    placeholder="Bonjour, j'ai créé cette page pour ceux qui veulent me soutenir."
-                    class="form-control textarea form-control-lg"
-                    v-model="ghost.bio" rows="5" cols="33"></textarea>
+                        name="bio"
+                        placeholder="Bonjour, j'ai créé cette page pour ceux qui veulent me soutenir."
+                        class="form-control textarea form-control-lg"
+                        v-model="ghost.bio" rows="5" cols="33" v-validate="'required'"
+                    ></textarea>
                   <span class="has-error">{{ errors.first('bio') }}</span>
              </div>
 
@@ -91,7 +80,7 @@
                     placeholder="https://"
                     class="form-control form-control-lg input"
                     v-model="ghost.social_link"
-                    v-validate="'required|min:6'"
+                    v-validate="'required'"
                 >
                   <span class="has-error">{{ errors.first('social_link') }}</span>
              </div>
@@ -127,13 +116,23 @@ export default {
             headers: { "My-Awesome-Header": "header value" },
             dictDefaultMessage: "<i class='feather icon-camera'></i>",
         },
-        ghost: {}
+        ghost: {},
+        displayIcon: true
     }),
 
     mounted () {
         this.getProfile()
-        this.dropzoneOptions.url = this.upload_url
+        var fileSelect = document.getElementById("fileSelect"),
+        fileElem = document.getElementById("fileElem");
+
+        fileSelect.addEventListener("click", function (e) {
+            if (fileElem) {
+                fileElem.click();
+            }
+            e.preventDefault(); // empêche la navigation vers "#"
+        }, false);
     },
+
     computed: {
         auth () {
             return JSON.parse(localStorage.getItem(this.$config.get('user')))
@@ -146,36 +145,43 @@ export default {
 
     methods: {
         async save () {
-            this.showErrors =  true
-            const isValid = await this.$validator.validate()
-            if (!isValid) return false
+            if (this.ghost.image == null) {
+                this.$swal.error('Validation', 'Votre photo de profil est vide')
+            } else {
+                this.showErrors =  true
+                const isValid = await this.$validator.validate()
+                if (!isValid) return false
 
-            this.startLoading()
+                this.startLoading()
+                this.ghost.payment_link = `${this.$config.get('front_url')}${this.ghost.username}`
 
-            let url = '/user-api/users/' + this.auth.id + '/'
-            this.ghost.payment_link = `${this.$config.get('front_url')}${this.ghost.username}`
-            const response = await this.$api.patch(url, this.ghost)
-                .catch(error => {
-                    this.stopLoading()
-                    this.$swal.error(this.$translate.text('Error'), this.$translate.text(error.response.data.errors))
-                })
+                let formData = new FormData()
+                formData.append('bio', this.ghost.bio)
+                formData.append('payment_link', this.ghost.payment_link)
+                formData.append('image', this.ghost.image)
+                formData.append('last_name', this.ghost.last_name)
+                formData.append('first_name', this.ghost.first_name)
+                // this.auth.id
+                let url = '/user-api/users/' + 15 + '/'
+                const response = await this.$api.patch(url, this.ghost)
+                    .catch(error => {
+                        this.stopLoading()
+                        this.$swal.error(this.$translate.text('Erreur'), this.$translate.text(error.response.data.message))
+                    })
 
-                if (response) {
-                    this.stopLoading()
-                    this.showErrors =  false
-                    AuthService.setUser(response.data)
-                    this.$swal.success('Confirmation', 'Compte modifié avec succès !')
-                }
+                    if (response) {
+                        this.stopLoading()
+                        this.showErrors =  false
+                        this.getProfile()
+                        this.$swal.success('Confirmation', 'Compte modifié avec succès !')
+                    }
+            }
         },
 
         async getProfile () {
-            this.showErrors =  true
-            const isValid = await this.$validator.validate()
-            if (!isValid) return false
-
             this.startLoading()
-
-            let url = '/user-api/users/' + this.auth.id + '/'
+            // this.auth.id
+            let url = '/user-api/users/' + 15 + '/'
             const response = await this.$api.get(url)
                 .catch(error => {
                     this.stopLoading()
@@ -190,38 +196,21 @@ export default {
                 }
         },
 
-        uploadFile (file) {
-            console.log(file)
-            this.ghost.image = file
-        },
-
-        readURL (input) {
-            if (input.files && input.files[0]) {
+        handleFile (e) {
+            var files = e.target.files || e.dataTransfer.files;
+            if (!files.length)
+                return;
 
             var reader = new FileReader();
-
-            reader.onload = function(e) {
-                $('.image-upload-wrap').hide();
-                $('.file-upload-image').attr('src', e.target.result);
-                $('.file-upload-content').show();
-                $('.image-title').html(input.files[0].name);
-            };
-
-            reader.readAsDataURL(input.files[0]);
-
-            } else {
-                this.removeUpload()
+            var file = files[0];
+            reader.onloadend = function () {
+                var data=(reader.result).split(',')[1];
+                var binaryBlob = atob(data);
+                $('.image').attr('src', reader.result)
             }
-        },
-
-        removeUpload () {
-            $('.file-upload-input').replaceWith($('.file-upload-input').clone());
-            $('.file-upload-content').hide();
-            $('.image-upload-wrap').show();
-        },
-
-        openUpload () {
-            $('.file-upload-input').trigger('click')
+            reader.readAsDataURL(file);
+            this.ghost.image = files[0]
+            this.displayIcon = false
         }
     }
 }
