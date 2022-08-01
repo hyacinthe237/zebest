@@ -10,7 +10,7 @@ axios.defaults.baseURL = config.get('base_url')
 if (localStorage.getItem(config.get('token')) !=  null){
     axios.defaults.headers.common['Authorization'] = 'Token ' + localStorage.getItem(config.get('token'))
 }
-axios.defaults.headers.common['Content-Type'] = 'application/json;charset=utf-8'
+axios.defaults.headers.common['Content-Type'] = 'application/json;charset=utf-8;multipart/form-data;'
 
 // Intercept all 401
 axios.interceptors.response.use(response => {
@@ -47,6 +47,10 @@ export default {
 
     patch (url, payload) {
         return axios.patch(url, payload)
+    },
+
+    patchWithHeader (url, payload, headers) {
+        return axios.patch(url, payload, headers)
     },
 
     delete (url, params) {

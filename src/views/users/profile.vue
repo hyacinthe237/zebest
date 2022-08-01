@@ -73,7 +73,7 @@
                   <span class="has-error">{{ errors.first('bio') }}</span>
              </div>
 
-             <div class="form-group mt-20">
+             <!-- <div class="form-group mt-20">
                 <label for="link">Lien de ta page (Facebook, Tiktok, snapTchat, etc...)</label>
                 <input type="text"
                     name="social_link"
@@ -83,7 +83,7 @@
                     v-validate="'required'"
                 >
                   <span class="has-error">{{ errors.first('social_link') }}</span>
-             </div>
+             </div> -->
 
              <div class="mt-20 mb-20">
                  <button class="btn btn-block btn-primary br-100" @click="save()">
@@ -161,9 +161,9 @@ export default {
                 formData.append('image', this.ghost.image)
                 formData.append('last_name', this.ghost.last_name)
                 formData.append('first_name', this.ghost.first_name)
-                // this.auth.id
-                let url = '/user-api/users/' + 15 + '/'
-                const response = await this.$api.patch(url, this.ghost)
+
+                let url = '/user-api/users/' + this.auth.id + '/'
+                const response = await this.$api.patch(url, formData)
                     .catch(error => {
                         this.stopLoading()
                         this.$swal.error(this.$translate.text('Erreur'), this.$translate.text(error.response.data.message))
@@ -180,8 +180,8 @@ export default {
 
         async getProfile () {
             this.startLoading()
-            // this.auth.id
-            let url = '/user-api/users/' + 15 + '/'
+
+            let url = '/user-api/users/' + this.auth.id + '/'
             const response = await this.$api.get(url)
                 .catch(error => {
                     this.stopLoading()
@@ -201,14 +201,14 @@ export default {
             if (!files.length)
                 return;
 
-            var reader = new FileReader();
-            var file = files[0];
+            var reader = new FileReader()
+
             reader.onloadend = function () {
-                var data=(reader.result).split(',')[1];
-                var binaryBlob = atob(data);
+                var data=(reader.result).split(',')[1]
+                var binaryBlob = atob(data)
                 $('.image').attr('src', reader.result)
             }
-            reader.readAsDataURL(file);
+            reader.readAsDataURL(files[0])
             this.ghost.image = files[0]
             this.displayIcon = false
         }
