@@ -3,7 +3,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="text-right">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="closeModal('confirmModal')">
                         <i class="feather icon-x"></i>
                     </button>
                 </div>
@@ -16,16 +16,22 @@
                     <p>Ta page est prête. Tu peux à présent la partager avec ta communauté.</p>
 
                     <div class="content-profile-photo">
-                        <img :src="logoPlaceholder">
-                        <span class="mt-10">Hyacinthe ABANDA</span>
+                        <img :src="logo">
+                        <span class="mt-10">{{ payment_link }}</span>
                     </div>
 
-                    <div class="primary underline mt-60">zebest.com/tonnomcréateur</div>
+                    <div class="primary underline mt-60">{{ payment_link }}</div>
 
                     <div class="mt-20 buttons mb-20">
-                      <button class="btn btn-primary mr-20 br-100" @click="copy()">
-                          <i class="feather icon-copy"></i>
-                          Copier le lien
+                      <input type="hidden" id="toCopy" :value="payment_link">
+                      <button
+                          class="btn-secondary btn mr-10"
+                          @click.stop.prevent="copyLink()"
+                          :disabled="!resource.is_indexed"
+                      >
+                          <i class="feather icon-copy mr-10"></i>
+                          <span v-if="isNotCopied">Copier le lien</span>
+                          <span else>Lien copié</span>
                       </button>
                       <button class="btn btn-dark br-100 mt-10" @click="tiktok()">
                           <img :src="logoTiktok">
@@ -34,38 +40,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- <div class="modal-content" v-if="nature == 'reussite'">
-              <div class="text-right">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <i class="feather icon-x"></i>
-                  </button>
-              </div>
-                <span class="_icon"><i class="feather icon-check"></i></span>
-                <h2 class="mt-40">merci pour votre donation</h2>
-
-                  <div class="mt-20">
-                    <button class="btn btn-block btn-primary mr-20 br-100" @click="goHome()">
-                        Revenir à l'accueil
-                    </button>
-                  </div>
-            </div>
-
-            <div class="modal-content" v-if="nature == 'donation'">
-              <div class="text-right">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <i class="feather icon-x"></i>
-                  </button>
-              </div>
-              <span class="_icon"><i class="feather icon-check"></i></span>
-              <h2 class="mt-40">transaction réussie</h2>
-
-                <div class="mt-20 buttons">
-                  <button class="btn btn-block btn-primary mr-20 br-100" @click="goDonation()">
-                      Faire une nouvelle donation
-                  </button>
-                </div>
-            </div> -->
         </div>
     </div>
 </template>
@@ -73,46 +47,57 @@
 <script>
 import logoTiktok from '@/assets/images/logo-tiktok.png'
 import logoFete from '@/assets/images/fete.png'
-import logoPlaceholder from '@/assets/images/placeholder.png'
+// import logoPlaceholder from '@/assets/images/placeholder.png'
 
 export default {
 
     data: () => ({
       logoTiktok,
       logoFete,
-      logoPlaceholder
+      isNotCopied: true
     }),
 
     props: {
-        nature: { type: String, default: '' }
+        user: { type: Object, default: {} }
     },
 
-    watch: {},
-
-    methods: {
-        copy () {
-            this.closeAllModals()
-            // this.go('liste-donateurs')
+    computed: {
+        name () {
+            return this.user.first_name + ' ' + this.user.last_name
         },
 
-        goHome () {
-            this.closeAllModals()
-            this.go('home')
+        payment_link () {
+            return this.user.payment_link
+        },
+
+        logo () {
+            return this.user.image
+        },
+    },
+
+    methods: {
+        copyLink () {
+            let toCopy = document.querySelector('#toCopy')
+            toCopy.setAttribute('type', 'text')
+            toCopy.select()
+
+            try {
+              document.execCommand('copy')
+              this.$swal.success(this.$translate.text('Lien copié'))
+              this.isNotCopied = false
+            } catch (err) {
+              this.isNotCopied = true
+              this.$swal.error(this.$translate.text('Lien non copié'))
+            }
+
+            /* unselect the range */
+            toCopy.setAttribute('type', 'hidden')
+            window.getSelection().removeAllRanges()
         },
 
         tiktok () {
             this.closeAllModals()
             // this.go('liste-donateurs')
-        },
-
-        goDonation () {
-            this.closeAllModals()
-            // this.go('faire-un-don')
-        },
-
-        payer () {
-            this.closeAllModals()
-            // this.go('faire-un-don')
         },
     }
 }

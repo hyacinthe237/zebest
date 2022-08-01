@@ -13,7 +13,7 @@
                   <input type="file" name='image' id="fileElem" accept="image/*" style="display:none" @change="handleFile">
                   <div class="photo" id="fileSelect">
                       <i class="feather icon-camera" v-if="displayIcon"></i>
-                      <img class="image" src="#" v-else/>
+                      <img class="image" id="image" src="" v-else/>
                   </div>
                   <span v-show="displayIcon">Ajouter une photo</span>
               </div>
@@ -172,8 +172,9 @@ export default {
                     if (response) {
                         this.stopLoading()
                         this.showErrors =  false
-                        this.getProfile()
-                        this.$swal.success('Confirmation', 'Compte modifié avec succès !')
+                        AuthService.setUser(response.data)
+                        this.go('choix-devise')
+                        // this.$swal.success('Confirmation', 'Compte modifié avec succès !')
                     }
             }
         },
@@ -193,6 +194,10 @@ export default {
                     this.showErrors =  false
                     AuthService.setUser(response.data)
                     this.ghost = Object.assign({}, response.data)
+                    if(this.ghost.image !== null) {
+                        this.displayIcon = false
+                        $('#image').attr('src', this.ghost.image)
+                    }
                 }
         },
 
@@ -204,8 +209,6 @@ export default {
             var reader = new FileReader()
 
             reader.onloadend = function () {
-                var data=(reader.result).split(',')[1]
-                var binaryBlob = atob(data)
                 $('.image').attr('src', reader.result)
             }
             reader.readAsDataURL(files[0])

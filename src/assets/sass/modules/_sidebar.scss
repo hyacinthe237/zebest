@@ -1,0 +1,353 @@
+#wrapper {
+    padding-left: 0;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    &.toggled {
+        padding-left: $sidebar-width;
+    }
+}
+
+#sidebar-wrapper {
+    z-index: 1000;
+    position: fixed;
+    left: $sidebar-width;
+    width: 0;
+    height: 100%;
+    margin-left: -$sidebar-width;
+    overflow-y: auto;
+    background: $sidebarBackgroundColour;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    box-shadow: 1px 0 15px 8px rgba(30, 107, 174, 0.1);
+}
+
+#wrapper.toggled {
+    #sidebar-wrapper {
+        width: $sidebar-width;
+    }
+    #page-content-wrapper {
+        position: absolute;
+        margin-right: -$sidebar-width;
+    }
+}
+
+#page-content-wrapper {
+    width: 100%;
+    position: absolute;
+    padding-top: 0px;
+    padding-bottom: 40px;
+
+    .toggle-container {
+        cursor: pointer;
+        padding: 10px;
+        z-index: 9999;
+
+        i {
+            font-size: 20px;
+        }
+    }
+}
+
+/* Sidebar Styles */
+.sidebar-nav {
+    position: absolute;
+    width: $sidebar-width;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-align: left;
+    padding-top: 1px;
+    padding-bottom: 20px;
+    font-family: 'Museo Sans', Averta, sans-serif;
+
+    &.bottom {
+        bottom:0;
+
+        .bottom-content {
+            padding: 0 20px;
+            padding-bottom: 20px;
+
+            i {
+                margin-right: 10px;
+                font-size: 20px;
+            }
+
+            .range {
+                width: 100%;
+                height: 6px;
+                background-color: $brand-grey;
+                border-radius: 50px;
+                position: relative;
+                margin: 5px 0;
+
+                .inner-range {
+                    position: absolute;
+                    top: 0;
+                    left:0;
+                    height: 6px;
+                    border-radius: 50px;
+                    
+                    &.step-1 { width: 1%; background-color: $brand-secondary;}
+                    &.step-2 { width: 2%; background-color: $brand-secondary;}
+                    &.step-3 { width: 3%; background-color: $brand-secondary;}
+                    &.step-4 { width: 4%; background-color: $brand-secondary;}
+                    &.step-5 { width: 5%; background-color: $brand-secondary;}
+                    &.step-6 { width: 6%; background-color: $brand-secondary;}
+                    &.step-7 { width: 7%; background-color: $brand-secondary;}
+                    &.step-8 { width: 8%; background-color: $brand-secondary;}
+                    &.step-9 { width: 9%; background-color: $brand-secondary;}
+                    &.step-10 { width: 10%; background-color: $brand-secondary;}
+                    &.step-11 { width: 11%; background-color: $brand-secondary;}
+                    &.step-12 { width: 12%; background-color: $brand-secondary;}
+                    &.step-13 { width: 13%; background-color: $brand-secondary;}
+                    &.step-14 { width: 14%; background-color: $brand-secondary;}
+                    &.step-15 { width: 15%; background-color: $brand-secondary;}
+                    &.step-16 { width: 16%; background-color: $brand-secondary;}
+                    &.step-17 { width: 17%; background-color: $brand-secondary;}
+                    &.step-18 { width: 18%; background-color: $brand-secondary;}
+                    &.step-19 { width: 19%; background-color: $brand-secondary;}
+                    &.step-20 { width: 20%; background-color: $brand-secondary;}
+                    &.step-21 { width: 21%; background-color: $brand-secondary;}
+                    &.step-22 { width: 22%; background-color: $brand-secondary;}
+                    &.step-23 { width: 23%; background-color: $brand-secondary;}
+                    &.step-24 { width: 24%; background-color: $brand-secondary;}
+                    &.step-25 { width: 25%; background-color: $brand-secondary;}
+                    &.step-26 { width: 26%; background-color: $brand-secondary;}
+                    &.step-27 { width: 27%; background-color: $brand-secondary;}
+                    &.step-28 { width: 28%; background-color: $brand-secondary;}
+                    &.step-29 { width: 29%; background-color: $brand-secondary;}
+                    &.step-30 { width: 30%; background-color: $brand-secondary;}
+                    &.step-31 { width: 31%; background-color: $brand-secondary;}
+                    &.step-32 { width: 32%; background-color: $brand-secondary;}
+                    &.step-33 { width: 33%; background-color: $brand-secondary;}
+                    &.step-34 { width: 34%; background-color: $brand-secondary;}
+                    &.step-35 { width: 35%; background-color: $brand-secondary;}
+                    &.step-36 { width: 36%; background-color: $brand-secondary;}
+                    &.step-37 { width: 37%; background-color: $brand-secondary;}
+                    &.step-38 { width: 38%; background-color: $brand-secondary;}
+                    &.step-39 { width: 39%; background-color: $brand-secondary;}
+                    &.step-40 { width: 40%; background-color: $brand-secondary;}
+                    &.step-41 { width: 41%; background-color: $brand-secondary;}
+                    &.step-42 { width: 42%; background-color: $brand-secondary;}
+                    &.step-43 { width: 43%; background-color: $brand-secondary;}
+                    &.step-44 { width: 44%; background-color: $brand-secondary;}
+                    &.step-45 { width: 45%; background-color: $brand-secondary;}
+                    &.step-46 { width: 46%; background-color: $brand-secondary;}
+                    &.step-47 { width: 47%; background-color: $brand-secondary;}
+                    &.step-48 { width: 48%; background-color: $brand-secondary;}
+                    &.step-49 { width: 49%; background-color: $brand-secondary;}
+                    &.step-50 { width: 50%; background-color: $brand-secondary;}
+                    &.step-51 { width: 51%; background-color: $brand-secondary;}
+                    &.step-52 { width: 52%; background-color: $brand-secondary;}
+                    &.step-53 { width: 53%; background-color: $brand-secondary;}
+                    &.step-54 { width: 54%; background-color: $brand-secondary;}
+                    &.step-55 { width: 55%; background-color: $brand-secondary;}
+                    &.step-56 { width: 56%; background-color: $brand-secondary;}
+                    &.step-57 { width: 57%; background-color: $brand-secondary;}
+                    &.step-58 { width: 58%; background-color: $brand-secondary;}
+                    &.step-59 { width: 59%; background-color: $brand-secondary;}
+                    &.step-60 { width: 60%; background-color: $brand-secondary;}
+                    &.step-61 { width: 61%; background-color: $brand-secondary;}
+                    &.step-62 { width: 62%; background-color: $brand-secondary;}
+                    &.step-63 { width: 63%; background-color: $brand-secondary;}
+                    &.step-64 { width: 64%; background-color: $brand-secondary;}
+                    &.step-65 { width: 65%; background-color: $brand-secondary;}
+                    &.step-66 { width: 66%; background-color: $brand-secondary;}
+                    &.step-67 { width: 67%; background-color: $brand-secondary;}
+                    &.step-68 { width: 68%; background-color: $brand-secondary;}
+                    &.step-69 { width: 69%; background-color: $brand-secondary;}
+                    &.step-70 { width: 70%; background-color: $brand-secondary;}
+                    &.step-71 { width: 71%; background-color: $brand-secondary;}
+                    &.step-72 { width: 72%; background-color: $brand-secondary;}
+                    &.step-73 { width: 73%; background-color: $brand-secondary;}
+                    &.step-74 { width: 74%; background-color: $brand-secondary;}
+                    &.step-75 { width: 75%; background-color: $brand-secondary;}
+                    &.step-76 { width: 76%; background-color: $brand-secondary;}
+                    &.step-77 { width: 77%; background-color: $brand-secondary;}
+                    &.step-78 { width: 78%; background-color: $brand-secondary;}
+                    &.step-79 { width: 79%; background-color: $brand-secondary;}
+                    &.step-80 { width: 80%; background-color: $brand-secondary;}
+                    &.step-81 { width: 81%; background-color: $brand-secondary;}
+                    &.step-82 { width: 82%; background-color: $brand-secondary;}
+                    &.step-83 { width: 83%; background-color: $brand-secondary;}
+                    &.step-84 { width: 84%; background-color: $brand-secondary;}
+                    &.step-85 { width: 85%; background-color: $brand-secondary;}
+                    &.step-86 { width: 86%; background-color: $brand-secondary;}
+                    &.step-87 { width: 87%; background-color: $brand-secondary;}
+                    &.step-88 { width: 88%; background-color: $brand-secondary;}
+                    &.step-89 { width: 89%; background-color: $brand-secondary;}
+                    &.step-90 { width: 90%; background-color: $brand-secondary;}
+                    &.step-91 { width: 91%; background-color: $brand-secondary;}
+                    &.step-92 { width: 92%; background-color: $brand-secondary;}
+                    &.step-93 { width: 93%; background-color: $brand-secondary;}
+                    &.step-94 { width: 94%; background-color: $brand-secondary;}
+                    &.step-95 { width: 95%; background-color: $brand-secondary;}
+                    &.step-96 { width: 96%; background-color: $brand-secondary;}
+                    &.step-97 { width: 97%; background-color: $brand-secondary;}
+                    &.step-98 { width: 98%; background-color: $brand-secondary;}
+                    &.step-99 { width: 99%; background-color: $brand-secondary;}
+                    &.step-00 { width: 00%; background-color: $brand-secondary;}
+                }
+            }
+        }
+    }
+
+    > li {
+        a {
+            padding: 16px 0;
+            display: block;
+            text-decoration: none;
+            color: $brand-teal;
+            font-size: 15px;
+            text-transform: capitalize;
+            font-weight: 500;
+            padding-left: 20px;
+            padding-right: 20px;
+            cursor: pointer;
+
+            i {
+                margin-right: 15px;
+                font-size: 20px;
+                color: $brand-primary;
+            }
+
+            span {
+                float: right;
+            }
+
+            &:hover,
+            &:active,
+            &.router-link-active,
+            &:focus {
+                text-decoration: none;
+                color: $sidebarActiveColour;
+                background: $sidebarActiveBackgroundColour;
+                i { color: $sidebarActiveColour }
+            }
+        }
+
+        &.brand {
+            font-family: Averta, Avenir, sans-serif;
+
+            a {
+                font-size: 18px;
+                color: $brand-primary;
+                font-weight: 600;
+
+                &:hover,
+                &:focus {
+                    text-decoration: none;
+                    color: $brand-primary;
+                    background: $sidebarBackgroundColour
+                }
+            }
+        }
+
+        &.location {
+            font-size: 15px;
+            color: $brand-secondary;
+            display: block;
+            text-decoration: none;
+            text-transform: capitalize;
+            font-weight: 500;
+            padding-left: 20px;
+            margin-top: -10px;
+            width: 100%;
+            margin-bottom: 15px;
+            @include ellipsis;
+        }
+
+
+        /**
+         * Dropdown
+         */
+        > .sidebar-dropdown {
+            position: relative;
+            float: none;
+            background: #eee;
+            display: none;
+            padding-bottom: 10px;
+
+            > li {
+                line-height: 16px;
+
+                > a {
+                    padding: 8px 0;
+                    padding-left:60px;
+                    font-size: 13px;
+                }
+            }
+        }
+        &.dropdown {
+            .ion-chevron-down { display: inline-block }
+            .ion-chevron-up { display: none; }
+
+            &.open, &.active {
+                .sidebar-dropdown {
+                    display: block;
+                }
+
+                .ion-chevron-down { display: none }
+                .ion-chevron-up { display: inline-block; }
+            }
+        }
+
+
+        &.active {
+            a {
+                color: $brand-presumi;
+            }
+        }
+    }
+}
+
+
+.secondary-sidebar {
+    width: 100%;
+
+    li {
+        padding: 5px 10px;
+        border-radius: 3px;
+        cursor: pointer;
+        color: $brand-primary;
+        margin-bottom: 2px;
+        font-size: 14px;
+        font-weight: bold;
+
+        &.active {
+            color: $brand-grey;
+            cursor: no-drop;
+        }
+
+        i {
+            padding-right: 20px;
+            font-size: 20px;
+        }
+    }
+}
+
+@media (min-width: 768px) {
+    #wrapper {
+        padding-left: $sidebar-width;
+        &.toggled {
+            padding-left: 0;
+        }
+    }
+    #sidebar-wrapper {
+        width: $sidebar-width;
+    }
+    #wrapper.toggled #sidebar-wrapper {
+        width: 0;
+    }
+    #page-content-wrapper {
+        position: relative;
+    }
+    #wrapper.toggled #page-content-wrapper {
+        position: relative;
+        margin-right: 0;
+    }
+}
