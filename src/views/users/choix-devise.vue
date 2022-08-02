@@ -15,7 +15,6 @@
                     name="currency"
                     v-model="ghost.currency"
                     class="form-control form-control-lg input"
-                    v-validate="'required'"
                 >
                 <option
                     v-for="r in devises"
@@ -23,7 +22,6 @@
                     :value="r.id"
                 >{{ r.name }}</option>
                 </select>
-                  <span class="has-error">{{ errors.first('currency') }}</span>
              </div>
 
              <div class="form-group mt-20">
@@ -33,21 +31,7 @@
                      placeholder="+237651545258"
                      class="form-control form-control-lg input"
                      v-model="ghost.phone"
-                     v-validate="'required|min:9'"
                  >
-                 <!-- <div class="content">
-                    <div>
-
-                     </div>
-                     <input type="number"
-                         name="number"
-                         placeholder="651545758"
-                         class="form-control form-control-lg dark"
-                         v-model="ghost.number"
-                         v-validate="'required|min:9'"
-                     >
-                 </div> -->
-                 <span class="has-error">{{ errors.first('phone') }}</span>
              </div>
 
              <div class="mt-20">
@@ -81,7 +65,7 @@ export default {
 
     mounted () {
         this.initDevises()
-        this.ghost.currency = 'USD'
+        this.ghost.currency = 'EUR'
     },
 
     computed: {
@@ -104,8 +88,7 @@ export default {
             if (!isValid) return false
 
             this.startLoading()
-            // this.ghost.phone = this.ghost.code + '' + this.ghost.number
-            this.ghost.owner = this.auth.id
+            
             const response = await this.$api.post('/payment-api/wallets/', this.ghost)
                 .catch(error => {
                     this.stopLoading()

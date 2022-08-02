@@ -17,7 +17,7 @@
 
                     <div class="content-profile-photo">
                         <img :src="logo">
-                        <span class="mt-10">{{ payment_link }}</span>
+                        <span class="mt-10">{{ name }}</span>
                     </div>
 
                     <div class="primary underline mt-60">{{ payment_link }}</div>
@@ -25,9 +25,8 @@
                     <div class="mt-20 buttons mb-20">
                       <input type="hidden" id="toCopy" :value="payment_link">
                       <button
-                          class="btn-secondary btn mr-10"
+                          class="btn btn-primary br-100 mr-10 mt-10"
                           @click.stop.prevent="copyLink()"
-                          :disabled="!resource.is_indexed"
                       >
                           <i class="feather icon-copy mr-10"></i>
                           <span v-if="isNotCopied">Copier le lien</span>

@@ -78,9 +78,9 @@ export default {
                 let data = response.data
                 this.$swal.success('Confirmation', data.message)
                 AuthService.setUser(data)
-                AuthService.setToken(data.user_token)
-                ApiService.setToken(data.user_token)
-                localStorage.setItem(this.$config.get('token'), data.user_token)
+                AuthService.setToken(data.token)
+                ApiService.setToken(data.token)
+                // localStorage.setItem(this.$config.get('token'), data.user_token)
                 this.go('profile')
             }
 

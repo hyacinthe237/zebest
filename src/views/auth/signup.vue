@@ -36,7 +36,7 @@
                          placeholder="tonnomdecreateur"
                          class="form-control form-control-lg dark no-white"
                          v-model="ghost.username"
-                         v-validate="'required|min:6'"
+                         v-validate="'required'"
                      >
                  </div>
                  <span class="has-error">{{ errors.first('username') }}</span>
@@ -55,7 +55,7 @@
 
              <div class="form-group">
                 <input type="password"
-                    name="password"
+                    name="password2"
                     placeholder="Confirmation mot de passe"
                     class="form-control form-control-lg input"
                     v-model="ghost.password2"
@@ -80,7 +80,7 @@
 
 <script>
 import AuthService from '@/services/auth'
-import ApiService from '@/services/api'
+// import ApiService from '@/services/api'
 import _ from 'lodash'
 
 export default {
@@ -140,9 +140,8 @@ export default {
                 let data = response.data
                 this.$swal.success('Confirmation', this.message)
                 AuthService.setUser(data)
-                AuthService.setToken(data.user_token)
-                ApiService.setToken(data.user_token)
-                // localStorage.setItem(this.$config.get('token'), data.user_token)
+                // AuthService.setToken(data.key)
+                // ApiService.setToken(data.key)
                 this.go('verify')
                 localStorage.removeItem('username')
             }

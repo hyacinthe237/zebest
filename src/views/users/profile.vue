@@ -107,15 +107,6 @@ export default {
     name: 'Profile',
 
     data: () => ({
-        dropzoneOptions: {
-            thumbnailWidth: 150,
-            maxFilesize: 2.0,
-            maxFiles:1,
-            multipleFiles:false,
-            acceptedFiles: ".jpeg,.jpg,.png",
-            headers: { "My-Awesome-Header": "header value" },
-            dictDefaultMessage: "<i class='feather icon-camera'></i>",
-        },
         ghost: {},
         displayIcon: true
     }),
