@@ -20,7 +20,7 @@
                         <span class="mt-10">{{ name }}</span>
                     </div>
 
-                    <div class="primary underline mt-60">{{ payment_link }}</div>
+                    <div class="primary underline mt-60 pointer" @click="openPaymentLink()" :title="payment_link">{{ payment_link }}</div>
 
                     <div class="mt-20 buttons mb-20">
                       <input type="hidden" id="toCopy" :value="payment_link">
@@ -57,7 +57,7 @@ export default {
     }),
 
     props: {
-        user: { type: Object, default: {} }
+        user: { type: Object, default: () => {} }
     },
 
     computed: {
@@ -96,8 +96,13 @@ export default {
 
         tiktok () {
             this.closeAllModals()
-            // this.go('liste-donateurs')
         },
+
+        openPaymentLink () {
+            let user = this.user
+            let route = this.$router.resolve({ name: 'my-page', params: { id: user.username } })
+            window.open(route.href, '_blank')
+        }
     }
 }
 </script>

@@ -88,7 +88,7 @@ export default {
             if (!isValid) return false
 
             this.startLoading()
-            
+
             const response = await this.$api.post('/payment-api/wallets/', this.ghost)
                 .catch(error => {
                     this.stopLoading()
@@ -101,11 +101,14 @@ export default {
                     this.showModal =  true
                     let params = {'id': 'confirmModal'}
                     this.openModal(params)
+                    this.openPaymentLink()
                 }
         },
 
-        openConfirm () {
-            $('#confirmModal').modal('show')
+        openPaymentLink () {
+            let user = this.auth
+            let route = this.$router.resolve({ name: 'my-page', params: { id: user.username } })
+            window.open(route.href, '_self')
         }
 
     }

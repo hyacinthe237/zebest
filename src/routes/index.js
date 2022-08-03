@@ -6,6 +6,7 @@ import ChoixDevise from '@/views/users/choix-devise'
 import ListeDonateurs from '@/views/users/liste-donateurs'
 import FaireUnRetrait from '@/views/users/faire-un-retrait'
 import FaireUnDon from '@/views/fans/faire-un-don'
+import MyPage from '@/views/dashboard/my-page'
 
 import Guard from '@/services/middleware'
 import AuthSignin from '@/views/auth/signin'
@@ -17,9 +18,10 @@ Vue.use(Router)
 /** Open rotues */
 const guestRoutes = [
   { path: '/', name: 'home', component: Home },
-  { path: '/signin', name: 'signin', component: AuthSignin  },
-  { path: '/signup', name: 'signup', component: Signup  },
-  { path: '/verify', name: 'verify', component: Verify  },
+  { path: '/auth/signin', name: 'signin', component: AuthSignin  },
+  { path: '/auth/signup', name: 'signup', component: Signup  },
+  { path: '/auth/verify', name: 'verify', component: Verify  },
+  { path: '/:id', name: 'my-page', component: MyPage  },
 ]
 
 /** Protected routes */
