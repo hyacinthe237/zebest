@@ -51,6 +51,10 @@
         display: flex;
         justify-content: flex-end;
         align-items: flex-end;
+
+        .dropdown {
+
+        }
     }
 }
 
@@ -100,6 +104,12 @@
 
               .btn {
                 font-size: 12px;
+              }
+              
+              .dropdown {
+                  button {
+                    span { display: none; }
+                  }
               }
           }
       }

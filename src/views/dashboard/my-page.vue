@@ -1,13 +1,13 @@
 <template>
     <div class="">
-      <VueScrollFixedNavbar>
+      <!-- <VueScrollFixedNavbar> -->
           <section class="_header padding">
               <div class="block-h">
                   <div class="logo pointer" @click="go('home')">zebest</div>
                   <div class="buttons" v-if="isConnected">
                       <div class="dropdown">
-                          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              Bienvenue, {{ auth.username }}
+                          <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <span>Bienvenue, {{ auth.username }}</span>
                           </button>
                           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                               <!-- <a class="dropdown-item" href="#">Action</a>
@@ -18,7 +18,7 @@
                   </div>
               </div>
           </section>
-      </VueScrollFixedNavbar>
+      <!-- </VueScrollFixedNavbar> -->
 
         <div class="mypage">
           <div v-show="isLoading" class="mt-60 loading">
@@ -30,15 +30,24 @@
                   <div class="nav nav-tabs" id="nav-tab" role="tablist">
                       <a class="nav-item nav-link" id="nav-editer-tab"
                           data-toggle="tab" href="#nav-editer" role="tab"
-                          aria-controls="nav-editer">Editer mon compte</a>
+                          aria-controls="nav-editer">
+                          <i class="feather icon-user"></i>
+                          <span>Editer mon compte</span>
+                      </a>
 
                       <a class="nav-item nav-link" id="nav-stats-tab"
                           data-toggle="tab" href="#nav-stats" role="tab"
-                          aria-controls="nav-stats">Mes statistiques</a>
+                          aria-controls="nav-stats">
+                          <i class="feather icon-activity"></i>
+                          <span>Mes statistiques</span>
+                      </a>
 
                       <a class="nav-item nav-link" id="nav-retrait-tab"
                           data-toggle="tab" href="#nav-retrait" role="tab"
-                          aria-controls="nav-retrait">Faire un retrait</a>
+                          aria-controls="nav-retrait">
+                          <i class="feather icon-dollar-sign"></i>
+                          <span>Faire un retrait</span>
+                      </a>
                   </div>
               </div>
 

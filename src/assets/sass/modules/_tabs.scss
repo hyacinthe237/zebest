@@ -91,6 +91,11 @@
     background: $brand-dark;
     border-radius:0;
     margin-right: 2px;
+
+    i {
+        padding-right: 5px;
+        font-size: 20px;
+    }
 }
 
 ._tabs > div a.nav-item.nav-link.active {
@@ -111,49 +116,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-
-    // .block {
-    //     display: flex;
-    //     justify-content: center;
-    //     flex-direction: column;
-    //     align-items: center;
-    //     height: auto;
-    //     // min-width: 50%;
-    //     width: 100%;
-    //     max-width: 768px;
-    //     background-color: transparent;
-    // }
-    //
-    // .btns-block {
-    //   display: flex;
-    //   justify-content: center;
-    //   align-items: center;
-    //   flex-direction: row;
-    //
-    //   .b-r {
-    //       margin-right: -10px
-    //   }
-    //   .b-l {
-    //       margin-left: -10px
-    //   }
-    //
-    //   .rond {
-    //       color: white;
-    //       background-color: $brand-primary;
-    //       border-radius: 30px;
-    //       border: 1px solid $brand-primary;
-    //       width: 30px;
-    //       height: 30px;
-    //       display: flex;
-    //       justify-content: center;
-    //       align-items: center;
-    //       z-index: 999;
-    //
-    //       i {
-    //         font-size: 18px;
-    //       }
-    //   }
-    // }
 }
 
 .tab_data_modal {
@@ -198,6 +160,15 @@
     transition:background 0.20s linear;
 }
 
-@media (min-width: 768px) {
+@media (max-width: 560px) {
+    ._tabs > div a.nav-item.nav-link{
+        border: none;
+        padding: 10px;
+        color:#fff;
+        background: $brand-dark;
+        border-radius:0;
+        margin-right: 2px;
 
+        span {display: none}
+    }
 }

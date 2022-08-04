@@ -93,7 +93,7 @@
 
 <script>
 import _ from 'lodash'
-import AuthService from '@/services/auth'
+// import AuthService from '@/services/auth'
 // import { mapGetters } from 'vuex'
 import fondFooter from '@/assets/images/fond.png'
 import logOM from '@/assets/images/logo-om.png'
