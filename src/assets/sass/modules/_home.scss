@@ -12,171 +12,171 @@
     }
 
     .button { display: none; }
+}
 
-    .block {
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-        align-items: center;
-        height: auto;
-        // min-width: 50%;
-        width: 100%;
-        max-width: 768px;
-        background-color: transparent;
-    }
+.block {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    height: auto;
+    // min-width: 50%;
+    width: 100%;
+    max-width: 768px;
+    background-color: transparent;
+}
 
-    .btns-block {
+.btns-block {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+
+  .b-r {
+      margin-right: -10px
+  }
+  .b-l {
+      margin-left: -10px
+  }
+
+  .rond {
+      color: white;
+      background-color: $brand-primary;
+      border-radius: 30px;
+      border: 1px solid $brand-primary;
+      width: 30px;
+      height: 30px;
       display: flex;
       justify-content: center;
       align-items: center;
-      flex-direction: row;
+      z-index: 999;
 
-      .b-r {
-          margin-right: -10px
+      i {
+        font-size: 18px;
       }
-      .b-l {
-          margin-left: -10px
-      }
+  }
+}
 
-      .rond {
-          color: white;
-          background-color: $brand-primary;
-          border-radius: 30px;
-          border: 1px solid $brand-primary;
-          width: 30px;
-          height: 30px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          z-index: 999;
+.social-icons {
 
-          i {
-            font-size: 18px;
-          }
-      }
-    }
-
-    .social-icons {
-
-        ul {
-            list-style: none;
-            display: flex;
-            justify-content: center;
-            flex-direction: row;
-            align-items: center;
-            background-color: transparent;
-            word-break: break-all;
-
-            li {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                margin-right: 10px;
-                width: 200px;
-                height: 60px;
-                background-color: white;
-                border-radius: 50px;
-
-                img {
-                  width: 120px;
-                  height: 50px;
-                }
-            }
-
-            a {
-               text-decoration: none;
-               color: $brand-primary;
-               font-size: 30px;
-            }
-        }
-    }
-
-    .recaps {
+    ul {
+        list-style: none;
         display: flex;
         justify-content: center;
-        flex-direction: column;
-        width: 100%;
-        background-color: $brand-secondary;
-        border-radius: 10px;
-        padding: 20px;
+        flex-direction: row;
+        align-items: center;
+        background-color: transparent;
+        word-break: break-all;
 
-        .recap-line {
+        li {
             display: flex;
-            justify-content: flex-start;
-            flex-direction: row;
+            justify-content: center;
             align-items: center;
+            margin-right: 10px;
+            width: 200px;
+            height: 60px;
+            background-color: white;
+            border-radius: 50px;
 
-            .label {
-                flex: 50%;
-                color: $brand-teal;
-            }
-            .value {
-                flex: auto;
-                color: $brand-dark;
-                text-align: left;
+            img {
+              width: 120px;
+              height: 50px;
             }
         }
 
-        .divider {
-            border-bottom: 1px solid $brand-dark;
-            margin-top: 20px;
-            margin-bottom: 20px;
-            width: 100%;
+        a {
+           text-decoration: none;
+           color: $brand-primary;
+           font-size: 30px;
+        }
+    }
+}
+
+.recaps {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    background-color: $brand-secondary;
+    border-radius: 10px;
+    padding: 20px;
+
+    .recap-line {
+        display: flex;
+        justify-content: flex-start;
+        flex-direction: row;
+        align-items: center;
+
+        .label {
+            flex: 50%;
+            color: $brand-teal;
+        }
+        .value {
+            flex: auto;
+            color: $brand-dark;
+            text-align: left;
         }
     }
 
-    .list-ronds {
+    .divider {
+        border-bottom: 1px solid $brand-dark;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        width: 100%;
+    }
+}
+
+.list-ronds {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  .rond-item {
       display: flex;
-      flex-direction: row;
+      justify-content: center;
       align-items: center;
+      background-color: $brand-dark;
+      color: white;
+      height: 70px;
+      width: 70px;
+      border-radius: 70px;
+      margin-left: 20px;
+      cursor: pointer;
 
-      .rond-item {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          background-color: $brand-dark;
-          color: white;
-          height: 70px;
-          width: 70px;
-          border-radius: 70px;
-          margin-left: 20px;
-          cursor: pointer;
-
-          &.active {
-              background-color: $brand-primary;
-              color: $brand-dark;
-          }
+      &.active {
+          background-color: $brand-primary;
+          color: $brand-dark;
       }
+  }
+}
+
+.diviseur {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+    width: 100%;
+
+    .divider {
+        border-bottom: 1px solid $brand-dark;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        width: 100%;
     }
 
-    .diviseur {
+    .rond {
+        width: 70px;
+        height: 70px;
+        border-radius: 70px;
+        background-color: white;
+        color: $brand-dark;
         display: flex;
         flex-direction: row;
         justify-content: center;
         align-items: center;
-        margin-top: 40px;
-        width: 100%;
-
-        .divider {
-            border-bottom: 1px solid $brand-dark;
-            margin-top: 20px;
-            margin-bottom: 20px;
-            width: 100%;
-        }
-
-        .rond {
-            width: 70px;
-            height: 70px;
-            border-radius: 70px;
-            background-color: white;
-            color: $brand-dark;
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            align-items: center;
-            z-index: 999;
-            padding: 20px;
-        }
+        z-index: 999;
+        padding: 20px;
     }
 }
 

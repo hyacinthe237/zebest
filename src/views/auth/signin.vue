@@ -1,7 +1,7 @@
 <template lang="html">
 <div class="">
   <section class="_header padding" v-show="!isLoading">
-      <div class="block">
+      <div class="block-h">
           <div class="logo pointer" @click="go('home')">zebest</div>
           <div class="buttons">
             <button
@@ -91,8 +91,10 @@ export default {
                 AuthService.setToken(data.token)
                 ApiService.setToken(data.token)
                 // localStorage.setItem(this.$config.get('token'), data.user_token)
-                this.$swal.success('Bienvenue sur Zebest', this.message)
-                this.go('home')
+                // this.$swal.success('Bienvenue sur Zebest', this.message)
+                // this.go('home')
+                let route = this.$router.resolve({ name: 'my-page', params: { id: data.username } })
+                window.open(route.href, '_self')
             }
 
             this.isLoading = false

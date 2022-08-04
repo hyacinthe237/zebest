@@ -1,9 +1,8 @@
 <template lang="html">
     <div class="">
-
       <VueScrollFixedNavbar>
         <section class="_header padding">
-        <div class="block bg" id="navbar">
+        <div class="block-h bg" id="navbar">
             <div class="logo pointer" @click="go('home')">zebest</div>
             <div class="buttons" v-if="!isConnected">
               <button
@@ -20,16 +19,10 @@
             </div>
             <div class="buttons" v-else>
               <button
-                  @click="logout()"
-                  class="btn btn-default br-100 mr-10"
-                  :disabled="isLoading"
-              >{{ t('Se déconnecter') }}</button>
-
-              <button
-                  @click="go('profile')"
+                  @click="mypage()"
                   class="btn btn-primary br-100"
                   :disabled="isLoading"
-              >{{ t('Mon compte') }}</button>
+              >{{ t('Ma page') }}</button>
             </div>
         </div>
         </section>
@@ -43,7 +36,7 @@
             Acceptez des donations de vos fans directement sur vos comptes Orange Money, Mobile Money, Free Money et bien plus.
           </p>
 
-          <form class="_form mt-20" @submit.prevent>
+          <form class="_form mt-20" @submit.prevent v-if="!isConnected">
              <div class="form-group mt-20">
                  <div class="content bs pl-100">
                      <div class="dark">zebest.com/</div>
@@ -145,9 +138,11 @@ export default {
             }
         },
 
-        logout () {
-            AuthService.logout()
-        }
+        mypage () {
+            let data = this.user
+            let route = this.$router.resolve({ name: 'my-page', params: { id: data.username } })
+            window.open(route.href, '_self')
+        },
     }
 }
 </script>

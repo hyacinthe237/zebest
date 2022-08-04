@@ -1,7 +1,7 @@
 <template lang="html">
     <div class="">
       <section class="_header padding" v-show="!isLoading">
-          <div class="block"><div class="logo pointer" @click="go('home')">zebest</div></div>
+          <div class="block-h"><div class="logo pointer" @click="go('home')">zebest</div></div>
       </section>
 
       <section class="home" v-show="!isLoading">

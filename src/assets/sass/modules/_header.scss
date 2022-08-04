@@ -3,6 +3,7 @@
     flex-direction: row;
     align-items: center;
     justify-content:space-between;
+    width: 100%;
 
     .sticky {
         position: -webkit-sticky;
@@ -17,7 +18,7 @@
         padding-right: 80px;
     }
 
-    .block {
+    .block-h {
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -48,8 +49,8 @@
     .buttons {
         width: auto;
         display: flex;
-        justify-content: center;
-        align-items: center;
+        justify-content: flex-end;
+        align-items: flex-end;
     }
 }
 
