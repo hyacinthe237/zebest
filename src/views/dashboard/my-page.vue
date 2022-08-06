@@ -1,7 +1,7 @@
 <template>
     <div class="">
       <!-- <VueScrollFixedNavbar> -->
-          <section class="_header padding">
+          <section class="_header">
               <div class="block-h">
                   <div class="logo pointer" @click="go('home')">zebest</div>
                   <div class="buttons" v-if="isConnected">
@@ -48,10 +48,17 @@
                           <i class="feather icon-dollar-sign"></i>
                           <span>Faire un retrait</span>
                       </a>
+
+                      <a class="nav-item nav-link" id="nav-settings-tab"
+                          data-toggle="tab" href="#nav-settings" role="tab"
+                          aria-controls="nav-settings">
+                          <i class="feather icon-settings"></i>
+                          <span>Paramètres</span>
+                      </a>
                   </div>
               </div>
 
-              <div class="tab-content" id="nav-tabContent">
+              <div class="tab-content mb-20" id="nav-tabContent">
                   <div class="tab-pane fade" id="nav-editer" role="tabpanel" aria-labelledby="nav-editer-tab">
                     <form class="_form mt-20 dark" @submit.prevent>
                         <div class="content-profile-photo pointer">
@@ -121,19 +128,6 @@
                               ></textarea>
                             <span class="has-error">{{ errors.first('bio') }}</span>
                        </div>
-
-                       <!-- <div class="form-group mt-20">
-                          <label for="link">Lien de ta page (Facebook, Tiktok, snapTchat, etc...)</label>
-                          <input type="text"
-                              name="social_link"
-                              placeholder="https://"
-                              class="form-control form-control-lg input"
-                              v-model="ghost.social_link"
-                              v-validate="'required'"
-                          >
-                            <span class="has-error">{{ errors.first('social_link') }}</span>
-                       </div> -->
-
                        <div class="mt-20 mb-20">
                            <button class="btn btn-block btn-primary br-100" @click="saveProfile()">
                                Enregistrer
@@ -157,30 +151,38 @@
                           <h2 class="mt-10">faire un retrait</h2>
 
                           <div class="btns-block mt-20">
-                              <button class="btn btn-outline b-r br-10">
+                              <!-- <button class="btn btn-outline b-r br-10">
                                   200 &euro;
-                              </button>
+                              </button> -->
+
+                              <input
+                                  class="b-r br-10"
+                                  :placeholder="200"
+                                  name="amount"
+                                  v-model="rhost.amount"
+                                  type="number"
+                              >
                               <button class="rond">
                                   <i class="feather icon-repeat"></i>
                               </button>
                               <button class="btn btn-outline b-l br-10">
-                                  130817,39 FCFA
+                                  {{ xaf_amount }} FCFA
                               </button>
                           </div>
 
-                          <p class="mt-20">1.00 &euro; = 657.17 FCFA <br/> *Le taux de change varie en fonction du mode d'envoi et de paiement.</p>
+                          <div class="p mt-20">1.00 &euro; = 657.17 FCFA <br/> *Le taux de change varie en fonction du mode d'envoi et de paiement.</div>
                           <div class="recaps">
                               <div class="recap-line">
                                   <div class="label">Frais de transfert</div>
-                                  <div class="value">+ 1.90 EUR</div>
+                                  <div class="value">+ {{ transfert_amount }} EUR</div>
                               </div>
                               <div class="recap-line">
                                   <div class="label">Total du transfert</div>
-                                  <div class="value">201.9 EUR</div>
+                                  <div class="value">{{ total_euro_amount }} EUR</div>
                               </div>
                               <div class="recap-line">
                                   <div class="label">Montant à reçevoir</div>
-                                  <div class="value">132681 FCFA</div>
+                                  <div class="value">{{ xaf_total_euro_amount }} FCFA</div>
                               </div>
                               <div class="divider"></div>
                               <div class="recap-line">
@@ -189,11 +191,57 @@
                               </div>
                           </div>
                           <div class="mt-20">
-                              <button class="btn btn-block btn-primary br-100">
+                              <button class="btn btn-block btn-primary br-100" @click="retrait()">
                                   Valider
                               </button>
                           </div>
                         </div>
+                      </div>
+                  </div>
+                  <div class="tab-pane fade" id="nav-settings" role="tabpanel" aria-labelledby="nav-settings-tab">
+                      <form class="_form mt-20 dark" @submit.prevent>
+                            <div class="form-group mt-20">
+                                <label for="name">Nom du réseau social</label>
+                                <input type="text"
+                                    name="name"
+                                    placeholder="Nom du réseau social"
+                                    class="form-control form-control-lg input"
+                                    v-model="shost.name"
+                                    v-validate="'required'"
+                                >
+                                <span class="has-error">{{ errors.first('name') }}</span>
+                            </div>
+                            <div class="form-group mt-20">
+                                <label for="link">Lien du réseau social</label>
+                                <input type="text"
+                                    name="link"
+                                    placeholder="Lien du réseau social"
+                                    class="form-control form-control-lg input"
+                                    v-model="shost.link"
+                                    v-validate="'required'"
+                                >
+                                <span class="has-error">{{ errors.first('link') }}</span>
+                            </div>
+
+                           <div class="mt-20 mb-20">
+                               <button class="btn btn-block btn-primary br-100" @click="saveSocialLink()">
+                                   Enregistrer
+                               </button>
+                           </div>
+                      </form>
+                      <div class="row">
+                         <div class="col-sm-12">
+                           <div class="social-box mt-20">
+                              <div class="tle bold">Liens de vos réseaux sociaux</div>
+                              <div
+                                  class="social-item pointer"
+                                  v-for="s in social_links"
+                                  :key="s.id"
+                              >
+                                <a :href="s.link" target="_blank">{{ s.link }}</a>
+                              </div>
+                           </div>
+                         </div>
                       </div>
                   </div>
               </div>
@@ -206,21 +254,26 @@
 
 <script>
 import AuthService from '@/services/auth'
-import { VueScrollFixedNavbar } from "vue-scroll-fixed-navbar"
+// import { VueScrollFixedNavbar } from "vue-scroll-fixed-navbar"
 // import LoadingModal from '@/components/commons/loaders/modal'
 
 // import moment from 'moment'
-// import _ from 'lodash'
+import _ from 'lodash'
 
 export default {
     data: () => ({
         duration: '',
         endDate: '',
         interval: null,
-        displayIcon: true
+        taux: 0.07,
+        taux_xaf: 657.17,
+        displayIcon: true,
+        social_links: [],
+        shost: {  name: '', link: '' },
+        rhost: {  amount: 0 },
     }),
 
-    components: { VueScrollFixedNavbar },
+    // components: { VueScrollFixedNavbar },
 
     computed: {
         auth () {
@@ -232,12 +285,43 @@ export default {
         },
 
         isConnected () { return !_.isEmpty(this.auth) },
+
+        host_amount () {
+          return !_.isEmpty(this.rhost.amount) ? this.rhost.amount : 0
+        },
+
+        xaf_amount () {
+          let m = Number.parseInt(this.host_amount, 10) * this.taux_xaf
+          return Number.parseFloat(m).toFixed(2)
+        },
+
+        transfert_amount () {
+            let m = Number.parseInt(this.host_amount, 10) * this.taux
+            return Number.parseFloat(m).toFixed(2)
+        },
+
+        total_euro_amount () {
+            let m = +Number.parseInt(this.host_amount, 10) + +this.transfert_amount
+            return Number.parseFloat(m).toFixed(2)
+        },
+
+        xaf_total_euro_amount () {
+            let m = this.total_euro_amount * this.taux_xaf
+            return Number.parseFloat(m).toFixed(2)
+        },
+
+        total_amount () {
+            let m = +Number.parseInt(this.rhost.amount, 10) + +this.transfert_amount
+            return Number.parseFloat(m).toFixed(2)
+        },
     },
 
     mounted () {
         // this.listenToEvents()
         this.getProfile()
+        this.getSocialLinks()
         this.activeEditerTab()
+        this.resetShost()
         var fileSelect = document.getElementById("fileSelect"),
         fileElem = document.getElementById("fileElem");
 
@@ -341,11 +425,75 @@ export default {
             }
         },
 
+        async saveSocialLink () {
+            this.showErrors =  true
+            const isValid = await this.$validator.validate()
+            if (!isValid) return false
+
+            this.startLoading()
+
+            const payload = {  name: this.shost.name, link: this.shost.link }
+
+            const response = await this.$api.post('/user-api/social-links/', payload)
+                .catch(error => {
+                    this.stopLoading()
+                    this.$swal.error(this.$translate.text('Erreur'), this.$translate.text(error.response.data.message))
+                })
+
+                if (response) {
+                    this.stopLoading()
+                    this.showErrors =  false
+                    this.getSocialLinks()
+                    this.resetShost()
+                    this.$swal.success('Confirmation', 'Réseau socail ajouté avec succès !')
+                }
+        },
+
+        async getSocialLinks () {
+            this.startLoading()
+
+            const response = await this.$api.get('/user-api/social-links/')
+                .catch(error => {
+                    this.stopLoading()
+                    this.$swal.error(this.$translate.text('Erreur'), this.$translate.text(error.response.data.message))
+                })
+
+                if (response) {
+                    this.stopLoading()
+                    this.social_links = response.data.results
+                }
+        },
+
+        resetShost () {
+              this.shost = {  name: '', link: '' }
+        },
+
         logout () {
             AuthService.logout()
             this.go('home')
             window.setTimeout(location.reload(), 50000)
-        }
+        },
+
+        async retrait () {
+            if (!_.isEmpty(this.xaf_total_euro_amount)) {
+              this.startLoading()
+
+              const payload = {  'amount': this.xaf_total_euro_amount }
+
+              const response = await this.$api.post('/payment-api/money-requests/', payload)
+                  .catch(error => {
+                      this.stopLoading()
+                      this.$swal.error(this.$translate.text('Erreur'), this.$translate.text(error.response.data.message))
+                  })
+
+                  if (response) {
+                      this.stopLoading()
+                      this.$swal.success('Confirmation', 'Retrait éffectué avec succès !')
+                  }
+            } else {
+              this.$swal.error('Validation', 'Bien vouloir saisir le montant à retirer !')
+            }
+        },
     }
 }
 </script>

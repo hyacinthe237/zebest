@@ -1,73 +1,3 @@
-.block-container {
-    box-shadow: 1px 0 5px 1px rgba(30, 107, 174, 0.1);
-    background-color: white;
-    border-radius: 10px;
-    overflow-x: scroll;
-    width: 100%;
-
-    .table-search {
-        margin-bottom: 10px;
-    }
-
-    .header {
-        padding: 20px;
-
-        .profile-status {
-            background-color: $brand-teal;
-            border-radius: 30px;
-            padding: 5px 10px;
-            font-size: 13px;
-            color: white;
-
-            &.active { background-color: $brand-success }
-            &.blocked { background-color: $brand-danger }
-        }
-    }
-
-    ._form {
-        .form-group { margin: 0 }
-
-        .inner-addon .feather {
-            color: $dark;
-            font-size: 16px;
-            left: 4px;
-            top: -1px;
-        }
-    }
-
-    .btn { font-size: 1rem }
-
-    ._block-tabs {
-        width: 100%;
-        border-bottom: 1px solid #f5f8fa;
-        position: relative;
-        // display: flex;
-
-        ._block-tab {
-            // flex: 1;
-            font-size: 15px;
-            font-weight: 600;
-            padding: 10px 20px;
-            display: inline-block;
-
-            i { font-size: 17px; margin-right: 10px; }
-            a { color: $brand-teal }
-            a:hover { text-decoration: none }
-
-            &.active {
-                border-bottom: 2px solid $brand-darker;
-                a { color: $primary }
-            }
-
-            @media (max-width: 480px) {
-                text-align: center;
-                span { display: none }
-                i { margin: 0 }
-            }
-        }
-    }
-}
-
 #sticky {
     position: -webkit-sticky;
     position: sticky;
@@ -115,7 +45,49 @@
     z-index: 1;
     display: flex;
     justify-content: center;
-    align-items: center;
+    // align-items: center;
+
+    .social-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: auto;
+
+      .tle {
+          font-size: 20px;
+          margin-bottom: 20px;
+          color: $brand-dark;
+          border-bottom: 1px solid $brand-primary;
+      }
+
+      .social-item {
+          width: auto;
+          background-color: $brand-dark;
+          color: white;
+          border-radius: 50px;
+          padding: 10px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+
+          a {
+              text-decoration: none;
+              color: white;
+
+              &:hover {
+                  background-color: $brand-primary;
+                  color: white;
+              }
+          }
+
+          &:hover {
+              background-color: $brand-primary;
+              color: white;
+          }
+      }
+    }
 }
 
 .tab_data_modal {
