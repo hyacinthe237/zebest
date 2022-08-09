@@ -8,10 +8,10 @@
           <h1>faire un don à "nom de créateur"</h1>
 
           <div class="list-ronds mt-20">
-              <div :class="['rond-item', montant == 50 ? 'active' : '']" @click="selectMontant(50)">50 &euro;</div>
-              <div :class="['rond-item', montant == 100 ? 'active' : '']" @click="selectMontant(100)">100 &euro;</div>
-              <div :class="['rond-item', montant == 250 ? 'active' : '']" @click="selectMontant(250)">250 &euro;</div>
-              <div :class="['rond-item', montant == 500 ? 'active' : '']" @click="selectMontant(500)">500 &euro;</div>
+              <div :class="['rond-item', dhost.amount == 50 ? 'active' : '']" @click="selectMontant(50)">50 &euro;</div>
+              <div :class="['rond-item', dhost.amount == 100 ? 'active' : '']" @click="selectMontant(100)">100 &euro;</div>
+              <div :class="['rond-item', dhost.amount == 250 ? 'active' : '']" @click="selectMontant(250)">250 &euro;</div>
+              <div :class="['rond-item', dhost.amount == 500 ? 'active' : '']" @click="selectMontant(500)">500 &euro;</div>
           </div>
 
           <div class="diviseur">

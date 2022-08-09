@@ -25,7 +25,7 @@
               <izy-hollow-loading loading :colour="'#46D465'"/>
           </div>
 
-          <div class="container" v-show="!isLoading">
+          <div class="container" v-if="isConnected">
               <div class="_tabs mt-20">
                   <div class="nav nav-tabs" id="nav-tab" role="tablist">
                       <a class="nav-item nav-link" id="nav-editer-tab"
@@ -58,7 +58,7 @@
                   </div>
               </div>
 
-              <div class="tab-content mb-20" id="nav-tabContent">
+              <div class="tab-content mb-20" id="nav-tabContent" v-if="isConnected">
                   <div class="tab-pane fade" id="nav-editer" role="tabpanel" aria-labelledby="nav-editer-tab">
                     <form class="_form mt-20 dark" @submit.prevent>
                         <div class="content-profile-photo pointer">
@@ -246,7 +246,59 @@
                   </div>
               </div>
           </div>
+          <div class="home" v-if="!isConnected || !isLoading">
+            <div class="block">
+              <h1>faire un don à "nom de créateur"</h1>
 
+              <div class="list-ronds mt-20">
+                  <div :class="['rond-item', dhost.amount == 50 ? 'active' : '']" @click="selectMontant(50)">50 &euro;</div>
+                  <div :class="['rond-item', dhost.amount == 100 ? 'active' : '']" @click="selectMontant(100)">100 &euro;</div>
+                  <div :class="['rond-item', dhost.amount == 250 ? 'active' : '']" @click="selectMontant(250)">250 &euro;</div>
+                  <div :class="['rond-item', dhost.amount == 500 ? 'active' : '']" @click="selectMontant(500)">500 &euro;</div>
+              </div>
+
+              <div class="diviseur">
+                  <div class="divider"></div>
+                  <div class="rond">Ou</div>
+                  <div class="divider"></div>
+              </div>
+
+              <form class="_form mt-20" @submit.prevent>
+                <div class="form-group mt-20">
+                   <input type="number"
+                       name="amount"
+                       placeholder="Saisir le montant"
+                       class="form-control form-control-lg input"
+                       v-model="dhost.amount"
+                   >
+                </div>
+
+                <div class="form-group mt-20">
+                   <input type="text"
+                       name="sender_first_name"
+                       placeholder="Votre prénom (optionnel)"
+                       class="form-control form-control-lg input"
+                       v-model="dhost.sender_first_name"
+                   >
+                </div>
+
+                <div class="form-group mt-20">
+                   <input type="text"
+                       name="sender_last_name"
+                       placeholder="Votre nom (optionnel)"
+                       class="form-control form-control-lg input"
+                       v-model="dhost.sender_last_name"
+                   >
+                </div>
+
+                 <div class="mt-10 mb-20">
+                     <button class="btn btn-block btn-primary br-100" @click="faireundon()">
+                         Ovations de {{ dhost.amount }} &euro;
+                     </button>
+                 </div>
+               </form>
+            </div>
+          </div>
           <!-- <LoadingModal/> -->
         </div>
     </div>
@@ -270,7 +322,9 @@ export default {
         displayIcon: true,
         social_links: [],
         shost: {  name: '', link: '' },
+        dhost: {  amount: '', sender_first_name: '', sender_last_name: '' },
         rhost: {  amount: 0 },
+        montant: 100,
     }),
 
     // components: { VueScrollFixedNavbar },
@@ -318,19 +372,23 @@ export default {
 
     mounted () {
         // this.listenToEvents()
-        this.getProfile()
-        this.getSocialLinks()
-        this.activeEditerTab()
-        this.resetShost()
-        var fileSelect = document.getElementById("fileSelect"),
-        fileElem = document.getElementById("fileElem");
+        this.dhost.amount = this.montant
+        if (this.isConnected) {
+            this.getProfile()
+            this.getSocialLinks()
+            this.activeEditerTab()
+            this.resetShost()
+            var fileSelect = document.getElementById("fileSelect"),
+            fileElem = document.getElementById("fileElem");
 
-        fileSelect.addEventListener("click", function (e) {
-            if (fileElem) {
-                fileElem.click();
-            }
-            e.preventDefault(); // empêche la navigation vers "#"
-        }, false);
+            fileSelect.addEventListener("click", function (e) {
+                if (fileElem) {
+                    fileElem.click();
+                }
+                e.preventDefault(); // empêche la navigation vers "#"
+            }, false);
+        }
+
     },
 
     methods: {
@@ -339,6 +397,11 @@ export default {
             $('#nav-editer').addClass("active")
             $('#nav-editer-tab').focus()
         },
+
+        selectMontant (montant) {
+            this.dhost.amount = montant
+        },
+
         /**
          * Events listeners
          *
@@ -423,6 +486,30 @@ export default {
                         this.$swal.success('Confirmation', 'Compte modifié avec succès !')
                     }
             }
+        },
+        async faireundon () {
+            this.startLoading()
+
+            let formData = new FormData()
+            formData.append('bio', this.ghost.bio)
+            formData.append('payment_link', this.ghost.payment_link)
+            formData.append('image', this.ghost.image)
+            formData.append('last_name', this.ghost.last_name)
+            formData.append('first_name', this.ghost.first_name)
+
+            let url = '/user-api/users/' + this.auth.id + '/'
+            const response = await this.$api.patch(url, formData)
+                .catch(error => {
+                    this.stopLoading()
+                    this.$swal.error(this.$translate.text('Erreur'), this.$translate.text(error.response.data.message))
+                })
+
+                if (response) {
+                    this.stopLoading()
+                    this.showErrors =  false
+                    AuthService.setUser(response.data)
+                    this.$swal.success('Confirmation', 'Compte modifié avec succès !')
+                }
         },
 
         async saveSocialLink () {
