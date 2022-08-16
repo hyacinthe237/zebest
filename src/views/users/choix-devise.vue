@@ -82,6 +82,7 @@ export default {
               { 'id': 'XAF', 'name': 'XAF - Franc CFA'},
             ]
         },
+        
         async save () {
             this.showErrors =  true
             const isValid = await this.$validator.validate()

@@ -1,7 +1,7 @@
 <template lang="html">
     <div class="">
       <section class="_header padding" v-show="!isLoading">
-          <div class="block">
+          <div class="block-h">
               <div class="logo pointer" @click="go('home')">zebest</div>
               <div class="buttons">
                 <button
@@ -73,7 +73,7 @@
         </div>
       </section>
       <div v-show="isLoading" class="loading mt-60">
-          <izy-hollow-loading loading />
+          <izy-hollow-loading loading :colour="'#46D465'" />
       </div>
     </div>
 </template>

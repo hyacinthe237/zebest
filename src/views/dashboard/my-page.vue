@@ -1,6 +1,5 @@
 <template>
     <div class="">
-      <!-- <VueScrollFixedNavbar> -->
           <section class="_header">
               <div class="block-h">
                   <div class="logo pointer" @click="go('home')">zebest</div>
@@ -18,14 +17,13 @@
                   </div>
               </div>
           </section>
-      <!-- </VueScrollFixedNavbar> -->
 
         <div class="mypage">
           <div v-show="isLoading" class="mt-60 loading">
-              <izy-hollow-loading loading :colour="'#46D465'"/>
+              <izy-hollow-loading loading :colour="'#46D465'" />
           </div>
 
-          <div class="container" v-if="isConnected">
+          <div class="container" v-if="isConnected && !isLoading">
               <div class="_tabs mt-20">
                   <div class="nav nav-tabs" id="nav-tab" role="tablist">
                       <a class="nav-item nav-link" id="nav-editer-tab"
@@ -246,7 +244,7 @@
                   </div>
               </div>
           </div>
-          <div class="home" v-if="!isConnected || !isLoading">
+          <div class="home" v-if="!isConnected && !isLoading">
             <div class="block">
               <h1>faire un don à "nom de créateur"</h1>
 
@@ -306,7 +304,6 @@
 
 <script>
 import AuthService from '@/services/auth'
-// import { VueScrollFixedNavbar } from "vue-scroll-fixed-navbar"
 // import LoadingModal from '@/components/commons/loaders/modal'
 
 // import moment from 'moment'
@@ -326,8 +323,6 @@ export default {
         rhost: {  amount: 0 },
         montant: 100,
     }),
-
-    // components: { VueScrollFixedNavbar },
 
     computed: {
         auth () {
@@ -373,11 +368,11 @@ export default {
     mounted () {
         // this.listenToEvents()
         this.dhost.amount = this.montant
+        this.activeEditerTab()
+        this.resetShost()
         if (this.isConnected) {
             this.getProfile()
             this.getSocialLinks()
-            this.activeEditerTab()
-            this.resetShost()
             var fileSelect = document.getElementById("fileSelect"),
             fileElem = document.getElementById("fileElem");
 

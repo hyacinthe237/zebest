@@ -1,5 +1,9 @@
 <template lang="html">
-    <div class="modal animated fadeIn modal-backdrop" tabindex="-1" role="dialog" id="confirmModal">
+    <div
+        class="modal animated modal-backdrop"
+        tabindex="-1" role="dialog" id="confirmModal"
+         aria-labelledby="confirmModalLabel" aria-hidden="true"
+    >
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="text-right">
