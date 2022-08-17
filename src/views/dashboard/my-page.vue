@@ -391,10 +391,6 @@ export default {
             return this.$route.params.id
         },
 
-        token_param () {
-            return this.$route.query.ntk
-        },
-
         upload_url () {
             return `${this.$config.get('base_url')}/user-api/users/${this.auth.id}/logo`
         },
@@ -433,7 +429,7 @@ export default {
 
     mounted () {
         if (!this.isConnected) {
-            ApiService.setToken(this.param_token)
+            ApiService.setToken(this.$route.query.ntk)
             this.getCreator()
             this.dhost.amount = this.montant
         }
@@ -547,8 +543,7 @@ export default {
         async getCreator () {
             this.startLoading()
 
-            let payload = { 'username': this.title_name }
-            const response = await this.$api.get('/auth/user/', { params: payload })
+            const response = await this.$api.get('/auth/user/')
                 .catch(error => {
                     this.stopLoading()
                     this.$swal.error('Error', error.response.data.message)
@@ -612,6 +607,7 @@ export default {
         async faireundon () {
             this.startLoading()
 
+            this.dhost.receiver = this.creator.id
             const response = await this.$api.post('/payment-api/donations/', this.dhost)
                 .catch(error => {
                     this.stopLoading()
