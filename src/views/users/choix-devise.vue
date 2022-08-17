@@ -46,22 +46,21 @@
           <izy-hollow-loading loading />
       </div>
 
-      <ConfirmModal v-if="showModal" :user="auth"></ConfirmModal>
+      <!-- <ConfirmModal v-if="showModal" :user="auth"></ConfirmModal> -->
     </div>
 </template>
 
 <script>
-import ConfirmModal from './modals/confirm'
+// import ConfirmModal from './modals/confirm'
 
 export default {
     name: 'ChoixDevise',
 
     data: () => ({
         devises: [],
-        showModal: false,
     }),
 
-    components: { ConfirmModal },
+    // components: { ConfirmModal },
 
     mounted () {
         this.initDevises()
@@ -82,7 +81,7 @@ export default {
               { 'id': 'XAF', 'name': 'XAF - Franc CFA'},
             ]
         },
-        
+
         async save () {
             this.showErrors =  true
             const isValid = await this.$validator.validate()
@@ -99,9 +98,8 @@ export default {
                 if (response) {
                     this.stopLoading()
                     this.showErrors =  false
-                    this.showModal =  true
-                    let params = {'id': 'confirmModal'}
-                    this.openModal(params)
+                    // let params = {'id': 'confirmModal'}
+                    // this.openModal(params)
                     this.openPaymentLink()
                 }
         },

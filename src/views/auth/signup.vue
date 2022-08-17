@@ -88,7 +88,7 @@ export default {
 
     data: () => ({
         message: 'Merci de vérifier votre email. Un code de vérification vous a été envoyé.',
-        ghost: { email: '', username: '', password1: '', password2: '' }
+        ghost: { email: '', username: '', password1: '', password2: '', is_creator: true }
     }),
 
     mounted () {
@@ -105,7 +105,8 @@ export default {
                 email: '',
                 username: !_.isEmpty(this.username) ? this.username : '',
                 password1: '',
-                password2: ''
+                password2: '',
+                is_creator: true
             }
         },
         /**
@@ -123,7 +124,7 @@ export default {
             formData.append('password1', this.ghost.password1)
             formData.append('password2', this.ghost.password2)
 
-            const response = await this.$api.post('/registration/', formData)
+            const response = await this.$api.post('/registration/', this.ghost)
                 .catch(error => {
                     this.isLoading = false
                     console.log('erreur => ', error.response.data)

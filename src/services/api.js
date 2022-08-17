@@ -1,7 +1,7 @@
 import axios from 'axios'
 import config from './config'
 import Swal from 'sweetalert2'
-// import AuthService from './auth'
+import AuthService from './auth'
 // import StoreService from '../store'
 // import _ from 'lodash'
 
@@ -17,7 +17,7 @@ axios.interceptors.response.use(response => {
     return response
 }, error => {
     if (error.response.status === 401) {
-        // setTimeout(AuthService.logout(), 0)
+        setTimeout(AuthService.logout(), 0)
 
         Swal.fire({
           icon: 'error',

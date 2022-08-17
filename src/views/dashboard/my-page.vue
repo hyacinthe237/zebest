@@ -47,6 +47,13 @@
                           <span>Faire un retrait</span>
                       </a>
 
+                      <a class="nav-item nav-link" id="nav-social-tab"
+                          data-toggle="tab" href="#nav-social" role="tab"
+                          aria-controls="nav-social">
+                          <i class="feather icon-globe"></i>
+                          <span>Réseaux sociaux</span>
+                      </a>
+
                       <a class="nav-item nav-link" id="nav-settings-tab"
                           data-toggle="tab" href="#nav-settings" role="tab"
                           aria-controls="nav-settings">
@@ -196,7 +203,8 @@
                         </div>
                       </div>
                   </div>
-                  <div class="tab-pane fade" id="nav-settings" role="tabpanel" aria-labelledby="nav-settings-tab">
+
+                  <div class="tab-pane fade" id="nav-social" role="tabpanel" aria-labelledby="nav-social-tab">
                       <form class="_form mt-20 dark" @submit.prevent>
                             <div class="form-group mt-20">
                                 <label for="name">Nom du réseau social</label>
@@ -240,6 +248,45 @@
                               </div>
                            </div>
                          </div>
+                      </div>
+                  </div>
+
+                  <div class="tab-pane fade" id="nav-settings" role="tabpanel" aria-labelledby="nav-settings-tab">
+                      <div class="block">
+                        <h2>Choix de la devise</h2>
+
+                        <form class="_form mt-20 dark" @submit.prevent>
+                           <div class="form-group">
+                              <label for="devise">En quelle devise souhaiterais-tu être payé(e) ?</label>
+                              <select
+                                  name="currency"
+                                  v-model="host.currency"
+                                  class="form-control form-control-lg input"
+                              >
+                              <option
+                                  v-for="r in devises"
+                                  :key="r.id"
+                                  :value="r.id"
+                              >{{ r.name }}</option>
+                              </select>
+                           </div>
+
+                           <div class="form-group mt-20">
+                               <label for="phone">Connecter votre numéro de portefeuille mobile</label>
+                               <input type="text"
+                                   name="phone"
+                                   placeholder="+237651545258"
+                                   class="form-control form-control-lg input"
+                                   v-model="host.phone"
+                               >
+                           </div>
+
+                           <div class="mt-20 text-center">
+                               <button class="btn btn-primary br-100" @click="saveWallet()">
+                                   Valider
+                               </button>
+                           </div>
+                         </form>
                       </div>
                   </div>
               </div>
@@ -299,12 +346,14 @@
           </div>
           <!-- <LoadingModal/> -->
         </div>
+
+        <ConfirmModal v-if="showModal" :user="auth"></ConfirmModal>
     </div>
 </template>
 
 <script>
 import AuthService from '@/services/auth'
-// import LoadingModal from '@/components/commons/loaders/modal'
+import ConfirmModal from '../users/modals/confirm'
 
 // import moment from 'moment'
 import _ from 'lodash'
@@ -318,11 +367,15 @@ export default {
         taux_xaf: 657.17,
         displayIcon: true,
         social_links: [],
+        devises: [],
         shost: {  name: '', link: '' },
         dhost: {  amount: '', sender_first_name: '', sender_last_name: '' },
         rhost: {  amount: 0 },
+        host: {  currency: '', phone: '', balance: '' },
         montant: 100,
     }),
+
+    components: { ConfirmModal },
 
     computed: {
         auth () {
@@ -366,12 +419,14 @@ export default {
     },
 
     mounted () {
-        // this.listenToEvents()
         this.dhost.amount = this.montant
+        this.host.currency = 'EUR'
         this.activeEditerTab()
+        this.initDevises()
         this.resetShost()
         if (this.isConnected) {
             this.getProfile()
+            this.getWallet()
             this.getSocialLinks()
             var fileSelect = document.getElementById("fileSelect"),
             fileElem = document.getElementById("fileElem");
@@ -388,13 +443,50 @@ export default {
 
     methods: {
         activeEditerTab () {
-            $('#nav-editer-tab').click()
-            $('#nav-editer').addClass("active")
-            $('#nav-editer-tab').focus()
+            window.$('#nav-editer-tab').click()
+            window.$('#nav-editer').addClass("active")
+            window.$('#nav-editer-tab').focus()
         },
 
         selectMontant (montant) {
             this.dhost.amount = montant
+        },
+
+        initDevises() {
+            this.devises = [
+              { 'id': 'USD', 'name': 'USD - Dollar Américain'},
+              { 'id': 'EUR', 'name': 'EUR - Union Economique Européenne'},
+              { 'id': 'XAF', 'name': 'XAF - Franc CFA'},
+            ]
+        },
+
+        async saveWallet () {
+            this.startLoading()
+            const response = await this.$api.put('/payment-api/wallets/', this.host)
+                .catch(error => {
+                    this.stopLoading()
+                    this.$swal.error(this.$translate.text('Error'), this.$translate.text(error.response.data.errors))
+                })
+
+                if (response) {
+                    this.stopLoading()
+                    this.getWallet()
+                    this.$swal.success('Confirmation', 'Modification des paramètres !')
+                }
+        },
+
+        async getWallet () {
+            this.startLoading()
+            const response = await this.$api.get('/payment-api/wallets/')
+                .catch(error => {
+                    this.stopLoading()
+                    this.$swal.error(this.$translate.text('Error'), this.$translate.text(error.response.data.errors))
+                })
+
+                if (response) {
+                    this.stopLoading()
+                    this.host = Object.assign({}, response.data.results[0])
+                }
         },
 
         /**
@@ -560,7 +652,7 @@ export default {
             if (!_.isEmpty(this.xaf_total_euro_amount)) {
               this.startLoading()
 
-              const payload = {  'amount': this.xaf_total_euro_amount }
+              const payload = { 'amount': this.xaf_total_euro_amount }
 
               const response = await this.$api.post('/payment-api/money-requests/', payload)
                   .catch(error => {

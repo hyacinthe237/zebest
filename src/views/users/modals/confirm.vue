@@ -76,6 +76,10 @@ export default {
         logo () {
             return this.user.image
         },
+
+        token () {
+            return localStorage.getItem('zebest_token')
+        },
     },
 
     methods: {
@@ -104,7 +108,8 @@ export default {
 
         openPaymentLink () {
             let user = this.user
-            let route = this.$router.resolve({ name: 'my-page', params: { id: user.username } })
+            let token = this.token
+            let route = this.$router.resolve({ name: 'my-page', params: { id: user.username }, query: { ntk: token } })
             window.open(route.href, '_blank')
         }
     }

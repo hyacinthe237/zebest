@@ -54,7 +54,7 @@
     }
 }
 
-@media (max-width: 560px) {
+@media (max-width: 520px) {
   ._header {
       display: flex;
       flex-direction: row;
@@ -102,7 +102,8 @@
                 font-size: 12px;
               }
 
-              .dropdown {display: none;
+              .dropdown {
+                // display: none;
                   button {
                     span { display: none; }
                   }
