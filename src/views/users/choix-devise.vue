@@ -6,7 +6,7 @@
 
       <section class="home" v-show="!isLoading">
         <div class="block">
-          <h1>Choix de la devise</h1>
+          <h2>Choix de la devise</h2>
 
           <form class="_form mt-20 dark" @submit.prevent>
              <div class="form-group mt-20">

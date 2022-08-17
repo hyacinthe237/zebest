@@ -462,7 +462,7 @@ export default {
 
         async saveWallet () {
             this.startLoading()
-            const response = await this.$api.put('/payment-api/wallets/', this.host)
+            const response = await this.$api.put(`/payment-api/wallets/${this.host.id}/`, this.host)
                 .catch(error => {
                     this.stopLoading()
                     this.$swal.error(this.$translate.text('Error'), this.$translate.text(error.response.data.errors))

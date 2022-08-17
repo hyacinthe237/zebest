@@ -6,7 +6,7 @@
 
       <section class="home" v-show="!isLoading">
         <div class="block mt-40">
-          <h1>compléter mon profil</h1>
+          <h2>compléter mon profil</h2>
 
           <form class="_form mt-20 dark" @submit.prevent>
               <div class="content-profile-photo pointer">
