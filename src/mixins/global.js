@@ -5,7 +5,6 @@ export default {
         isLoading: false,
         isOffline: false,
         showErrors: true,
-        showModal: false,
         breadcrumb: [],
         keywords: ''
     }),

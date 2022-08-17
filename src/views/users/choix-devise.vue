@@ -99,7 +99,7 @@ export default {
                     this.stopLoading()
                     this.showErrors =  false
                     // let params = {'id': 'confirmModal'}
-                    // this.openModal(params)
+                    this.$store.commit('SET_SHOW_MODAL', true)
                     this.openPaymentLink()
                 }
         },

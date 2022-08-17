@@ -2,12 +2,12 @@
     <div
         class="modal animated modal-backdrop"
         tabindex="-1" role="dialog" id="confirmModal"
-         aria-labelledby="confirmModalLabel" aria-hidden="true"
+        aria-labelledby="confirmModalLabel" aria-hidden="true"
     >
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="text-right">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="closeModal('confirmModal')">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="closeM()">
                         <i class="feather icon-x"></i>
                     </button>
                 </div>
@@ -24,10 +24,10 @@
                         <span class="mt-10">{{ name }}</span>
                     </div>
 
-                    <div class="primary underline mt-60 pointer" @click="openPaymentLink()" :title="payment_link">{{ payment_link }}</div>
+                    <div class="primary underline mt-20 pointer" @click="openPaymentLink()">{{ payment_link }}</div>
 
                     <div class="mt-20 buttons mb-20">
-                      <input type="hidden" id="toCopy" :value="payment_link">
+                      <input type="hidden" id="toCopy" :value="`${payment_link}?ntk=${token}`">
                       <button
                           class="btn btn-primary br-100 mr-10 mt-10"
                           @click.stop.prevent="copyLink()"
@@ -100,6 +100,11 @@ export default {
             /* unselect the range */
             toCopy.setAttribute('type', 'hidden')
             window.getSelection().removeAllRanges()
+        },
+
+        closeM () {
+            window.$('#confirmModal').modal('hide')
+            this.$store.commit('SET_SHOW_MODAL', false)
         },
 
         tiktok () {

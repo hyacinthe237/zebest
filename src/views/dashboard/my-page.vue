@@ -352,6 +352,7 @@
 
 <script>
 import AuthService from '@/services/auth'
+import ApiService from '@/services/api'
 import ConfirmModal from '../users/modals/confirm'
 
 // import moment from 'moment'
@@ -372,6 +373,7 @@ export default {
         rhost: {  amount: 0 },
         host: {  currency: '', phone: '', balance: '' },
         montant: 100,
+        creator: {}
     }),
 
     components: { ConfirmModal },
@@ -381,8 +383,16 @@ export default {
             return JSON.parse(localStorage.getItem(this.$config.get('user')))
         },
 
+        showModal () {
+            return this.$store.state.showModal
+        },
+
         title_name () {
             return this.$route.params.id
+        },
+
+        token_param () {
+            return this.$route.query.ntk
         },
 
         upload_url () {
@@ -422,16 +432,20 @@ export default {
     },
 
     mounted () {
-        this.dhost.amount = this.montant
-        this.host.currency = 'EUR'
-        this.activeEditerTab()
-        this.initDevises()
-        this.resetShost()
+        if (!this.isConnected) {
+            ApiService.setToken(this.param_token)
+            this.getCreator()
+            this.dhost.amount = this.montant
+        }
 
         if (this.isConnected) {
             this.getProfile()
             this.getWallet()
             this.getSocialLinks()
+            this.host.currency = 'EUR'
+            this.activeEditerTab()
+            this.initDevises()
+            this.resetShost()
             var fileSelect = document.getElementById("fileSelect"),
             fileElem = document.getElementById("fileElem");
 
@@ -527,6 +541,22 @@ export default {
                         this.displayIcon = false
                         $('#image').attr('src', this.ghost.image)
                     }
+                }
+        },
+
+        async getCreator () {
+            this.startLoading()
+
+            let payload = { 'username': this.title_name }
+            const response = await this.$api.get('/auth/user/', { params: payload })
+                .catch(error => {
+                    this.stopLoading()
+                    this.$swal.error('Error', error.response.data.message)
+                })
+
+                if (response) {
+                    this.stopLoading()
+                    this.creator = Object.assign({}, response.data)
                 }
         },
 
