@@ -292,7 +292,7 @@
           </div>
           <div class="home" v-if="!isConnected && !isLoading">
             <div class="block">
-              <h1>faire un don à "nom de créateur"</h1>
+              <h2>faire un don à <span>{{ title_name }}</span></h2>
 
               <div class="list-ronds mt-20">
                   <div :class="['rond-item', dhost.amount == 50 ? 'active' : '']" @click="selectMontant(50)">50 &euro;</div>
@@ -381,6 +381,10 @@ export default {
             return JSON.parse(localStorage.getItem(this.$config.get('user')))
         },
 
+        title_name () {
+            return this.$route.params.id
+        },
+
         upload_url () {
             return `${this.$config.get('base_url')}/user-api/users/${this.auth.id}/logo`
         },
@@ -423,20 +427,20 @@ export default {
         this.activeEditerTab()
         this.initDevises()
         this.resetShost()
-        var fileSelect = document.getElementById("fileSelect"),
-        fileElem = document.getElementById("fileElem");
 
-        fileSelect.addEventListener("click", function (e) {
-            if (fileElem) {
-                fileElem.click();
-            }
-            e.preventDefault(); // empêche la navigation vers "#"
-        }, false);
-        
         if (this.isConnected) {
             this.getProfile()
             this.getWallet()
             this.getSocialLinks()
+            var fileSelect = document.getElementById("fileSelect"),
+            fileElem = document.getElementById("fileElem");
+
+            fileSelect.addEventListener("click", function (e) {
+                if (fileElem) {
+                    fileElem.click();
+                }
+                e.preventDefault(); // empêche la navigation vers "#"
+            }, false);
         }
 
     },
@@ -574,28 +578,20 @@ export default {
                     }
             }
         },
+
         async faireundon () {
             this.startLoading()
 
-            let formData = new FormData()
-            formData.append('bio', this.ghost.bio)
-            formData.append('payment_link', this.ghost.payment_link)
-            formData.append('image', this.ghost.image)
-            formData.append('last_name', this.ghost.last_name)
-            formData.append('first_name', this.ghost.first_name)
-
-            let url = '/user-api/users/' + this.auth.id + '/'
-            const response = await this.$api.patch(url, formData)
+            const response = await this.$api.post('/payment-api/donations/', this.dhost)
                 .catch(error => {
                     this.stopLoading()
-                    this.$swal.error(this.$translate.text('Erreur'), this.$translate.text(error.response.data.message))
+                    this.$swal.error('Erreur', error.response.data.message)
                 })
 
                 if (response) {
                     this.stopLoading()
-                    this.showErrors =  false
-                    AuthService.setUser(response.data)
-                    this.$swal.success('Confirmation', 'Compte modifié avec succès !')
+                    localStorage.setItem('amount', this.dhost.amount)
+                    this.go('checkout')
                 }
         },
 

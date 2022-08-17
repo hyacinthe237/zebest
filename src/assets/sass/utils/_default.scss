@@ -38,6 +38,10 @@ h1, h2 {
     font-size: 64px;
     text-transform: uppercase;
     text-align: center;
+
+    span {
+        color: $brand-primary;
+    }
 }
 
 @media (max-width: 560px) {

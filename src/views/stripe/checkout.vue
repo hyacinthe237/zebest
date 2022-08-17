@@ -22,18 +22,38 @@ export default {
 
     data: () => ({
         loading: false,
-        lineItems: [ { price: 'some-price-id', quantity: 1 } ],
-        successURL: 'your-success-url',
-        cancelURL: 'your-cancel-url',
+        lineItems: []
     }),
 
     computed: {
         stripe_key () {
             return config.get('stripe_key')
-        }
+        },
+
+        amount () {
+            return Number.parseInt(localStorage.getItem('amount'))
+        },
+
+        sucessUrl () {
+            let route = this.$router.resolve({ name: 'success' })
+            return route.href
+        },
+
+        cancelUrl () {
+            let route = this.$router.resolve({ name: 'cancel' })
+            return route.href
+        },
+    },
+
+    mounted () {
+        this.initLineItems()
     },
 
     methods: {
+        initLineItems () {
+            this.lineItems = [ { price: this.amount, quantity: 1 } ]
+        },
+
         submit () {
             // You will be redirected to Stripe's secure checkout page
             this.$refs.checkoutRef.redirectToCheckout();
