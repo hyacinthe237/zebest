@@ -144,8 +144,7 @@
                   <div class="tab-pane fade" id="nav-stats" role="tabpanel" aria-labelledby="nav-stats-tab">
                       <div class="row">
                         <div class="col-sm-12">
-                          Mes statistiques : Il pourra voir ses stats sous forme de graph représentant les
-                          donations reçu d’une période à une autre.
+
                         </div>
                       </div>
                   </div>
@@ -424,19 +423,20 @@ export default {
         this.activeEditerTab()
         this.initDevises()
         this.resetShost()
+        var fileSelect = document.getElementById("fileSelect"),
+        fileElem = document.getElementById("fileElem");
+
+        fileSelect.addEventListener("click", function (e) {
+            if (fileElem) {
+                fileElem.click();
+            }
+            e.preventDefault(); // empêche la navigation vers "#"
+        }, false);
+        
         if (this.isConnected) {
             this.getProfile()
             this.getWallet()
             this.getSocialLinks()
-            var fileSelect = document.getElementById("fileSelect"),
-            fileElem = document.getElementById("fileElem");
-
-            fileSelect.addEventListener("click", function (e) {
-                if (fileElem) {
-                    fileElem.click();
-                }
-                e.preventDefault(); // empêche la navigation vers "#"
-            }, false);
         }
 
     },
@@ -663,6 +663,7 @@ export default {
                   if (response) {
                       this.stopLoading()
                       this.$swal.success('Confirmation', 'Retrait éffectué avec succès !')
+                      this.rhost.amount = 0
                   }
             } else {
               this.$swal.error('Validation', 'Bien vouloir saisir le montant à retirer !')

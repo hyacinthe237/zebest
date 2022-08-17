@@ -39,16 +39,6 @@ import IzyBack from '@/components/commons/izy-back/izy-back'
 // eslint-disable-next-line
 import globalMixins from '@/mixins/global'
 import messagesFr from 'vee-validate/dist/locale/fr.js'
-// import { StripePlugin } from '@vue-stripe/vue-stripe'
-//
-// const options = {
-//   pk: config.get('stripe_key'),
-//   stripeAccount: config.get('stripe_account'),
-//   apiVersion: config.get('api_version'),
-//   locale: process.env.LOCALE,
-// };
-
-// Vue.use(StripePlugin, options);
 
 global.$ = $
 window.eventBus = new Vue()
@@ -78,7 +68,6 @@ Vue.component('Breadcrumb', Breadcrumb)
 Vue.component('Spinners', Spinners)
 Vue.component('izyBack', IzyBack)
 Vue.component('vue-dropzone', vue2Dropzone)
-// Vue.component('stripe-checkout', StripeCheckout)
 
 new Vue({
   router,
