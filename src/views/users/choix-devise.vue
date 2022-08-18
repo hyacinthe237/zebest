@@ -36,7 +36,7 @@
 
              <div class="mt-20">
                  <button class="btn btn-block btn-primary br-100" @click="save()">
-                     Valider
+                     {{ ghost.phone == '' ? 'Passer cette étape' : 'Valider' }}
                  </button>
              </div>
            </form>
@@ -45,22 +45,18 @@
       <div v-show="isLoading" class="mt-60 loading">
           <izy-hollow-loading loading />
       </div>
-
-      <!-- <ConfirmModal v-if="showModal" :user="auth"></ConfirmModal> -->
     </div>
 </template>
 
 <script>
-// import ConfirmModal from './modals/confirm'
 
 export default {
     name: 'ChoixDevise',
 
     data: () => ({
         devises: [],
+        ghost: { currency: '', phone: '' }
     }),
-
-    // components: { ConfirmModal },
 
     mounted () {
         this.initDevises()
@@ -83,31 +79,30 @@ export default {
         },
 
         async save () {
-            this.showErrors =  true
-            const isValid = await this.$validator.validate()
-            if (!isValid) return false
+            if (this.ghost.phone == '') {
+                this.openPaymentLink()
+            } else {
+                this.startLoading()
 
-            this.startLoading()
+                const response = await this.$api.post('/payment-api/wallets/', this.ghost)
+                    .catch(error => {
+                        this.stopLoading()
+                        this.$swal.error(this.$translate.text('Error'), this.$translate.text(error.response.data.errors))
+                    })
 
-            const response = await this.$api.post('/payment-api/wallets/', this.ghost)
-                .catch(error => {
-                    this.stopLoading()
-                    this.$swal.error(this.$translate.text('Error'), this.$translate.text(error.response.data.errors))
-                })
-
-                if (response) {
-                    this.stopLoading()
-                    this.showErrors =  false
-                    // let params = {'id': 'confirmModal'}
-                    this.$store.commit('SET_SHOW_MODAL', true)
-                    this.openPaymentLink()
-                }
+                    if (response) {
+                        this.stopLoading()
+                        this.showErrors =  false
+                        this.openPaymentLink()
+                    }
+            }
         },
 
         openPaymentLink () {
             let user = this.auth
             let route = this.$router.resolve({ name: 'my-page', params: { id: user.username } })
             window.open(route.href, '_self')
+            this.$store.commit('SET_SHOW_MODAL', true)
         }
 
     }
