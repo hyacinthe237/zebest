@@ -14,80 +14,20 @@
 
                   <h2 class="mt-20">faire un don à <span>{{ user.username }}</span></h2>
 
-                  <form class="_form mt-20" @submit.prevent>
-                    <div class="form-group">
-                       <input type="email"
-                           name="email"
-                           placeholder="Email"
-                           class="form-control form-control-lg input"
-                           v-model="ghost.email"
-                           v-validate="'required'"
-                       >
-                         <span class="has-error">{{ errors.first('email') }}</span>
-                    </div>
-
-                    <div class="form-group mt-10">
-                       <input type="number"
-                           name="cardId"
-                           placeholder="Numéro de carte bancaire"
-                           class="form-control form-control-lg input"
-                           v-model="ghost.card_id"
-                       >
-                         <span class="has-error">{{ errors.first('cardId') }}</span>
-                    </div>
-
-                    <div class="form-group mt-10">
-                       <input type="text"
-                           name="name"
-                           placeholder="Nom du titulaire de la carte"
-                           class="form-control form-control-lg input"
-                           v-model="ghost.name"
-                           v-validate="'required'"
-                       >
-                         <span class="has-error">{{ errors.first('name') }}</span>
-                    </div>
-
-                    <div class="row">
-                      <div class="col-6">
-                        <div class="form-group mt-10">
-                           <input type="text"
-                               name="mmaa"
-                               placeholder="MM/AA"
-                               class="form-control form-control-lg input"
-                               v-model="ghost.mmaa"
-                               v-validate="'required'"
-                           >
-                             <span class="has-error">{{ errors.first('mmaa') }}</span>
-                        </div>
-                      </div>
-                      <div class="col-6">
-                        <div class="form-group mt-10">
-                           <input type="text"
-                               name="cvc"
-                               placeholder="CVC"
-                               class="form-control form-control-lg input"
-                               v-model="ghost.cvc"
-                               v-validate="'required'"
-                           >
-                             <span class="has-error">{{ errors.first('cv') }}</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <!-- <div class="form-group">
+                    <div class="form-group mt-20">
                         <stripe-element-payment
                             ref="paymentRef"
                             :pk="pk"
                             :elements-options="elementsOptions"
+                            :confirm-params="confirmParams"
                         />
-                    </div> -->
+                    </div>
 
                      <div class="mt-10">
                          <button class="btn btn-block btn-primary br-100" @click="payer()">
                              Payer
                          </button>
                      </div>
-                   </form>
               </div>
           </div>
       </div>
@@ -104,7 +44,10 @@ import config from '@/services/config'
 export default {
 
     data: () => ({
-      elementsOptions: {}
+        elementsOptions: {},
+        confirmParams: {
+            return_url: config.get('front_url') + '#/success/checkout',
+        },
     }),
 
     props: {
@@ -117,7 +60,7 @@ export default {
     watch: {
         donation: {
             immediate: true,
-            handler: function () {
+            handler: function (val) {
                 if (val) {
                     this.elementsOptions.clientSecret = val.client_secret
                 }
@@ -141,9 +84,10 @@ export default {
 
     methods: {
         payer () {
-            window.$('#confirmDonModal').modal('hide')
-            this.$store.commit('SET_SHOW_BANCAIRE_MODAL', false)
-            this.$emit('infosBancaire', this.ghost)
+            // window.$('#confirmDonModal').modal('hide')
+            // this.$store.commit('SET_SHOW_BANCAIRE_MODAL', false)
+            // this.$emit('infosBancaire', this.ghost)
+            this.$refs.paymentRef.submit();
         },
 
         closeM () {
