@@ -142,11 +142,7 @@
                   </div>
 
                   <div class="tab-pane fade" id="nav-stats" role="tabpanel" aria-labelledby="nav-stats-tab">
-                      <div class="row">
-                        <div class="col-sm-12">
-
-                        </div>
-                      </div>
+                      <IzyChart :chartData="chartData"></IzyChart>
                   </div>
 
                   <div class="tab-pane fade" id="nav-retrait" role="tabpanel" aria-labelledby="nav-retrait-tab">
@@ -395,7 +391,8 @@ export default {
         rhost: {  amount: 0 },
         host: {  currency: '', phone: '', balance: '' },
         montant: 100,
-        creator: {}
+        creator: {},
+        chartData: { labels: [], datasets: [] },
     }),
 
     components: { ConfirmModal, BancaireModal },
@@ -600,6 +597,8 @@ export default {
                 if (response) {
                     this.stopLoading()
                     this.$store.commit('donations/SET_DONATIONS', response.data.results)
+                    this.chartData.labels = response.data.results.map(r => r.created_at)
+                    this.chartData.datasets = [{ data: response.data.results.map(r => Number.parseInt(r.amount, 10)) }]
                 }
         },
 

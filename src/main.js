@@ -35,6 +35,7 @@ import Breadcrumb from '@/components/commons/breadcrumb/breadcrumb'
 import VErrorComponent from '@/components/commons/error/v-error'
 import IzyPaginate from '@/components/commons/izy-paginate/izy-paginate'
 import IzyBack from '@/components/commons/izy-back/izy-back'
+import IzyChart from '@/components/commons/chartjs/chart'
 
 // eslint-disable-next-line
 import globalMixins from '@/mixins/global'
@@ -68,6 +69,7 @@ Vue.component('Breadcrumb', Breadcrumb)
 Vue.component('Spinners', Spinners)
 Vue.component('izyBack', IzyBack)
 Vue.component('vue-dropzone', vue2Dropzone)
+Vue.component('IzyChart', IzyChart)
 
 new Vue({
   router,
