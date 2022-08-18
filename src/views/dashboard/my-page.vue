@@ -362,6 +362,8 @@
         </div>
 
         <ConfirmModal v-if="showModal" :user="auth"></ConfirmModal>
+
+        <BancaireModal v-if="showBancaireModal" :user="creator" :donation="donation"></BancaireModal>
     </div>
 </template>
 
@@ -369,6 +371,7 @@
 import AuthService from '@/services/auth'
 import ApiService from '@/services/api'
 import ConfirmModal from '../users/modals/confirm'
+import BancaireModal from './modals/confirm'
 import DashboardMixins from './mixins'
 
 // import moment from 'moment'
@@ -378,6 +381,7 @@ export default {
     mixins: [DashboardMixins],
 
     data: () => ({
+        donation: {},
         duration: '',
         endDate: '',
         interval: null,
@@ -394,7 +398,7 @@ export default {
         creator: {}
     }),
 
-    components: { ConfirmModal },
+    components: { ConfirmModal, BancaireModal },
 
     computed: {
         auth () {
@@ -403,6 +407,10 @@ export default {
 
         showModal () {
             return this.$store.state.showModal
+        },
+
+        showBancaireModal () {
+            return this.$store.state.showBancaireModal
         },
 
         title_name () {
@@ -637,7 +645,8 @@ export default {
                 if (response) {
                     this.stopLoading()
                     localStorage.setItem('amount', this.dhost.amount)
-                    this.go('checkout')
+                    this.donation = Object.assign({}, response.data)
+                    this.$store.commit('SET_SHOW_BANCAIRE_MODAL', true)
                 }
         },
 

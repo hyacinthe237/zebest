@@ -9,6 +9,7 @@ export default new Vuex.Store({
         breadcrumb: [],
         toggleIcon: false,
         showModal: false,
+        showBancaireModal: false,
         amount: 0
     },
 
@@ -19,6 +20,10 @@ export default new Vuex.Store({
 
         SET_SHOW_MODAL (state, value) {
             state.showModal = value
+        },
+
+        SET_SHOW_BANCAIRE_MODAL (state, value) {
+            state.showBancaireModal = value
         },
 
         SET_BREADCRUMB (state, payload) {

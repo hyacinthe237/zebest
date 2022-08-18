@@ -5,8 +5,6 @@
             mode="payment"
             :pk="stripe_key"
             :line-items="lineItems"
-            :success-url="successURL"
-            :cancel-url="cancelURL"
             @loading="v => loading = v"
         />
         <button @click="submit">Payer</button>
