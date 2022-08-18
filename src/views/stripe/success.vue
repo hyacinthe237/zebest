@@ -34,7 +34,6 @@ import ApiService from '@/services/api'
 
 export default {
     mounted () {
-        console.log(this.$route.query)
         ApiService.setToken(localStorage.getItem('zebest_token'))
         this.chargeDonation()
     },
