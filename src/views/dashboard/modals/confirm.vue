@@ -46,7 +46,7 @@ export default {
     data: () => ({
         elementsOptions: {},
         confirmParams: {
-            return_url: config.get('front_url') + '#/success/checkout',
+            return_url: config.get('front_url') + 'success/checkout',
         },
     }),
 

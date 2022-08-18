@@ -457,6 +457,7 @@ export default {
         if (!this.isConnected) {
             console.log('isConnected', this.isConnected)
             ApiService.setToken(this.$route.query.ntk)
+            AuthService.setToken(this.$route.query.ntk)
             this.getCreator()
             this.dhost.amount = this.montant
         }
@@ -580,6 +581,7 @@ export default {
                 if (response) {
                     this.stopLoading()
                     this.creator = Object.assign({}, response.data)
+                    localStorage.setItem('nm', response.data.username)
                 }
         },
 
@@ -644,7 +646,7 @@ export default {
 
                 if (response) {
                     this.stopLoading()
-                    localStorage.setItem('amount', this.dhost.amount)
+                    localStorage.setItem('donation', response.data.donation_id)
                     this.donation = Object.assign({}, response.data)
                     this.$store.commit('SET_SHOW_BANCAIRE_MODAL', true)
                 }
