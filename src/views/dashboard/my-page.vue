@@ -66,14 +66,14 @@
               <div class="tab-content mb-20" id="nav-tabContent" v-if="isConnected">
                   <div class="tab-pane fade" id="nav-editer" role="tabpanel" aria-labelledby="nav-editer-tab">
                     <form class="_form mt-20 dark" @submit.prevent>
-                        <div class="content-profile-photo pointer">
+                        <div class="content-profile-photo">
                             <input type="file" name='image' id="fileElem" accept="image/*" style="display:none" @change="handleFile">
                             <!-- <div class="photo" id="fileSelect">
                                 <i class="feather icon-camera" v-if="displayIcon"></i>
                                 <img class="image" id="image" src="" v-else/>
                             </div> -->
 
-                            <div class="photo" id="fileSelect">
+                            <div class="photo pointer" id="fileSelect">
                                 <img class="image" id="image" :src="ghost.image"/>
                             </div>
                             <span v-show="displayIcon">Ajouter une photo</span>
@@ -335,6 +335,21 @@
                    >
                 </div>
 
+                <div class="form-group mt-20">
+                   <select
+                       name="sender_country"
+                       v-model="dhost.sender_country"
+                       class="form-control form-control-lg input"
+                   >
+                   <option value="">Sélectionnez votre pays</option>
+                   <option
+                       v-for="(c, index) in countries"
+                       :key="index+1"
+                       :value="c.value"
+                   >{{ c.name }}</option>
+                   </select>
+                </div>
+
                  <div class="mt-10 mb-20">
                      <button class="btn btn-block btn-primary br-100" @click="faireundon()">
                          Ovations de {{ dhost.amount }} &euro;
@@ -354,11 +369,14 @@
 import AuthService from '@/services/auth'
 import ApiService from '@/services/api'
 import ConfirmModal from '../users/modals/confirm'
+import DashboardMixins from './mixins'
 
 // import moment from 'moment'
 import _ from 'lodash'
 
 export default {
+    mixins: [DashboardMixins],
+
     data: () => ({
         duration: '',
         endDate: '',
@@ -369,7 +387,7 @@ export default {
         social_links: [],
         devises: [],
         shost: {  name: '', link: '' },
-        dhost: {  amount: '', sender_first_name: '', sender_last_name: '' },
+        dhost: {  amount: '', sender_first_name: '', sender_last_name: '', sender_country: ''  },
         rhost: {  amount: 0 },
         host: {  currency: '', phone: '', balance: '' },
         montant: 100,
@@ -429,12 +447,14 @@ export default {
 
     mounted () {
         if (!this.isConnected) {
+            console.log('isConnected', this.isConnected)
             ApiService.setToken(this.$route.query.ntk)
             this.getCreator()
             this.dhost.amount = this.montant
         }
 
         if (this.isConnected) {
+            console.log('isConnected', this.isConnected)
             this.getProfile()
             this.getWallet()
             this.getSocialLinks()
@@ -442,8 +462,8 @@ export default {
             this.activeEditerTab()
             this.initDevises()
             this.resetShost()
-            var fileSelect = document.getElementById("fileSelect"),
-            fileElem = document.getElementById("fileElem");
+            var fileSelect = document.getElementById("fileSelect")
+            var fileElem = document.getElementById("fileElem")
 
             fileSelect.addEventListener("click", function (e) {
                 if (fileElem) {
