@@ -24,7 +24,7 @@
                         <span class="mt-10">{{ name }}</span>
                     </div>
 
-                    <div class="primary underline mt-20 pointer" @click="openPaymentLink()">{{ payment_link }}</div>
+                    <div class="primary underline mt-10 pointer" @click="openPaymentLink()">{{ payment_link }}</div>
 
                     <div class="mt-20 buttons mb-20">
                       <input type="hidden" id="toCopy" :value="`${payment_link}?ntk=${token}`">
@@ -36,10 +36,10 @@
                           <span v-if="isNotCopied">Copier le lien</span>
                           <span else>Lien copié</span>
                       </button>
-                      <button class="btn btn-dark br-100 mt-10" @click="tiktok()">
+                      <!-- <button class="btn btn-dark br-100 mt-10" @click="tiktok()">
                           <img :src="logoTiktok">
                           Tiktok
-                      </button>
+                      </button> -->
                     </div>
                 </div>
             </div>

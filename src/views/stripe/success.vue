@@ -54,7 +54,6 @@ export default {
 
                 if (response) {
                     this.stopLoading()
-                    console.log(response.data)
                 }
         },
 
@@ -64,6 +63,7 @@ export default {
             let route = this.$router.resolve({ name: 'my-page', params: { id: user }, query: { ntk: token } })
             window.open(route.href, '_self')
             localStorage.clear()
+            this.$store.commit('SET_SHOW_BANCAIRE_MODAL', false)
         }
     },
 }
