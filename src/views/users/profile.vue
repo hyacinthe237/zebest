@@ -73,7 +73,7 @@
                   <span class="has-error">{{ errors.first('bio') }}</span>
              </div>
 
-             <!-- <div class="form-group mt-20">
+             <div class="form-group mt-20">
                 <label for="link">Lien de ta page (Facebook, Tiktok, snapTchat, etc...)</label>
                 <input type="text"
                     name="social_link"
@@ -83,7 +83,7 @@
                     v-validate="'required'"
                 >
                   <span class="has-error">{{ errors.first('social_link') }}</span>
-             </div> -->
+             </div>
 
              <div class="mt-20 mb-20">
                  <button class="btn btn-block btn-primary br-100" @click="save()">
@@ -164,8 +164,7 @@ export default {
                         this.stopLoading()
                         this.showErrors =  false
                         AuthService.setUser(response.data)
-                        this.go('choix-devise')
-                        // this.$swal.success('Confirmation', 'Compte modifié avec succès !')
+                        this.saveSocialLink()
                     }
             }
         },
@@ -189,6 +188,23 @@ export default {
                         this.displayIcon = false
                         $('#image').attr('src', this.ghost.image)
                     }
+                }
+        },
+
+        async saveSocialLink () {
+            this.startLoading()
+
+            const payload = {  name: this.ghost.social_link, link: this.ghost.social_link }
+
+            const response = await this.$api.post('/user-api/social-links/', payload)
+                .catch(error => {
+                    this.stopLoading()
+                    this.$swal.error(this.$translate.text('Erreur'), this.$translate.text(error.response.data.message))
+                })
+
+                if (response) {
+                    this.stopLoading()
+                    this.go('choix-devise')
                 }
         },
 

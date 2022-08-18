@@ -455,6 +455,7 @@ export default {
     },
 
     mounted () {
+        this.activeEditerTab()
         if (!this.isConnected) {
             ApiService.setToken(this.$route.query.ntk)
             AuthService.setToken(this.$route.query.ntk)
@@ -463,11 +464,10 @@ export default {
         }
 
         if (this.isConnected) {
+            this.host.currency = 'EUR'
             this.getProfile()
             this.getWallet()
             this.getSocialLinks()
-            this.host.currency = 'EUR'
-            this.activeEditerTab()
             this.initDevises()
             this.resetShost()
             this.getDonations()
@@ -486,9 +486,9 @@ export default {
 
     methods: {
         activeEditerTab () {
-            window.$('#nav-editer-tab').click()
-            window.$('#nav-editer').addClass("active")
-            window.$('#nav-editer-tab').focus()
+            $('#nav-editer-tab').click()
+            $('#nav-editer').addClass("active")
+            $('#nav-editer-tab').focus()
         },
 
         selectMontant (montant) {
