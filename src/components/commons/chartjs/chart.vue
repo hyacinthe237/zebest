@@ -4,8 +4,7 @@
     :chart-data="chartData"
     :chart-id="chartId"
     :dataset-id-key="datasetIdKey"
-    width="400px"
-    height="400px"
+    :styles="myStyles"
   />
 </template>
 
@@ -38,6 +37,16 @@ export default {
     return {
       chartOptions: {
         responsive: true
+      }
+    }
+  },
+
+  computed: {
+    myStyles () {
+      return {
+        height: `${400}px`,
+        width: `${400}px`,
+        position: 'relative'
       }
     }
   }
