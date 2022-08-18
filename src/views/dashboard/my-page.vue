@@ -1,6 +1,6 @@
 <template>
     <div class="">
-          <section class="_header">
+          <section class="_header padding">
               <div class="block-h">
                   <div class="logo pointer" @click="go('home')">zebest</div>
                   <div class="buttons" v-if="isConnected">
