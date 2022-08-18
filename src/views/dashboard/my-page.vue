@@ -405,6 +405,10 @@ export default {
             return JSON.parse(localStorage.getItem(this.$config.get('user')))
         },
 
+        donations () {
+            return this.$store.state.donations
+        },
+
         showModal () {
             return this.$store.state.showModal
         },
@@ -455,7 +459,6 @@ export default {
 
     mounted () {
         if (!this.isConnected) {
-            console.log('isConnected', this.isConnected)
             ApiService.setToken(this.$route.query.ntk)
             AuthService.setToken(this.$route.query.ntk)
             this.getCreator()
@@ -463,7 +466,6 @@ export default {
         }
 
         if (this.isConnected) {
-            console.log('isConnected', this.isConnected)
             this.getProfile()
             this.getWallet()
             this.getSocialLinks()
@@ -471,6 +473,7 @@ export default {
             this.activeEditerTab()
             this.initDevises()
             this.resetShost()
+            this.getDonations()
             var fileSelect = document.getElementById("fileSelect")
             var fileElem = document.getElementById("fileElem")
 
@@ -582,6 +585,21 @@ export default {
                     this.stopLoading()
                     this.creator = Object.assign({}, response.data)
                     localStorage.setItem('nm', response.data.username)
+                }
+        },
+
+        async getDonations () {
+            this.startLoading()
+
+            const response = await this.$api.get('/payment-api/donations/')
+                .catch(error => {
+                    this.stopLoading()
+                    this.$swal.error('Error', error.response.data.message)
+                })
+
+                if (response) {
+                    this.stopLoading()
+                    this.$store.commit('donations/SET_DONATIONS', response.data.results)
                 }
         },
 
