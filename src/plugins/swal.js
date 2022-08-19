@@ -11,7 +11,7 @@ Swal.install = function (Vue) {
                 position: 'top-end',
                 text: msg ? msg : '',
                 type: 'success',
-                showConfirmButton: false,
+                showConfirmButton: true,
                 timer: 5000
             })
         },
@@ -22,7 +22,7 @@ Swal.install = function (Vue) {
                 position: 'top-end',
                 text: msg ? msg : '',
                 type: 'error',
-                showConfirmButton: false,
+                showConfirmButton: true,
                 timer: 15000
             })
         }
