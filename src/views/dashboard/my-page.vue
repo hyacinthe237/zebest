@@ -66,7 +66,7 @@
               <div class="tab-content mb-20" id="nav-tabContent" v-if="isConnected">
                   <div class="tab-pane fade" id="nav-editer" role="tabpanel" aria-labelledby="nav-editer-tab">
                     <form class="_form mt-20 dark" @submit.prevent>
-                        <div class="content-profile-photo">
+                        <div class="content-profile-photo photo">
                             <input type="file" name='image' id="fileElem" accept="image/*" style="display:none" @change="handleFile">
                             <!-- <div class="photo" id="fileSelect">
                                 <i class="feather icon-camera" v-if="displayIcon"></i>
@@ -76,7 +76,7 @@
                             <div class="photo pointer" id="fileSelect">
                                 <img class="image" id="image" :src="ghost.image"/>
                             </div>
-                            <span v-show="displayIcon">Ajouter une photo</span>
+                            <!-- <span v-show="displayIcon">Ajouter une photo</span> -->
                         </div>
                       <div class="row">
                           <div class="col-sm-12">
@@ -455,7 +455,6 @@ export default {
     },
 
     mounted () {
-        this.activeEditerTab()
         if (!this.isConnected) {
             ApiService.setToken(this.$route.query.ntk)
             AuthService.setToken(this.$route.query.ntk)
@@ -471,24 +470,24 @@ export default {
             this.initDevises()
             this.resetShost()
             this.getDonations()
+            this.selectFile()
+            $('#nav-editer-tab').click()
+            $('#nav-editer').addClass("active")
+            $('#nav-editer-tab').focus()
+        }
+    },
+
+    methods: {
+        selectFile () {
             var fileSelect = document.getElementById("fileSelect")
             var fileElem = document.getElementById("fileElem")
 
             fileSelect.addEventListener("click", function (e) {
                 if (fileElem) {
-                    fileElem.click();
+                    fileElem.click()
                 }
-                e.preventDefault(); // empêche la navigation vers "#"
-            }, false);
-        }
-
-    },
-
-    methods: {
-        activeEditerTab () {
-            $('#nav-editer-tab').click()
-            $('#nav-editer').addClass("active")
-            $('#nav-editer-tab').focus()
+                e.preventDefault()
+            }, false)
         },
 
         selectMontant (montant) {
