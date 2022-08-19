@@ -34,7 +34,6 @@ import ApiService from '@/services/api'
 
 export default {
     mounted () {
-        ApiService.setToken(localStorage.getItem('zebest_token'))
         this.chargeDonation()
     },
 
@@ -58,8 +57,7 @@ export default {
 
         nouvelle () {
             let user = localStorage.getItem('nm')
-            let token = localStorage.getItem('zebest_token')
-            let route = this.$router.resolve({ name: 'my-page', params: { id: user }, query: { ntk: token } })
+            let route = this.$router.resolve({ name: 'my-page', params: { id: user } })
             window.open(route.href, '_self')
             localStorage.clear()
             this.$store.commit('SET_SHOW_BANCAIRE_MODAL', false)
