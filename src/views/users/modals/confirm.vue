@@ -27,7 +27,7 @@
                     <div class="primary underline mt-10 pointer" @click="openPaymentLink()">{{ payment_link }}</div>
 
                     <div class="mt-20 buttons mb-20">
-                      <input type="hidden" id="toCopy" :value="`${payment_link}?ntk=${token}`">
+                      <input type="hidden" id="toCopy" :value="`${payment_link}`">
                       <button
                           class="btn btn-primary br-100 mr-10 mt-10"
                           @click.stop.prevent="copyLink()"

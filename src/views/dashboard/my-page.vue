@@ -1,19 +1,22 @@
 <template>
     <div class="">
-          <section class="_header padding">
+          <section class="_header">
               <div class="block-h">
                   <div class="logo pointer" @click="go('home')">zebest</div>
                   <div class="buttons" v-if="isConnected">
-                      <div class="dropdown">
+                      <input type="hidden" id="toCopy" :value="`${payment_link}`">
+                      <div class="item mr-2" @click.stop.prevent="copyLink()"><i class="feather icon-copy"></i></div>
+                      <div class="item mr-2" @click="logout()"><i class="feather icon-log-out"></i></div>
+                      <!-- <div class="dropdown">
                           <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                               <span>Bienvenue, {{ auth.username }}</span>
                           </button>
                           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                              <!-- <a class="dropdown-item" href="#">Action</a>
-                              <a class="dropdown-item" href="#">Another action</a> -->
-                              <a class="dropdown-item pointer" href="#" @click="logout()">Se déconnecter</a>
+                              <a class="dropdown-item" href="#">Action</a>
+                              <a class="dropdown-item" href="#">Another action</a>
+                              <a class="dropdown-item pointer" href="#">Se déconnecter</a>
                           </div>
-                      </div>
+                      </div> -->
                   </div>
               </div>
           </section>
@@ -365,7 +368,7 @@
 
 <script>
 import AuthService from '@/services/auth'
-import ApiService from '@/services/api'
+// import ApiService from '@/services/api'
 import ConfirmModal from '../users/modals/confirm'
 import BancaireModal from './modals/confirm'
 import DashboardMixins from './mixins'
@@ -400,6 +403,10 @@ export default {
     computed: {
         auth () {
             return JSON.parse(localStorage.getItem(this.$config.get('user')))
+        },
+
+        payment_link () {
+            return this.auth.payment_link
         },
 
         donations () {
@@ -456,8 +463,6 @@ export default {
 
     mounted () {
         if (!this.isConnected) {
-            ApiService.setToken(this.$route.query.ntk)
-            AuthService.setToken(this.$route.query.ntk)
             this.getCreator()
             this.dhost.amount = this.montant
         }
@@ -478,6 +483,25 @@ export default {
     },
 
     methods: {
+        copyLink () {
+            let toCopy = document.querySelector('#toCopy')
+            toCopy.setAttribute('type', 'text')
+            toCopy.select()
+
+            try {
+              document.execCommand('copy')
+              this.$swal.success(this.$translate.text('Lien copié'))
+              this.isNotCopied = false
+            } catch (err) {
+              this.isNotCopied = true
+              this.$swal.error(this.$translate.text('Lien non copié'))
+            }
+
+            /* unselect the range */
+            toCopy.setAttribute('type', 'hidden')
+            window.getSelection().removeAllRanges()
+        },
+
         selectFile () {
             var fileSelect = document.getElementById("fileSelect")
             var fileElem = document.getElementById("fileElem")
@@ -570,8 +594,8 @@ export default {
 
         async getCreator () {
             this.startLoading()
-
-            const response = await this.$api.get('/auth/user/')
+            let payload = { 'username': this.$route.params.id }
+            const response = await this.$api.get('/user-api/user/', { params: payload })
                 .catch(error => {
                     this.stopLoading()
                     this.$swal.error('Error', error.response.data.message)
