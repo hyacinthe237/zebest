@@ -316,7 +316,7 @@
                    >
                 </div>
 
-                <div class="form-group mt-20">
+                <!-- <div class="form-group mt-20">
                    <input type="text"
                        name="sender_first_name"
                        placeholder="Votre prénom (optionnel)"
@@ -347,7 +347,7 @@
                        :value="c.value"
                    >{{ c.name }}</option>
                    </select>
-                </div>
+                </div> -->
 
                  <div class="mt-10 mb-20">
                      <button class="btn btn-block btn-primary br-100" @click="faireundon()">
@@ -372,6 +372,7 @@ import AuthService from '@/services/auth'
 import ConfirmModal from '../users/modals/confirm'
 import BancaireModal from './modals/confirm'
 import DashboardMixins from './mixins'
+import axios from 'axios'
 
 // import moment from 'moment'
 import _ from 'lodash'
@@ -395,6 +396,7 @@ export default {
         host: {  currency: '', phone: '', balance: '' },
         montant: 100,
         creator: {},
+        rates: {},
         chartData: { labels: [], datasets: [] },
     }),
 
@@ -476,6 +478,7 @@ export default {
             this.resetShost()
             this.getDonations()
             this.selectFile()
+            this.getTauxChange()
             $('#nav-editer-tab').click()
             $('#nav-editer').addClass("active")
             $('#nav-editer-tab').focus()
@@ -524,6 +527,23 @@ export default {
               { 'id': 'EUR', 'name': 'EUR - Union Economique Européenne'},
               { 'id': 'XAF', 'name': 'XAF - Franc CFA'},
             ]
+        },
+
+        async getTauxChange () {
+            this.startLoading()
+            await axios.get(`http://data.fixer.io/api/latest?access_key=${this.$config.get('fixer_key')}`,
+              { headers: {
+                  'Access-Control-Allow-Origin': '*'
+              } }
+            ).then(function (response) {
+                  this.stopLoading()
+                  this.rates = response.data.rates
+                  console.log(response.data);
+                  console.log(response.status);
+                  console.log(response.statusText);
+                  console.log(response.headers);
+                  console.log(response.config);
+            });
         },
 
         async saveWallet () {
@@ -595,7 +615,7 @@ export default {
         async getCreator () {
             this.startLoading()
             let payload = { 'username': this.$route.params.id }
-            const response = await this.$api.get('/user-api/user/', { params: payload })
+            const response = await this.$api.post('/payment-api/user-infos/', payload)
                 .catch(error => {
                     this.stopLoading()
                     this.$swal.error('Error', error.response.data.message)
@@ -604,7 +624,6 @@ export default {
                 if (response) {
                     this.stopLoading()
                     this.creator = Object.assign({}, response.data)
-                    localStorage.setItem('nm', response.data.username)
                 }
         },
 

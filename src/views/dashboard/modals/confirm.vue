@@ -12,9 +12,9 @@
                     <img :src="logo">
                   </div>
 
-                  <h2 class="mt-20">faire un don à <span>{{ user.username }}</span></h2>
+                  <h2 class="mt-10">faire un don à <span>{{ user.username }}</span></h2>
 
-                    <div class="form-group mt-20">
+                    <div class="form-group mt-10">
                         <stripe-element-payment
                             ref="paymentRef"
                             :pk="pk"
@@ -46,7 +46,7 @@ export default {
     data: () => ({
         elementsOptions: {},
         confirmParams: {
-            return_url: config.get('front_url') + 'success/checkout',
+            return_url: '',
         },
     }),
 
@@ -63,6 +63,7 @@ export default {
             handler: function (val) {
                 if (val) {
                     this.elementsOptions.clientSecret = val.client_secret
+                    this.confirmParams.return_url = this.$config.get('base_url') + 'success/checkout'
                 }
             }
         }

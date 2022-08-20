@@ -10,6 +10,7 @@ export default {
         app_key: process.env.VUE_APP_KEY || 'base64:qfqr3qV0NU2R3/4VX11vwREaPpQbKfzyxxYbWKTFZFE=',
         stripe_key: process.env.VUE_APP_STRIPE_KEY || 'pk_test_51LTyiCAvIRwTcFP0XGOOe8m3WNPQe3pnuNoSddjzVS722ZKg5T1iueOl3Zla4RKoDMEj02nrLwWozmeFZD5jILfh00XsTj7Vdv',
         stripe_account: process.env.VUE_APP_STRIPE_ACCOUNT || 'acct_1LTyiCAvIRwTcFP0',
+        fixer_key: process.env.VUE_APP_FIXER_KEY || 'b0cd596ebb5d7e6a5e0a3aee12022b51',
     },
 
     get(key) {

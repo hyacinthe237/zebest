@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import ApiService from '@/services/api'
+// import ApiService from '@/services/api'
 
 export default {
     mounted () {

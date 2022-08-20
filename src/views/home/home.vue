@@ -42,7 +42,7 @@
                      <div class="dark">zebest.com/</div>
                      <input type="text"
                          name="username"
-                         placeholder="tonnomdecreateur"
+                         placeholder="tonnom"
                          class="form-control form-control-lg dark no-white"
                          v-model="ghost.username"
                          v-validate="'required|min:6'"
@@ -62,8 +62,8 @@
           <h1>pour les créateurs de contenu en Afrique</h1>
 
           <p class="mt-20">
-            Zebest c'est la façon la plus simple pour les créateurs de contenu en Afrique de recevoir des donations de leurs fans.
-            En quelques clics, vous recevez le paiement de vos fans sur vos comptes mobile préférés.
+            Zebest c'est la façon la plus simple pour les créateurs de contenu en Afrique de <span class="bold">recevoir du soutien</span> de leurs fans.
+            <br/>En quelques clics, vous recevez le paiement de vos fans sur vos comptes mobile préférés.
           </p>
 
           <div class="social-icons mt-40">

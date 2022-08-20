@@ -33,7 +33,7 @@
                      <div class="dark">zebest.com/</div>
                      <input type="text"
                          name="username"
-                         placeholder="tonnomdecreateur"
+                         placeholder="tonnom"
                          class="form-control form-control-lg dark no-white"
                          v-model="ghost.username"
                          v-validate="'required'"
