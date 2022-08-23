@@ -45,9 +45,16 @@
 
                       <a class="nav-item nav-link" id="nav-retrait-tab"
                           data-toggle="tab" href="#nav-retrait" role="tab"
-                          aria-controls="nav-retrait">
+                          aria-controls="nav-retrait" v-show="is_creator">
                           <i class="feather icon-dollar-sign"></i>
                           <span>Faire un retrait</span>
+                      </a>
+
+                      <a class="nav-item nav-link" id="nav-don-tab"
+                          data-toggle="tab" href="#nav-don" role="tab"
+                          aria-controls="nav-don" v-show="!is_creator">
+                          <i class="feather icon-dollar-sign"></i>
+                          <span>Faire un don</span>
                       </a>
 
                       <a class="nav-item nav-link" id="nav-social-tab"
@@ -202,6 +209,57 @@
                       </div>
                   </div>
 
+                  <div class="tab-pane fade" id="nav-don" role="tabpanel" aria-labelledby="nav-don-tab">
+                    <div class="block">
+                      <h2>faire un don</h2>
+
+                      <div class="list-ronds mt-20">
+                          <div :class="['rond-item', dhost.amount == 50 ? 'active' : '']" @click="selectMontant(50)">50 &euro;</div>
+                          <div :class="['rond-item', dhost.amount == 100 ? 'active' : '']" @click="selectMontant(100)">100 &euro;</div>
+                          <div :class="['rond-item', dhost.amount == 250 ? 'active' : '']" @click="selectMontant(250)">250 &euro;</div>
+                          <div :class="['rond-item', dhost.amount == 500 ? 'active' : '']" @click="selectMontant(500)">500 &euro;</div>
+                      </div>
+
+                      <div class="diviseur">
+                          <div class="divider"></div>
+                          <div class="rond">Ou</div>
+                          <div class="divider"></div>
+                      </div>
+
+                      <form class="_form mt-20" @submit.prevent>
+                        <div class="form-group">
+                           <select
+                               name="receiver"
+                               v-model="dhost.receiver"
+                               class="form-control form-control-lg input"
+                           >
+                           <option vlaue="">Sélectionner un créateur de contenu</option>
+                           <option
+                               v-for="c in creators"
+                               :key="c.id"
+                               :value="c.id"
+                           >{{ c.first_name }} {{ c.last_name }}</option>
+                           </select>
+                        </div>
+
+                        <div class="form-group mt-20">
+                           <input type="number"
+                               name="amount"
+                               placeholder="Saisir le montant"
+                               class="form-control form-control-lg input"
+                               v-model="dhost.amount"
+                           >
+                        </div>
+
+                         <div class="mt-10 mb-20">
+                             <button class="btn btn-block btn-primary br-100" @click="faireundon()">
+                                 Ovations de {{ dhost.amount }} &euro;
+                             </button>
+                         </div>
+                       </form>
+                    </div>
+                  </div>
+
                   <div class="tab-pane fade" id="nav-social" role="tabpanel" aria-labelledby="nav-social-tab">
                       <form class="_form mt-20 dark" @submit.prevent>
                             <div class="form-group mt-20">
@@ -316,7 +374,7 @@
                    >
                 </div>
 
-                <!-- <div class="form-group mt-20">
+                <div class="form-group mt-20">
                    <input type="text"
                        name="sender_first_name"
                        placeholder="Votre prénom (optionnel)"
@@ -334,7 +392,7 @@
                    >
                 </div>
 
-                <div class="form-group mt-20">
+                <!-- <div class="form-group mt-20">
                    <select
                        name="sender_country"
                        v-model="dhost.sender_country"
@@ -382,6 +440,7 @@ export default {
 
     data: () => ({
         donation: {},
+        creators: [],
         duration: '',
         endDate: '',
         interval: null,
@@ -391,7 +450,7 @@ export default {
         social_links: [],
         devises: [],
         shost: {  name: '', link: '' },
-        dhost: {  amount: '', sender_first_name: '', sender_last_name: '', sender_country: ''  },
+        dhost: {  amount: '', receiver: ''  },
         rhost: {  amount: 0 },
         host: {  currency: '', phone: '', balance: '' },
         montant: 100,
@@ -406,6 +465,8 @@ export default {
         auth () {
             return JSON.parse(localStorage.getItem(this.$config.get('user')))
         },
+
+        is_creator () { return this.auth.is_creator },
 
         payment_link () {
             return this.auth.payment_link
@@ -464,9 +525,9 @@ export default {
     },
 
     mounted () {
+        this.dhost.amount = this.montant
         if (!this.isConnected) {
             this.getCreator()
-            this.dhost.amount = this.montant
         }
 
         if (this.isConnected) {
@@ -476,7 +537,9 @@ export default {
             this.getSocialLinks()
             this.initDevises()
             this.resetShost()
+            this.resetDhost()
             this.getDonations()
+            this.getCreators()
             this.selectFile()
             this.getTauxChange()
             $('#nav-editer-tab').click()
@@ -627,6 +690,20 @@ export default {
                 }
         },
 
+        async getCreators () {
+            this.startLoading()
+            const response = await this.$api.get('/user-api/users/')
+                .catch(error => {
+                    this.stopLoading()
+                    this.$swal.error('Error', error.response.data.message)
+                })
+
+                if (response) {
+                    this.stopLoading()
+                    this.creators = response.data.results.filter(c => c.is_creator == true)
+                }
+        },
+
         async getDonations () {
             this.startLoading()
 
@@ -695,7 +772,6 @@ export default {
 
         async faireundon () {
             this.startLoading()
-
             this.dhost.receiver = this.creator.id
             const response = await this.$api.post('/payment-api/donations/', this.dhost)
                 .catch(error => {
@@ -752,6 +828,10 @@ export default {
 
         resetShost () {
               this.shost = {  name: '', link: '' }
+        },
+
+        resetDhost () {
+              this.dhost = {  amount: this.montant, receiver: '' }
         },
 
         logout () {

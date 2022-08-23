@@ -56,7 +56,7 @@ export default {
         },
 
         nouvelle () {
-            let user = localStorage.getItem('nm')
+            let user = this.$route.query.user
             let route = this.$router.resolve({ name: 'my-page', params: { id: user } })
             window.open(route.href, '_self')
             localStorage.clear()

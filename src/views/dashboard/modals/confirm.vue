@@ -63,7 +63,7 @@ export default {
             handler: function (val) {
                 if (val) {
                     this.elementsOptions.clientSecret = val.client_secret
-                    this.confirmParams.return_url = this.$config.get('base_url') + 'success/checkout'
+                    this.confirmParams.return_url = `${this.$config.get('front_url')}success/checkout?user=${this.user.username}`
                 }
             }
         }

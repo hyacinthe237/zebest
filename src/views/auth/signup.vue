@@ -28,6 +28,17 @@
                   <span class="has-error">{{ errors.first('email') }}</span>
              </div>
 
+             <div class="form-group mt-20">
+                <select
+                    name="is_creator"
+                    v-model="ghost.is_creator"
+                    class="form-control form-control-lg input"
+                >
+                <option :value="true">Je suis un créateur de contenu</option>
+                <option :value="false">Je ne suis pas un créateur de contenu</option>
+                </select>
+             </div>
+
              <div class="form-group">
                  <div class="content bs pl-100">
                      <div class="dark">zebest.com/</div>
@@ -88,7 +99,7 @@ export default {
 
     data: () => ({
         message: 'Merci de vérifier votre email. Un code de vérification vous a été envoyé.',
-        ghost: { email: '', username: '', password1: '', password2: '', is_creator: true }
+        ghost: { email: '', username: '', password1: '', password2: '', is_creator: false }
     }),
 
     mounted () {
@@ -117,12 +128,6 @@ export default {
             const isValid = await this.$validator.validate()
             if (!isValid) return false
             this.isLoading = true
-
-            let formData = new FormData()
-            formData.append('email', this.ghost.email)
-            formData.append('username', this.ghost.username)
-            formData.append('password1', this.ghost.password1)
-            formData.append('password2', this.ghost.password2)
 
             const response = await this.$api.post('/registration/', this.ghost)
                 .catch(error => {
