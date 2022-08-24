@@ -624,25 +624,37 @@ export default {
          * @return {void}
          */
         async resetPassword () {
-            const isValid = await this.$validator.validate()
-            if (!isValid) return false
-            this.startLoading()
-
-            const response = await this.$api.post('/auth/password/change/', this.phost)
-                .catch(error => {
-                    this.stopLoading()
-                    console.log('erreur => ', error.response.data)
-                    this.$toastr.error('Erreur création compte', error.response.data)
-                })
-
-            if (response) {
-                this.stopLoading()
-                this.phost = { new_password1: '', new_password2: '' }
-                this.$toastr.success('Confirmation', 'Votre mot de passe a été mit à jour avec succès')
-                AuthService.logout()
-                this.go('signin')
-                window.setTimeout(location.reload(), 50000)
+            if (this.phost.new_password1 != '' && this.phost.new_password2 == '') {
+                this.$swal.error('Validation', 'Votre confirmation de mot de passe est vide')
             }
+
+            if (this.phost.new_password1 == '' && this.phost.new_password2 != '') {
+                this.$swal.error('Validation', 'Votre mot de passe est vide')
+            }
+
+            if (this.phost.new_password1 == '' && this.phost.new_password2 == '') {
+                this.$swal.error('Validation', 'Bien vouloir saisir le mot de passe et la confirmation')
+            }
+
+            if (this.phost.new_password1 != '' && this.phost.new_password2 != '') {
+                this.startLoading()
+
+                const response = await this.$api.post('/auth/password/change/', this.phost)
+                    .catch(error => {
+                        this.stopLoading()
+                        console.log('erreur => ', error.response.data)
+                        this.$swal.error('Erreur création compte', error.response.data)
+                    })
+
+                if (response) {
+                    this.showErrors =  false
+                    this.stopLoading()
+                    this.phost = { new_password1: '', new_password2: '' }
+                    this.$swal.success('Confirmation', 'Votre mot de passe a été mit à jour avec succès')
+                    this.loadData()
+                }
+            }
+
         },
 
         selectFile () {
