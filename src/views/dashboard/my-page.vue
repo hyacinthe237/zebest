@@ -445,7 +445,6 @@ export default {
         endDate: '',
         interval: null,
         taux: 0.07,
-        taux_xaf: 657.17,
         displayIcon: true,
         social_links: [],
         devises: [],
@@ -455,7 +454,6 @@ export default {
         host: {  currency: '', phone: '', balance: '' },
         montant: 100,
         creator: {},
-        rates: {},
         chartData: { labels: [], datasets: [] },
     }),
 
@@ -475,6 +473,14 @@ export default {
         donations () {
             return this.$store.state.donations
         },
+
+        rates () {
+            return this.$store.state.donations.rates
+        },
+
+        taux_xaf () { return this.rates.XAF - 5 },
+        taux_usd () { return this.rates.USD },
+        taux_gbp () { return this.rates.GBP },
 
         showModal () {
             return this.$store.state.showModal
@@ -594,19 +600,16 @@ export default {
 
         async getTauxChange () {
             this.startLoading()
-            await axios.get(`http://data.fixer.io/api/latest?access_key=${this.$config.get('fixer_key')}`,
-              { headers: {
-                  'Access-Control-Allow-Origin': '*'
-              } }
-            ).then(function (response) {
-                  this.stopLoading()
-                  this.rates = response.data.rates
-                  console.log(response.data);
-                  console.log(response.status);
-                  console.log(response.statusText);
-                  console.log(response.headers);
-                  console.log(response.config);
-            });
+            const response = await this.$api.get('/payment-api/current-change/')
+                .catch(error => {
+                    this.stopLoading()
+                    this.$swal.error(this.$translate.text('Error'), this.$translate.text(error.response.data.errors))
+                })
+
+                if (response) {
+                    this.stopLoading()
+                    this.$store.commit('donations/SET_RATES', response.data.results)
+                }
         },
 
         async saveWallet () {

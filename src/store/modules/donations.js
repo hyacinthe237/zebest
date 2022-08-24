@@ -6,11 +6,16 @@ export default {
 
     state: {
         donations: [],
+        rates: {},
     },
 
     mutations: {
         SET_DONATIONS (state, payload) {
             state.donations = payload
+        },
+
+        SET_RATES (state, payload) {
+            state.rates = payload
         },
     },
 
