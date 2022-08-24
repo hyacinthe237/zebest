@@ -185,7 +185,7 @@
                          </div>
 
                          <div class="mt-20">
-                             <button class="btn btn-block btn-primary br-100" @click="reset()">
+                             <button class="btn btn-block btn-primary br-100" @click="resetPassword()">
                                  Je modifie mon mot de passe
                              </button>
                          </div>
@@ -623,7 +623,7 @@ export default {
          * User signs in
          * @return {void}
          */
-        async reset () {
+        async resetPassword () {
             const isValid = await this.$validator.validate()
             if (!isValid) return false
             this.startLoading()
