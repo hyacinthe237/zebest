@@ -411,6 +411,21 @@
                   <div class="divider"></div>
               </div>
 
+              <div class="recaps mt-20">
+                  <div class="recap-line">
+                      <div class="label">Frais de transfert</div>
+                      <div class="value">+ {{ donation_transfert_amount }} EUR</div>
+                  </div>
+                  <div class="recap-line">
+                      <div class="label">Total du transfert</div>
+                      <div class="value">{{ donation_total_euro_amount }} EUR</div>
+                  </div>
+                  <div class="recap-line">
+                      <div class="label">Montant à crédité</div>
+                      <div class="value">{{ donation_xaf_total_euro_amount }} FCFA</div>
+                  </div>
+              </div>
+
               <form class="_form mt-20" @submit.prevent>
                 <div class="form-group mt-20">
                    <input type="number"
@@ -424,7 +439,7 @@
                 <div class="form-group mt-20">
                    <input type="text"
                        name="sender_first_name"
-                       placeholder="Votre prénom (optionnel)"
+                       placeholder="Votre prénom"
                        class="form-control form-control-lg input"
                        v-model="dhost.sender_first_name"
                    >
@@ -433,26 +448,11 @@
                 <div class="form-group mt-20">
                    <input type="text"
                        name="sender_last_name"
-                       placeholder="Votre nom (optionnel)"
+                       placeholder="Votre nom"
                        class="form-control form-control-lg input"
                        v-model="dhost.sender_last_name"
                    >
                 </div>
-
-                <!-- <div class="form-group mt-20">
-                   <select
-                       name="sender_country"
-                       v-model="dhost.sender_country"
-                       class="form-control form-control-lg input"
-                   >
-                   <option value="">Sélectionnez votre pays</option>
-                   <option
-                       v-for="(c, index) in countries"
-                       :key="index+1"
-                       :value="c.value"
-                   >{{ c.name }}</option>
-                   </select>
-                </div> -->
 
                  <div class="mt-10 mb-20">
                      <button class="btn btn-block btn-primary br-100" @click="faireundon()">
@@ -495,7 +495,7 @@ export default {
         social_links: [],
         devises: [],
         shost: {  name: '', link: '' },
-        dhost: {  amount: '', receiver: ''  },
+        dhost: {  amount: '', receiver: '', sender_first_name: '', sender_last_name: '' },
         rhost: {  amount: 0 },
         host: {  currency: '', phone: '', balance: '' },
         phost: {  new_password1: '', new_password2: '' },
@@ -561,6 +561,20 @@ export default {
             return Number.parseFloat(m).toFixed(2)
         },
 
+        donation_amount () {
+          return !_.isEmpty(this.dhost.amount) ? this.dhost.amount : this.montant
+        },
+
+        donation_transfert_amount () {
+            let m = Number.parseInt(this.donation_amount, 10) * this.taux_retrait
+            return Number.parseFloat(m).toFixed(2)
+        },
+
+        donation_total_euro_amount () {
+            let m = +Number.parseInt(this.donation_amount, 10) + +this.donation_transfert_amount
+            return Number.parseFloat(m).toFixed(2)
+        },
+
         total_euro_amount () {
             let m = +Number.parseInt(this.host_amount, 10) + +this.transfert_amount
             return Number.parseFloat(m).toFixed(2)
@@ -568,6 +582,11 @@ export default {
 
         net_a_recevoir () {
             let m = +Number.parseInt(this.host_amount, 10)  * this.taux_xaf
+            return Number.parseFloat(m).toFixed(2)
+        },
+
+        donation_xaf_total_euro_amount () {
+            let m = this.donation_total_euro_amount * this.taux_xaf
             return Number.parseFloat(m).toFixed(2)
         },
 
@@ -583,7 +602,7 @@ export default {
     },
 
     mounted () {
-        this.dhost.amount = this.montant
+        this.dhost = {  amount: this.montant, receiver: '', sender_first_name: '', sender_last_name: '' }
         if (!this.isConnected) {
             this.getCreator()
             this.getTauxChange()
@@ -869,20 +888,60 @@ export default {
         },
 
         async faireundon () {
-            this.startLoading()
-            this.dhost.receiver = this.creator.id
-            const response = await this.$api.post('/payment-api/donations/', this.dhost)
-                .catch(error => {
-                    this.stopLoading()
-                    this.$swal.error('Erreur', error.response.data.message)
-                })
+          this.startLoading()
+          let payload = { amount: '', receiver: '', sender_first_name: '', sender_last_name: '' }
 
-                if (response) {
-                    this.stopLoading()
-                    localStorage.setItem('donation', response.data.donation_id)
-                    this.donation = Object.assign({}, response.data)
-                    this.$store.commit('SET_SHOW_BANCAIRE_MODAL', true)
-                }
+          if (!this.isConnected && this.ghost.sender_last_name=='' && this.ghost.sender_first_name!='') {
+              this.$swal.error('Validation', 'Bien vouloir saisir votre nom avant de valider')
+          }
+
+          if (!this.isConnected && this.ghost.sender_last_name!='' && this.ghost.sender_first_name=='') {
+              this.$swal.error('Validation', 'Bien vouloir saisir votre prénom avant de valider')
+          }
+
+          if (!this.isConnected && this.ghost.sender_last_name!='' && this.ghost.sender_first_name=='') {
+              this.$swal.error('Validation', 'Bien vouloir saisir votre nom et prénom avant de valider')
+          }
+
+          if (!this.isConnected && this.ghost.sender_last_name!='' && this.ghost.sender_first_name!='') {
+              payload = {
+                  receiver: this.creator.id,
+                  amount: this.donation_total_euro_amount,
+                  sender_last_name: this.ghost.sender_last_name,
+                  sender_first_name: this.ghost.sender_first_name
+              }
+
+              const response = await this.$api.post('/payment-api/donations/', payload)
+                  .catch(error => {
+                      this.stopLoading()
+                      this.$swal.error('Erreur', error.response.data.message)
+                  })
+
+                  if (response) {
+                      this.stopLoading()
+                      localStorage.setItem('donation', response.data.donation_id)
+                      this.donation = Object.assign({}, response.data)
+                      this.$store.commit('SET_SHOW_BANCAIRE_MODAL', true)
+                  }
+          }
+
+          if (this.isConnected) {
+              payload = Object.assign({}, this.dhost)
+              const response = await this.$api.post('/payment-api/donations/', payload)
+                  .catch(error => {
+                      this.stopLoading()
+                      this.$swal.error('Erreur', error.response.data.message)
+                  })
+
+                  if (response) {
+                      this.stopLoading()
+                      localStorage.setItem('donation', response.data.donation_id)
+                      this.donation = Object.assign({}, response.data)
+                      this.$store.commit('SET_SHOW_BANCAIRE_MODAL', true)
+                  }
+          }
+
+
         },
 
         async saveSocialLink () {
@@ -939,10 +998,11 @@ export default {
         },
 
         async retrait () {
-            if (!_.isEmpty(this.net_a_recevoir)) {
+            let montant = Number.parseInt(this.rhost.amount, 10)
+            if (montant != 0) {
               this.startLoading()
 
-              const payload = { 'amount': this.net_a_recevoir }
+              const payload = { 'amount': montant }
 
               const response = await this.$api.post('/payment-api/money-requests/', payload)
                   .catch(error => {
