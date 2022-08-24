@@ -36,6 +36,13 @@
                           <span>Editer mon compte</span>
                       </a>
 
+                      <a class="nav-item nav-link" id="nav-password-tab"
+                          data-toggle="tab" href="#nav-password" role="tab"
+                          aria-controls="nav-password">
+                          <i class="feather icon-lock"></i>
+                          <span>Mot de passe</span>
+                      </a>
+
                       <a class="nav-item nav-link" id="nav-stats-tab"
                           data-toggle="tab" href="#nav-stats" role="tab"
                           aria-controls="nav-stats">
@@ -149,6 +156,40 @@
                            </button>
                        </div>
                      </form>
+                  </div>
+
+                  <div class="tab-pane fade" id="nav-password" role="tabpanel" aria-labelledby="nav-password-tab">
+                      <h2>modification mot de passe</h2>
+
+                      <form class="_form mt-20" @submit.prevent>
+                         <div class="form-group">
+                            <input type="password"
+                                name="new_password1"
+                                placeholder="Nouveau mot de passe"
+                                class="form-control form-control-lg input"
+                                v-model="phost.new_password1"
+                                v-validate="'required|min:8'"
+                            >
+                              <span class="has-error">{{ errors.first('new_password1') }}</span>
+                         </div>
+
+                         <div class="form-group">
+                            <input type="password"
+                                name="new_password2"
+                                placeholder="Confirmation nouveau mot de passe"
+                                class="form-control form-control-lg input"
+                                v-model="phost.new_password2"
+                                v-validate="'required|min:8'"
+                            >
+                              <span class="has-error">{{ errors.first('new_password2') }}</span>
+                         </div>
+
+                         <div class="mt-20">
+                             <button class="btn btn-block btn-primary br-100" @click="reset()">
+                                 Je modifie mon mot de passe
+                             </button>
+                         </div>
+                       </form>
                   </div>
 
                   <div class="tab-pane fade" id="nav-stats" role="tabpanel" aria-labelledby="nav-stats-tab">
@@ -451,6 +492,7 @@ export default {
         dhost: {  amount: '', receiver: ''  },
         rhost: {  amount: 0 },
         host: {  currency: '', phone: '', balance: '' },
+        phost: {  new_password1: '', new_password2: '' },
         montant: 100,
         creator: {},
         chartData: { labels: [], datasets: [] },
@@ -536,6 +578,12 @@ export default {
         }
 
         if (this.isConnected) {
+            this.loadDatas()
+        }
+    },
+
+    methods: {
+        loadDatas () {
             this.host.currency = 'EUR'
             this.getProfile()
             this.getWallet()
@@ -550,10 +598,8 @@ export default {
             $('#nav-editer-tab').click()
             $('#nav-editer').addClass("active")
             $('#nav-editer-tab').focus()
-        }
-    },
+        },
 
-    methods: {
         copyLink () {
             let toCopy = document.querySelector('#toCopy')
             toCopy.setAttribute('type', 'text')
@@ -571,6 +617,32 @@ export default {
             /* unselect the range */
             toCopy.setAttribute('type', 'hidden')
             window.getSelection().removeAllRanges()
+        },
+
+        /**
+         * User signs in
+         * @return {void}
+         */
+        async reset () {
+            const isValid = await this.$validator.validate()
+            if (!isValid) return false
+            this.startLoading()
+
+            const response = await this.$api.post('/auth/password/change/', this.phost)
+                .catch(error => {
+                    this.stopLoading()
+                    console.log('erreur => ', error.response.data)
+                    this.$toastr.error('Erreur création compte', error.response.data)
+                })
+
+            if (response) {
+                this.stopLoading()
+                this.phost = { new_password1: '', new_password2: '' }
+                this.$toastr.success('Confirmation', 'Votre mot de passe a été mit à jour avec succès')
+                AuthService.logout()
+                this.go('signin')
+                window.setTimeout(location.reload(), 50000)
+            }
         },
 
         selectFile () {

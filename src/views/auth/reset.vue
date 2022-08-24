@@ -90,9 +90,7 @@ export default {
 
             if (response) {
                 this.isLoading = false
-                let data = response.data
-                console.log(data)
-                // this.go('signin')
+                this.ghost = { new_password1: '', new_password2: '' }
             }
         },
     }
