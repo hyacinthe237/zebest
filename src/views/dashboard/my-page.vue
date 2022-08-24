@@ -222,7 +222,7 @@
                               </button>
                           </div>
 
-                          <div class="p mt-20">1.00 &euro; = 657.17 FCFA <br/> *Le taux de change varie en fonction du mode d'envoi et de paiement.</div>
+                          <div class="p mt-20">1.00 &euro; = {{ taux_xaf }} FCFA <br/> *Le taux de change varie en fonction du mode d'envoi et de paiement.</div>
                           <div class="recaps">
                               <div class="recap-line">
                                   <div class="label">Frais de transfert</div>
@@ -233,8 +233,13 @@
                                   <div class="value">{{ total_euro_amount }} EUR</div>
                               </div>
                               <div class="recap-line">
-                                  <div class="label">Montant à reçevoir</div>
+                                  <div class="label">Montant à débité</div>
                                   <div class="value">{{ xaf_total_euro_amount }} FCFA</div>
+                              </div>
+
+                              <div class="recap-line">
+                                  <div class="label">Montant à reçevoir</div>
+                                  <div class="value">{{ net_a_recevoir }} FCFA</div>
                               </div>
                               <div class="divider"></div>
                               <div class="recap-line">
@@ -485,7 +490,7 @@ export default {
         duration: '',
         endDate: '',
         interval: null,
-        taux: 0.07,
+        taux_retrait: 0.07,
         displayIcon: true,
         social_links: [],
         devises: [],
@@ -552,12 +557,17 @@ export default {
         },
 
         transfert_amount () {
-            let m = Number.parseInt(this.host_amount, 10) * this.taux
+            let m = Number.parseInt(this.host_amount, 10) * this.taux_retrait
             return Number.parseFloat(m).toFixed(2)
         },
 
         total_euro_amount () {
             let m = +Number.parseInt(this.host_amount, 10) + +this.transfert_amount
+            return Number.parseFloat(m).toFixed(2)
+        },
+
+        net_a_recevoir () {
+            let m = +Number.parseInt(this.host_amount, 10)  * this.taux_xaf
             return Number.parseFloat(m).toFixed(2)
         },
 
@@ -576,6 +586,7 @@ export default {
         this.dhost.amount = this.montant
         if (!this.isConnected) {
             this.getCreator()
+            this.getTauxChange()
         }
 
         if (this.isConnected) {
@@ -928,10 +939,10 @@ export default {
         },
 
         async retrait () {
-            if (!_.isEmpty(this.xaf_total_euro_amount)) {
+            if (!_.isEmpty(this.net_a_recevoir)) {
               this.startLoading()
 
-              const payload = { 'amount': this.xaf_total_euro_amount }
+              const payload = { 'amount': this.net_a_recevoir }
 
               const response = await this.$api.post('/payment-api/money-requests/', payload)
                   .catch(error => {
