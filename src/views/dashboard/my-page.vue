@@ -888,27 +888,26 @@ export default {
         },
 
         async faireundon () {
-          this.startLoading()
           let payload = { amount: '', receiver: '', sender_first_name: '', sender_last_name: '' }
-
-          if (!this.isConnected && this.ghost.sender_last_name=='' && this.ghost.sender_first_name!='') {
+          if (!this.isConnected && _.isEmpty(this.dhost.sender_last_name) && !_.isEmpty(this.dhost.sender_first_name)) {
               this.$swal.error('Validation', 'Bien vouloir saisir votre nom avant de valider')
           }
 
-          if (!this.isConnected && this.ghost.sender_last_name!='' && this.ghost.sender_first_name=='') {
+          if (!this.isConnected && !_.isEmpty(this.dhost.sender_last_name) && _.isEmpty(this.dhost.sender_first_name)) {
               this.$swal.error('Validation', 'Bien vouloir saisir votre prénom avant de valider')
           }
 
-          if (!this.isConnected && this.ghost.sender_last_name!='' && this.ghost.sender_first_name=='') {
+          if (!this.isConnected && _.isEmpty(this.dhost.sender_last_name) && _.isEmpty(this.dhost.sender_first_name)) {
               this.$swal.error('Validation', 'Bien vouloir saisir votre nom et prénom avant de valider')
           }
 
-          if (!this.isConnected && this.ghost.sender_last_name!='' && this.ghost.sender_first_name!='') {
+          if (!this.isConnected && this.dhost.sender_last_name!='' && this.dhost.sender_first_name!='') {
+              this.startLoading()
               payload = {
                   receiver: this.creator.id,
                   amount: this.donation_total_euro_amount,
-                  sender_last_name: this.ghost.sender_last_name,
-                  sender_first_name: this.ghost.sender_first_name
+                  sender_last_name: this.dhost.sender_last_name,
+                  sender_first_name: this.dhost.sender_first_name
               }
 
               const response = await this.$api.post('/payment-api/donations/', payload)
@@ -926,6 +925,7 @@ export default {
           }
 
           if (this.isConnected) {
+              this.startLoading()
               payload = Object.assign({}, this.dhost)
               const response = await this.$api.post('/payment-api/donations/', payload)
                   .catch(error => {
