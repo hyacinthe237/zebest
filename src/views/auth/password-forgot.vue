@@ -1,50 +1,55 @@
 <template lang="html">
-    <section class="signin-page">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-4 m-auto">
+    <div class="">
+      <section class="_header padding" v-show="!isLoading">
+          <div class="block-h">
+              <div class="logo pointer" @click="go('home')">zebest</div>
+              <div class="buttons">
+                <button
+                    @click="go('signin')"
+                    class="btn btn-block btn-primary br-100"
+                    :disabled="isLoading"
+                >{{ t('Se connecter') }}</button>
+              </div>
+          </div>
+      </section>
+      <section class="home" v-show="!isLoading">
+        <div class="block mt-60">
+          <h1>Mot de passe oublié</h1>
 
-                    <div class="login-form">
-                        <div class="logo-name text-center" v-translate>Forgot password</div>
+          <form class="_form mt-20" @submit.prevent>
+             <div class="form-group">
+                <input type="email"
+                    name="email"
+                    placeholder="Email"
+                    class="form-control form-control-lg input"
+                    v-model="ghost.email"
+                    v-validate="'required'"
+                >
+                  <span class="has-error">{{ errors.first('email') }}</span>
+             </div>
 
-                         <form class="_form mt-20" @submit.prevent="send()">
-                            <div class="form-group">
-                                <div class="inner-addon left-addon">
-                                    <i class="glyphicon feather icon-user"></i>
-
-                                    <input type="email"
-                                        name="email"
-                                        placeholder="Email"
-                                        class="form-control form-control-lg input-white"
-                                        v-model="ghost.email"
-                                        v-validate="'required|email'"
-                                    >
-                                    <span class="has-error">{{ errors.first('email') }}</span>
-                                </div>
-                            </div>
-
-                            <div class="mt-20">
-                                <izy-btn :loading="isLoading" :size="'lg'" block>
-                                    <i class="feather icon-arrow-right pull-right"></i>
-                                    {{ t('Send email') }}
-                                </izy-btn>
-                            </div>
-
-                            <div class="links">
-                                <router-link :to="{ name: 'signin', params: {} }">{{ t('Sign in') }}</router-link>
-                            </div>
-                       </form>
-                    </div>
-
-                </div>
-            </div>
+             <div class="mt-20">
+                 <button class="btn btn-block btn-primary br-100" @click="send()">
+                     Envoyer
+                 </button>
+             </div>
+           </form>
         </div>
-    </section>
+      </section>
+      <div v-show="isLoading" class="loading mt-60">
+          <izy-hollow-loading loading :colour="'#46D465'" />
+      </div>
+    </div>
 </template>
 
 <script>
 export default {
     name: 'ForgotPassword',
+
+    data: () => ({
+        ghost: { email: '' },
+        message: 'Merci de vérifier votre email. Un mot de passe vous a été envoyé.',
+    }),
 
     methods: {
         /**
@@ -57,15 +62,15 @@ export default {
 
             this.isLoading = true
 
-            const response = await this.$api.post('/login', this.ghost)
+            const response = await this.$api.post('/user-api/custom-password-reset/', this.ghost)
                 .catch(error => {
                     console.log('error => ', error)
                     this.$swal.error(this.$translate.text(error.response.data))
                 })
 
             if (response) {
-                console.log(response)
-                this.$swal.success(this.$translate.text('Please check your email box.'))
+                this.$swal.success('Confirmation', this.message)
+                this.go('signin')
             }
 
             this.isLoading = false

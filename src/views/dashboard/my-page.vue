@@ -430,7 +430,6 @@ import AuthService from '@/services/auth'
 import ConfirmModal from '../users/modals/confirm'
 import BancaireModal from './modals/confirm'
 import DashboardMixins from './mixins'
-import axios from 'axios'
 
 // import moment from 'moment'
 import _ from 'lodash'

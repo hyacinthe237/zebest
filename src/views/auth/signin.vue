@@ -39,6 +39,8 @@
               <span class="has-error">{{ errors.first('password') }}</span>
          </div>
 
+         <div class="text-right mt-10 primary pointer bold" @click="go('password-forgot')">Mot de passe oublié ?</div>
+
          <div class="mt-20">
              <button class="btn btn-block btn-primary br-100" @click="signin()">
                  Connexion

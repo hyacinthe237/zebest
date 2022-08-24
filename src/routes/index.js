@@ -10,6 +10,8 @@ import Guard from '@/services/middleware'
 import AuthSignin from '@/views/auth/signin'
 import Signup from '@/views/auth/signup'
 import Verify from '@/views/auth/verify'
+import PasswordForgot from '@/views/auth/password-forgot'
+import PasswordReset from '@/views/auth/reset'
 import AuthPasswordForgot from '@/views/auth/password-forgot'
 
 Vue.use(Router)
@@ -19,6 +21,8 @@ const guestRoutes = [
   { path: '/auth/signin', name: 'signin', component: AuthSignin  },
   { path: '/auth/signup', name: 'signup', component: Signup  },
   { path: '/auth/verify', name: 'verify', component: Verify  },
+  { path: '/auth/password/forgot', name: 'password-forgot', component: PasswordForgot  },
+  { path: '/auth/password/reset', name: 'password-reset', component: PasswordReset  },
   { path: '/:id', name: 'my-page', component: MyPage  },
   { path: '/success/checkout', name: 'success', component: SuccessCheckout  },
 ]
