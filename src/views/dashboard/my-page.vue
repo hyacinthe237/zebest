@@ -1,10 +1,11 @@
 <template>
     <div class="">
-          <section class="_header">
+          <section class="_header" v-show="!isLoading">
               <div class="block-h">
                   <div class="logo pointer" @click="go('home')">zebest</div>
                   <div class="buttons" v-if="isConnected">
                       <input type="hidden" id="toCopy" :value="`${payment_link}`">
+                      <div class="item mr-2" @click="loadDatas()"><i class="feather icon-repeat"></i></div>
                       <div class="item mr-2" @click.stop.prevent="copyLink()"><i class="feather icon-copy"></i></div>
                       <div class="item mr-2" @click="logout()"><i class="feather icon-log-out"></i></div>
                       <!-- <div class="dropdown">
@@ -651,7 +652,7 @@ export default {
                     this.stopLoading()
                     this.phost = { new_password1: '', new_password2: '' }
                     this.$swal.success('Confirmation', 'Votre mot de passe a été mit à jour avec succès')
-                    this.loadData()
+                    this.loadDatas()
                 }
             }
 
