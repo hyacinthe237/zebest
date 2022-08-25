@@ -92,14 +92,11 @@ export default {
                 AuthService.setUser(data)
                 AuthService.setToken(data.token)
                 ApiService.setToken(data.token)
-                // localStorage.setItem(this.$config.get('token'), data.user_token)
-                // this.$swal.success('Bienvenue sur Zebest', this.message)
-                // this.go('home')
-                let route = this.$router.resolve({ name: 'my-page', params: { id: data.username } })
-                window.open(route.href, '_self')
+                this.$router.push({ name: 'my-page', params: { id: data.username } })
+                this.isLoading = false
             }
 
-            this.isLoading = false
+
         },
     }
 }

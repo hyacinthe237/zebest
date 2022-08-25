@@ -57,8 +57,7 @@ export default {
 
         nouvelle () {
             let user = this.$route.query.user
-            let route = this.$router.resolve({ name: 'my-page', params: { id: user } })
-            window.open(route.href, '_self')
+            this.$router.push({ name: 'my-page', params: { id: user } })
             localStorage.clear()
             this.$store.commit('SET_SHOW_BANCAIRE_MODAL', false)
         }

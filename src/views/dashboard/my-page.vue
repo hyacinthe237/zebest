@@ -232,10 +232,10 @@
                                   <div class="label">Total du transfert</div>
                                   <div class="value">{{ total_euro_amount }} EUR</div>
                               </div>
-                              <div class="recap-line">
+                              <!-- <div class="recap-line">
                                   <div class="label">Montant à débité</div>
                                   <div class="value">{{ xaf_total_euro_amount }} FCFA</div>
-                              </div>
+                              </div> -->
 
                               <div class="recap-line">
                                   <div class="label">Montant à reçevoir</div>
@@ -261,16 +261,31 @@
                       <h2>faire un don</h2>
 
                       <div class="list-ronds mt-20">
+                          <div :class="['rond-item', dhost.amount == 5 ? 'active' : '']" @click="selectMontant(5)">5 &euro;</div>
+                          <div :class="['rond-item', dhost.amount == 10 ? 'active' : '']" @click="selectMontant(10)">10 &euro;</div>
                           <div :class="['rond-item', dhost.amount == 50 ? 'active' : '']" @click="selectMontant(50)">50 &euro;</div>
                           <div :class="['rond-item', dhost.amount == 100 ? 'active' : '']" @click="selectMontant(100)">100 &euro;</div>
-                          <div :class="['rond-item', dhost.amount == 250 ? 'active' : '']" @click="selectMontant(250)">250 &euro;</div>
-                          <div :class="['rond-item', dhost.amount == 500 ? 'active' : '']" @click="selectMontant(500)">500 &euro;</div>
                       </div>
 
                       <div class="diviseur">
                           <div class="divider"></div>
                           <div class="rond">Ou</div>
                           <div class="divider"></div>
+                      </div>
+
+                      <div class="recaps mt-20">
+                          <div class="recap-line">
+                              <div class="label">Frais de transfert</div>
+                              <div class="value">+ {{ donation_transfert_amount }} EUR</div>
+                          </div>
+                          <div class="recap-line">
+                              <div class="label">Total du transfert</div>
+                              <div class="value">{{ donation_total_euro_amount }} EUR</div>
+                          </div>
+                          <div class="recap-line">
+                              <div class="label">Montant à crédité</div>
+                              <div class="value">{{ donation_xaf_total_euro_amount }} FCFA</div>
+                          </div>
                       </div>
 
                       <form class="_form mt-20" @submit.prevent>
@@ -399,10 +414,10 @@
               <h2>faire un don à <span>{{ title_name }}</span></h2>
 
               <div class="list-ronds mt-20">
+                  <div :class="['rond-item', dhost.amount == 5 ? 'active' : '']" @click="selectMontant(5)">5 &euro;</div>
+                  <div :class="['rond-item', dhost.amount == 10 ? 'active' : '']" @click="selectMontant(10)">10 &euro;</div>
                   <div :class="['rond-item', dhost.amount == 50 ? 'active' : '']" @click="selectMontant(50)">50 &euro;</div>
                   <div :class="['rond-item', dhost.amount == 100 ? 'active' : '']" @click="selectMontant(100)">100 &euro;</div>
-                  <div :class="['rond-item', dhost.amount == 250 ? 'active' : '']" @click="selectMontant(250)">250 &euro;</div>
-                  <div :class="['rond-item', dhost.amount == 500 ? 'active' : '']" @click="selectMontant(500)">500 &euro;</div>
               </div>
 
               <div class="diviseur">
@@ -499,7 +514,7 @@ export default {
         rhost: {  amount: 0 },
         host: {  currency: '', phone: '', balance: '' },
         phost: {  new_password1: '', new_password2: '' },
-        montant: 100,
+        montant: 5,
         creator: {},
         chartData: { labels: [], datasets: [] },
     }),
@@ -566,17 +581,17 @@ export default {
         },
 
         donation_transfert_amount () {
-            let m = Number.parseInt(this.donation_amount, 10) * this.taux_retrait
+            let m = Number.parseInt(this.dhost.amount, 10) * this.taux_retrait
             return Number.parseFloat(m).toFixed(2)
         },
 
         donation_total_euro_amount () {
-            let m = +Number.parseInt(this.donation_amount, 10) + +this.donation_transfert_amount
+            let m = Number.parseInt(this.dhost.amount, 10)
             return Number.parseFloat(m).toFixed(2)
         },
 
         total_euro_amount () {
-            let m = +Number.parseInt(this.host_amount, 10) + +this.transfert_amount
+            let m = Number.parseInt(this.host_amount, 10)
             return Number.parseFloat(m).toFixed(2)
         },
 

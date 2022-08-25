@@ -7,7 +7,7 @@ import MyPage from '@/views/dashboard/my-page'
 import SuccessCheckout from '@/views/stripe/success'
 
 import Guard from '@/services/middleware'
-import AuthSignin from '@/views/auth/signin'
+import Signin from '@/views/auth/signin'
 import Signup from '@/views/auth/signup'
 import Verify from '@/views/auth/verify'
 import PasswordForgot from '@/views/auth/password-forgot'
@@ -18,20 +18,20 @@ Vue.use(Router)
 /** Open rotues */
 const guestRoutes = [
   { path: '/', name: 'home', component: Home },
-  { path: '/auth/signin', name: 'signin', component: AuthSignin  },
+  { path: '/:id', name: 'my-page', component: MyPage  },
+  { path: '/auth/signin', name: 'signin', component: Signin  },
   { path: '/auth/signup', name: 'signup', component: Signup  },
   { path: '/auth/verify', name: 'verify', component: Verify  },
   { path: '/auth/password/forgot', name: 'password-forgot', component: PasswordForgot  },
   { path: '/auth/password/reset', name: 'password-reset', component: PasswordReset  },
-  { path: '/:id', name: 'my-page', component: MyPage  },
   { path: '/success/checkout', name: 'success', component: SuccessCheckout  },
 ]
 
 /** Protected routes */
 const authRoutes = [
-  { path: '/profile', name: 'profile', component: UserProfile  },
+  { path: '/create/profile', name: 'profile', component: UserProfile  },
   { path: '/choix/devise', name: 'choix-devise', component: ChoixDevise  },
-  { path: '/password-forgot', name: 'password-forgot', component: AuthPasswordForgot  },
+  { path: '/password/forgot', name: 'password-forgot', component: AuthPasswordForgot  },
 ]
 
 authRoutes.forEach(r => {
