@@ -24,7 +24,7 @@
                         <span class="mt-10">{{ name }}</span>
                     </div>
 
-                    <div class="primary underline mt-10 pointer" @click="openPaymentLink()">{{ payment_link }}</div>
+                    <a class="primary underline mt-10 pointer" :href="payment_link" target="_blank">{{ payment_link }}</a>
 
                     <div class="mt-20 buttons mb-20">
                       <input type="hidden" id="toCopy" :value="`${payment_link}`">
@@ -70,7 +70,7 @@ export default {
         },
 
         payment_link () {
-            return this.user.payment_link
+            return `${this.$config.get('front_url')}${this.user.username}`
         },
 
         logo () {

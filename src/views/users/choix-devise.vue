@@ -100,8 +100,7 @@ export default {
 
         openPaymentLink () {
             let user = this.auth
-            let route = this.$router.resolve({ name: 'my-page', params: { id: user.username } })
-            window.open(route.href, '_self')
+            this.$router.push({ name: 'my-page', params: { id: user.username } })
             this.$store.commit('SET_SHOW_MODAL', true)
         }
 
