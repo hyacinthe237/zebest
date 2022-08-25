@@ -6,6 +6,7 @@
                   <div class="buttons" v-if="isConnected">
                       <input type="hidden" id="toCopy" :value="`${payment_link}`">
                       <div class="item mr-2" @click="loadDatas()"><i class="feather icon-repeat"></i></div>
+                      <div class="item mr-2" @click="displayModal()"><i class="feather icon-send"></i></div>
                       <div class="item mr-2" @click.stop.prevent="copyLink()"><i class="feather icon-copy"></i></div>
                       <div class="item mr-2" @click="logout()"><i class="feather icon-log-out"></i></div>
                       <!-- <div class="dropdown">
@@ -629,6 +630,10 @@ export default {
     },
 
     methods: {
+        displayModal () {
+            this.$store.commit('SET_SHOW_MODAL', true)
+        },
+
         loadDatas () {
             this.host.currency = 'EUR'
             this.getProfile()
