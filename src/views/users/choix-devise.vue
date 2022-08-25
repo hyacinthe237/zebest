@@ -87,7 +87,7 @@ export default {
                 const response = await this.$api.post('/payment-api/wallets/', this.ghost)
                     .catch(error => {
                         this.stopLoading()
-                        this.$swal.error(this.$translate.text('Error'), this.$translate.text(error.response.data.errors))
+                        this.$swal.error('Erreur choix de devise', error.response.data.message)
                     })
 
                     if (response) {

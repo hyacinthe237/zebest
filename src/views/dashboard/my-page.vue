@@ -732,7 +732,7 @@ export default {
             const response = await this.$api.get('/payment-api/current-change/')
                 .catch(error => {
                     this.stopLoading()
-                    this.$swal.error(this.$translate.text('Error'), this.$translate.text(error.response.data.errors))
+                    this.$swal.error('Erreur liste taux de change', error.response.data.message)
                 })
 
                 if (response) {
@@ -746,7 +746,7 @@ export default {
             const response = await this.$api.put(`/payment-api/wallets/${this.host.id}/`, this.host)
                 .catch(error => {
                     this.stopLoading()
-                    this.$swal.error(this.$translate.text('Error'), this.$translate.text(error.response.data.errors))
+                    this.$swal.error('Erreur modification des paramètres', error.response.data.message)
                 })
 
                 if (response) {
@@ -761,7 +761,7 @@ export default {
             const response = await this.$api.get('/payment-api/wallets/')
                 .catch(error => {
                     this.stopLoading()
-                    this.$swal.error(this.$translate.text('Error'), this.$translate.text(error.response.data.errors))
+                    this.$swal.error('Erreur liste des paramètres', error.response.data.message)
                 })
 
                 if (response) {
@@ -792,7 +792,7 @@ export default {
             const response = await this.$api.get(url)
                 .catch(error => {
                     this.stopLoading()
-                    this.$swal.error(this.$translate.text('Error'), this.$translate.text(error.response.data.message))
+                    this.$swal.error('Erreur chargement de votre profil', error.response.data.message)
                 })
 
                 if (response) {
@@ -813,7 +813,7 @@ export default {
             const response = await this.$api.post('/payment-api/user-infos/', payload)
                 .catch(error => {
                     this.stopLoading()
-                    this.$swal.error('Error', error.response.data.message)
+                    this.$swal.error('Erreur chargement des données du créateur de contenu', error.response.data.message)
                 })
 
                 if (response) {
@@ -827,7 +827,7 @@ export default {
             const response = await this.$api.get('/user-api/users/')
                 .catch(error => {
                     this.stopLoading()
-                    this.$swal.error('Error', error.response.data.message)
+                    this.$swal.error('Erreur liste des créateurs des contenus', error.response.data.message)
                 })
 
                 if (response) {
@@ -842,7 +842,7 @@ export default {
             const response = await this.$api.get('/payment-api/donations/')
                 .catch(error => {
                     this.stopLoading()
-                    this.$swal.error('Error', error.response.data.message)
+                    this.$swal.error('Erreur liste des donations', error.response.data.message)
                 })
 
                 if (response) {
@@ -890,7 +890,7 @@ export default {
                 const response = await this.$api.patch(url, formData)
                     .catch(error => {
                         this.stopLoading()
-                        this.$swal.error(this.$translate.text('Erreur'), this.$translate.text(error.response.data.message))
+                        this.$swal.error('Erreur modification du profil', error.response.data.message)
                     })
 
                     if (response) {
@@ -928,7 +928,7 @@ export default {
               const response = await this.$api.post('/payment-api/donations/', payload)
                   .catch(error => {
                       this.stopLoading()
-                      this.$swal.error('Erreur', error.response.data.message)
+                      this.$swal.error('Erreur paiement donation', error.response.data.message)
                   })
 
                   if (response) {
@@ -945,7 +945,7 @@ export default {
               const response = await this.$api.post('/payment-api/donations/', payload)
                   .catch(error => {
                       this.stopLoading()
-                      this.$swal.error('Erreur', error.response.data.message)
+                      this.$swal.error('Erreur paiement donation', error.response.data.message)
                   })
 
                   if (response) {
@@ -971,7 +971,7 @@ export default {
             const response = await this.$api.post('/user-api/social-links/', payload)
                 .catch(error => {
                     this.stopLoading()
-                    this.$swal.error(this.$translate.text('Erreur'), this.$translate.text(error.response.data.message))
+                    this.$swal.error('Erreur ajout réseau social', error.response.data.message)
                 })
 
                 if (response) {
@@ -989,7 +989,7 @@ export default {
             const response = await this.$api.get('/user-api/social-links/')
                 .catch(error => {
                     this.stopLoading()
-                    this.$swal.error(this.$translate.text('Erreur'), this.$translate.text(error.response.data.message))
+                    this.$swal.error('Erreur liste réseaux sociaux', error.response.data.message)
                 })
 
                 if (response) {
@@ -1022,7 +1022,7 @@ export default {
               const response = await this.$api.post('/payment-api/money-requests/', payload)
                   .catch(error => {
                       this.stopLoading()
-                      this.$swal.error(this.$translate.text('Erreur'), this.$translate.text(error.response.data.message))
+                      this.$swal.error('Erreur de retrait', error.response.data.message)
                   })
 
                   if (response) {

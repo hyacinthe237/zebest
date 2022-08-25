@@ -157,7 +157,7 @@ export default {
                 const response = await this.$api.patch(url, formData)
                     .catch(error => {
                         this.stopLoading()
-                        this.$swal.error(this.$translate.text('Erreur'), this.$translate.text(error.response.data.message))
+                        this.$swal.error('Erreur de modification de profile', error.response.data.message)
                     })
 
                     if (response) {

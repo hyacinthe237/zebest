@@ -132,13 +132,7 @@ export default {
             const response = await this.$api.post('/registration/', this.ghost)
                 .catch(error => {
                     this.isLoading = false
-                    console.log('erreur => ', error.response.data)
-                    let str = ''
-                    str = error.response.data.email ? error.response.data.email[0] : ''
-                    str = error.response.data.username ? error.response.data.username[0] : ''
-                    str = error.response.data.password1 ? error.response.data.password1[0] : ''
-                    str = error.response.data.password2 ? error.response.data.password2[0] : ''
-                    this.$toastr.error('Erreur création compte', str)
+                    this.$swal.error('Erreur de création de compte', error.response.data.message)
                 })
 
             if (response) {
@@ -146,8 +140,6 @@ export default {
                 let data = response.data
                 this.$swal.success('Confirmation', this.message)
                 AuthService.setUser(data)
-                // AuthService.setToken(data.key)
-                // ApiService.setToken(data.key)
                 this.go('verify')
                 localStorage.removeItem('username')
             }

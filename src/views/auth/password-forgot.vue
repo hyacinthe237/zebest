@@ -64,8 +64,7 @@ export default {
 
             const response = await this.$api.post('/user-api/custom-password-reset/', this.ghost)
                 .catch(error => {
-                    console.log('error => ', error)
-                    this.$swal.error(this.$translate.text(error.response.data))
+                    this.$swal.error('Erreur de validation', error.response.data.message)
                 })
 
             if (response) {

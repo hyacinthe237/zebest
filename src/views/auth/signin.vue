@@ -83,8 +83,7 @@ export default {
             const response = await this.$api.post('/user-api/login', payload)
                 .catch(error => {
                     this.isLoading = true
-                    console.log('error => ', error.response.data.message)
-                    this.$swal.error(this.$translate.text('Erreur de connexion'), this.$translate.text(error.response.data.message))
+                    this.$swal.error('Erreur de connexion', error.response.data.message)
                 })
 
             if (response) {

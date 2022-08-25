@@ -47,7 +47,7 @@ export default {
             const response = await this.$api.post(`/payment-api/charge-donation/`, payload)
                 .catch(error => {
                     this.stopLoading()
-                    this.$swal.error(this.$translate.text('Error'), this.$translate.text(error.response.data.errors))
+                    this.$swal.error('Erreur recharge donation', error.response.data.message)
                 })
 
                 if (response) {

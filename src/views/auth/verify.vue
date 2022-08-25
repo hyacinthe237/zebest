@@ -70,8 +70,7 @@ export default {
             const response = await this.$api.post('/user-api/verify-otp', { "otp": this.ghost.otp })
                 .catch(error => {
                     this.isLoading = true
-                    console.log('erreur => ', error.response.data.error)
-                    this.$swal.error('Erreur vérification code', error.response.data)
+                    this.$swal.error('Erreur vérification code', error.response.data.message)
                 })
 
             if (response) {
@@ -80,7 +79,6 @@ export default {
                 AuthService.setUser(data)
                 AuthService.setToken(data.token)
                 ApiService.setToken(data.token)
-                // localStorage.setItem(this.$config.get('token'), data.user_token)
                 this.go('profile')
             }
 
