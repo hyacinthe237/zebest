@@ -1,98 +1,127 @@
+import _ from 'lodash'
+
 export default {
     data: () => ({
-        countries: []
+        donation: {},
+        creators: [],
+        duration: '',
+        endDate: '',
+        interval: null,
+        taux_retrait: 0.07,
+        displayIcon: true,
+        social_links: [],
+        devises: [],
+        shost: {  name: '', link: '' },
+        dhost: {  amount: '', receiver: '', sender_first_name: '', sender_last_name: '' },
+        rhost: {  amount: 0 },
+        host: {  currency: '', phone: '', balance: '' },
+        phost: {  new_password1: '', new_password2: '' },
+        montant: 5,
+        creator: {},
+        selected: {},
+        chartData: { labels: [], datasets: [] },
     }),
 
+    computed: {
+        auth () {
+            return JSON.parse(localStorage.getItem(this.$config.get('user')))
+        },
+
+        is_creator () { return this.auth.is_creator },
+
+        payment_link () {
+            return this.auth.payment_link
+        },
+
+        donations () {
+            return this.$store.state.donations
+        },
+
+        rates () {
+            return this.$store.state.donations.rates
+        },
+
+        taux_xaf () { return this.rates.XAF - 5 },
+        taux_usd () { return this.rates.USD },
+        taux_gbp () { return this.rates.GBP },
+
+        showModal () {
+            return this.$store.state.showModal
+        },
+
+        showshareModal () {
+            return this.$store.state.showshareModal
+        },
+
+        showBancaireModal () {
+            return this.$store.state.showBancaireModal
+        },
+
+        title_name () {
+            return this.$route.params.id
+        },
+
+        isConnected () { return !_.isEmpty(this.auth) },
+
+        host_amount () {
+          return !_.isEmpty(this.rhost.amount) ? this.rhost.amount : 0
+        },
+
+        xaf_amount () {
+          let m = Number.parseInt(this.host_amount, 10) * this.taux_xaf
+          return Number.parseFloat(m).toFixed(2)
+        },
+
+        transfert_amount () {
+            let m = Number.parseInt(this.host_amount, 10) * this.taux_retrait
+            return Number.parseFloat(m).toFixed(2)
+        },
+
+        donation_amount () {
+          return !_.isEmpty(this.dhost.amount) ? this.dhost.amount : this.montant
+        },
+
+        donation_transfert_amount () {
+            let m = Number.parseInt(this.dhost.amount, 10) * this.taux_retrait
+            return Number.parseFloat(m).toFixed(2)
+        },
+
+        donation_total_euro_amount () {
+            let m = Number.parseInt(this.dhost.amount, 10)
+            return Number.parseFloat(m).toFixed(2)
+        },
+
+        total_euro_amount () {
+            let m = Number.parseInt(this.host_amount, 10)
+            return Number.parseFloat(m).toFixed(2)
+        },
+
+        net_a_recevoir () {
+            let m = +Number.parseInt(this.host_amount, 10)  * this.taux_xaf
+            return Number.parseFloat(m).toFixed(2)
+        },
+
+        donation_xaf_total_euro_amount () {
+            let m = this.donation_total_euro_amount * this.taux_xaf
+            return Number.parseFloat(m).toFixed(2)
+        },
+
+        xaf_total_euro_amount () {
+            let m = this.total_euro_amount * this.taux_xaf
+            return Number.parseFloat(m).toFixed(2)
+        },
+
+        total_amount () {
+            let m = +Number.parseInt(this.rhost.amount, 10) + +this.transfert_amount
+            return Number.parseFloat(m).toFixed(2)
+        },
+    },
+
     mounted () {
-        this.initCountries()
+
     },
 
     methods: {
-        initCountries () {
-          this.countries = [ { 'name': 'Afghanistan', 'value': 'AF' }, { 'name': 'Afrique du Sud', 'value': 'ZA' },{ 'name': 'Åland, Îles', 'value': 'AX' },
-          { 'name': 'Albanie', 'value': 'AL' }, { 'name': 'Algérie', 'value': 'DZ' }, { 'name': 'Allemagne', 'value': 'DE' },
-          { 'name': 'Allemagne de l\'EST', 'value': 'DD' }, { 'name': 'Andorre', 'value': 'AD' }, { 'name': 'Angola', 'value': 'AO' },
-          { 'name': 'Anguilla', 'value': 'AI' }, { 'name': 'Antarctique', 'value': 'AQ' }, { 'name': 'Antigua et Barbuda', 'value': 'AG' },
-          { 'name': 'Antilles néerlandaises', 'value': 'AN' }, { 'name': 'Arabie Saoudite', 'value': 'SA' }, { 'name': 'Argentine', 'value': 'AR' },
-          { 'name': 'Arménie', 'value': 'AM' }, { 'name': 'Aruba', 'value': 'AW' }, { 'name': 'Australie', 'value': 'AU' },
-          { 'name': 'Autriche', 'value': 'AT' }, { 'name': 'Azerbaïdjan', 'value': 'AZ' }, { 'name': 'Bahamas', 'value': 'BS' },
-          { 'name': 'Bahrein', 'value': 'BH' }, { 'name': 'Bangladesh', 'value': 'BD' }, { 'name': 'Barbade', 'value': 'BB' },
-          { 'name': 'Bélarus', 'value': 'BY' }, { 'name': 'Belgique', 'value': 'BE' }, { 'name': 'Bélize', 'value': 'BZ' },
-          { 'name': 'Bénin', 'value': 'BJ' }, { 'name': 'Bermudes', 'value': 'BM' }, { 'name': 'Bhoutan', 'value': 'BT' },
-          { 'name': 'Bolivie (État plurinational de)', 'value': 'BO' }, { 'name': 'Bonaire, Saint-Eustache et Saba', 'value': 'BQ' },
-          { 'name': 'Bosnie-Herzégovine', 'value': 'BA' }, { 'name': 'Botswana', 'value': 'BW' }, { 'name': 'Bouvet, Ile', 'value': 'BV' },
-          { 'name': 'Brésil', 'value': 'BR' }, { 'name': 'Brunéi Darussalam', 'value': 'BN' }, { 'name': 'Bulgarie', 'value': 'BG' },
-          { 'name': 'Burkina Faso', 'value': 'BF' }, { 'name': 'Burundi', 'value': 'BI' }, { 'name': 'Cabo Verde', 'value': 'CV' },
-          { 'name': 'Caïmans, Iles', 'value': 'KY' }, { 'name': 'Cambodge', 'value': 'KH' }, { 'name': 'Cameroun', 'value': 'CM' },
-          { 'name': 'Canada', 'value': 'CA' }, { 'name': 'Chili', 'value': 'CL' }, { 'name': 'Chine', 'value': 'CN' },
-          { 'name': 'Christmas, île', 'value': 'CX' }, { 'name': 'Chypre', 'value': 'CY' }, { 'name': 'Cocos/Keeling (Îles)', 'value': 'CC' },
-          { 'name': 'Colombie', 'value': 'CO' }, { 'name': 'Comores', 'value': 'KM' }, { 'name': 'Congo', 'value': 'CG' },
-          { 'name': 'Congo, République démocratique', 'value': 'CD' }, { 'name': 'Cook, Iles', 'value': 'CK' }, { 'name': 'Corée, République de', 'value': 'KR' },
-          { 'name': 'Corée, République populaire démocratique de', 'value': 'KP' }, { 'name': 'Costa Rica', 'value': 'CR' },
-          { 'name': 'Côte d\'Ivoire', 'value': 'CI' }, { 'name': 'Croatie', 'value': 'HR' }, { 'name': 'Cuba', 'value': 'CU' },
-          { 'name': 'Curaçao', 'value': 'CW' }, { 'name': 'Danemark', 'value': 'DK' }, { 'name': 'Djibouti', 'value': 'DJ' },
-          { 'name': 'Dominicaine, République', 'value': 'DO' }, { 'name': 'Dominique', 'value': 'DM' }, { 'name': 'Egypte', 'value': 'EG' },
-          { 'name': 'El Salvador', 'value': 'SV' }, { 'name': 'Emirats arabes unis', 'value': 'AE' }, { 'name': 'Equateur', 'value': 'EC' },
-          { 'name': 'Erythrée', 'value': 'ER' }, { 'name': 'Espagne', 'value': 'ES' }, { 'name': 'Estonie', 'value': 'EE' },
-          { 'name': 'Etats-Unis d\'Amérique', 'value': 'US' }, { 'name': 'Ethiopie', 'value': 'ET' }, { 'name': 'Falkland/Malouines (Îles)', 'value': 'FK' },
-          { 'name': 'Féroé, îles', 'value': 'FO' }, { 'name': 'Fidji', 'value': 'FJ' }, { 'name': 'Finlande', 'value': 'FI' },
-          { 'name': 'France', 'value': 'FR' }, { 'name': 'Gabon', 'value': 'GA' }, { 'name': 'Gambie', 'value': 'GM' },
-          { 'name': 'Géorgie', 'value': 'GE' }, { 'name': 'Géorgie du sud et les îles Sandwich du sud', 'value': 'GS' }, { 'name': 'Ghana', 'value': 'GH' },
-          { 'name': 'Gibraltar', 'value': 'GI' }, { 'name': 'Grèce', 'value': 'GR' }, { 'name': 'Grenade', 'value': 'GD' },
-          { 'name': 'Groenland', 'value': 'GL' }, { 'name': 'Guadeloupe', 'value': 'GP' }, { 'name': 'Guam', 'value': 'GU' },
-          { 'name': 'Guatemala', 'value': 'GT' }, { 'name': 'Guernesey', 'value': 'GG' }, { 'name': 'Guinée', 'value': 'GN' },
-          { 'name': 'Guinée-Bissau', 'value': 'GW' }, { 'name': 'Guinée équatoriale', 'value': 'GQ' }, { 'name': 'Guyana', 'value': 'GY' },
-          { 'name': 'Guyane française', 'value': 'GF' }, { 'name': 'Haïti', 'value': 'HT' }, { 'name': 'Heard, Ile et MacDonald, îles', 'value': 'HM' },
-          { 'name': 'Honduras', 'value': 'HN' }, { 'name': 'Hong Kong', 'value': 'HK' }, { 'name': 'Hongrie', 'value': 'HU' },
-          { 'name': 'Île de Man', 'value': 'IM' }, { 'name': 'Îles mineures éloignées des Etats-Unis', 'value': 'UM' }, { 'name': 'Îles vierges britanniques', 'value': 'VG' },
-          { 'name': 'Îles vierges des Etats-Unis', 'value': 'VI' }, { 'name': 'Inde', 'value': 'IN' }, { 'name': 'Indien (Territoire britannique de l\'océan)', 'value': 'IO' },
-          { 'name': 'Indonésie', 'value': 'ID' }, { 'name': 'République islamique d\'Iran', 'value': 'IR' }, { 'name': 'Iraq', 'value': 'IQ' },
-          { 'name': 'Irlande', 'value': 'IE' }, { 'name': 'Islande', 'value': 'IS' }, { 'name': 'Israël', 'value': 'IL' },
-          { 'name': 'Italie', 'value': 'IT' }, { 'name': 'Jamaïque', 'value': 'JM' }, { 'name': 'Japon', 'value': 'JP' },
-          { 'name': 'Jersey', 'value': 'JE' }, { 'name': 'Jordanie', 'value': 'JO' }, { 'name': 'Kazakhstan', 'value': 'KZ' },
-          { 'name': 'Kenya', 'value': 'KE' }, { 'name': 'Kirghizistan', 'value': 'KG' }, { 'name': 'Kiribati', 'value': 'KI' },
-          { 'name': 'Koweït', 'value': 'KW' }, { 'name': 'République démocratique populaire du Lao', 'value': 'LA' }, { 'name': 'Lesotho', 'value': 'LS' },
-          { 'name': 'Lettonie', 'value': 'LV' }, { 'name': 'Liban', 'value': 'LB' }, { 'name': 'Libéria', 'value': 'LR' },
-          { 'name': 'Libye', 'value': 'LY' }, { 'name': 'Liechtenstein', 'value': 'LI' }, { 'name': 'Lituanie', 'value': 'LT' },
-          { 'name': 'Luxembourg', 'value': 'LU' }, { 'name': 'Macao', 'value': 'MO' }, { 'name': 'Macédoine', 'value': 'MK' },
-          { 'name': 'Madagascar', 'value': 'MG' }, { 'name': 'Malaisie', 'value': 'MY' }, { 'name': 'Malawi', 'value': 'MW' },
-          { 'name': 'Maldives', 'value': 'MV' }, { 'name': 'Mali', 'value': 'ML' }, { 'name': 'Malte', 'value': 'MT' },
-          { 'name': 'Mariannes du nord, Iles', 'value': 'MP' }, { 'name': 'Maroc', 'value': 'MA' }, { 'name': 'Marshall, Iles', 'value': 'MH' },
-          { 'name': 'Martinique', 'value': 'MQ' }, { 'name': 'Maurice', 'value': 'MU' }, { 'name': 'Mauritanie', 'value': 'MR' },
-          { 'name': 'Mayotte', 'value': 'YT' }, { 'name': 'Mexique', 'value': 'MX' }, { 'name': 'Micronésie', 'value': 'FM' },
-          { 'name': 'Moldova', 'value': 'MD' }, { 'name': 'Monaco', 'value': 'MC' }, { 'name': 'Mongolie', 'value': 'MN' },
-          { 'name': 'Monténégro', 'value': 'ME' }, { 'name': 'Montserrat', 'value': 'MS' }, { 'name': 'Mozambique', 'value': 'MZ' },
-          { 'name': 'Myanmar', 'value': 'MM' }, { 'name': 'Namibie', 'value': 'NA' }, { 'name': 'Nauru', 'value': 'NR' },
-          { 'name': 'Népal', 'value': 'NP' }, { 'name': 'Nicaragua', 'value': 'NI' }, { 'name': 'Niger', 'value': 'NE' },
-          { 'name': 'Nigéria', 'value': 'NG' }, { 'name': 'Niue', 'value': 'NU' }, { 'name': 'Norfolk, Ile', 'value': 'NF' },
-          { 'name': 'Norvège', 'value': 'NO' }, { 'name': 'Nouvelle-Calédonie', 'value': 'NC' }, { 'name': 'Nouvelle-Zélande', 'value': 'NZ' },
-          { 'name': 'Oman', 'value': 'OM' }, { 'name': 'Ouganda', 'value': 'UG' }, { 'name': 'Ouzbékistan', 'value': 'UZ' },
-          { 'name': 'Pakistan', 'value': 'PK' }, { 'name': 'Palaos', 'value': 'PW' }, { 'name': 'Palestine, Etat', 'value': 'PS' },
-          { 'name': 'Panama', 'value': 'PA' }, { 'name': 'Papouasie-Nouvelle-Guinée', 'value': 'PG' }, { 'name': 'Paraguay', 'value': 'PY' },
-          { 'name': 'Pays-Bas', 'value': 'NL' }, { 'name': 'Pays inconnu', 'value': 'XX' }, { 'name': 'Pays multiples', 'value': 'ZZ' },
-          { 'name': 'Pérou', 'value': 'PE' }, { 'name': 'Philippines', 'value': 'PH' }, { 'name': 'Pitcairn', 'value': 'PN' },
-          { 'name': 'Pologne', 'value': 'PL' }, { 'name': 'Polynésie française', 'value': 'PF' }, { 'name': 'Porto Rico', 'value': 'PR' },
-          { 'name': 'Portugal', 'value': 'PT' }, { 'name': 'Qatar', 'value': 'QA' }, { 'name': 'République arabe syrienne', 'value': 'SY' },
-          { 'name': 'République centrafricaine', 'value': 'CF' }, { 'name': 'Réunion', 'value': 'RE' }, { 'name': 'Roumanie', 'value': 'RO' },
-          { 'name': 'Royaume-Uni de Grande-Bretagne et d\'Irlande du Nord', 'value': 'GB' }, { 'name': 'Russie, Fédération', 'value': 'RU' },
-          { 'name': 'Rwanda', 'value': 'RW' }, { 'name': 'Sahara occidental', 'value': 'EH' }, { 'name': 'Saint-Barthélemy', 'value': 'BL' },
-          { 'name': 'Saint-Kitts-et-Nevis', 'value': 'KN' }, { 'name': 'Saint-Marin', 'value': 'SM' }, { 'name': 'Saint-Martin (partie française)', 'value': 'MF' },
-          { 'name': 'Saint-Martin (partie néerlandaise)', 'value': 'SX' }, { 'name': 'Saint-Pierre-et-Miquelon', 'value': 'PM' }, { 'name': 'Saint-Siège', 'value': 'VA' },
-          { 'name': 'Saint-Vincent-et-les-Grenadines', 'value': 'VC' }, { 'name': 'Sainte-Hélène, Ascension et Tristan da Cunha', 'value': 'SH' },
-          { 'name': 'Sainte-Lucie', 'value': 'LC' }, { 'name': 'Salomon, Iles', 'value': 'SB' }, { 'name': 'Samoa', 'value': 'WS' },
-          { 'name': 'Samoa américaines', 'value': 'AS' }, { 'name': 'Sao Tomé-et-Principe', 'value': 'ST' }, { 'name': 'Sénégal', 'value': 'SN' },
-          { 'name': 'Serbie', 'value': 'RS' }, { 'name': 'Seychelles', 'value': 'SC' }, { 'name': 'Sierra Leone', 'value': 'SL' }, { 'name': 'Singapour', 'value': 'SG' },
-          { 'name': 'Slovaquie', 'value': 'SK' }, { 'name': 'Slovénie', 'value': 'SI' }, { 'name': 'Somalie', 'value': 'SO' },
-          { 'name': 'Soudan', 'value': 'SD' }, { 'name': 'Soudan du Sud', 'value': 'SS' }, { 'name': 'Sri Lanka', 'value': 'LK' }, { 'name': 'Suède', 'value': 'SE' },
-          { 'name': 'Suisse', 'value': 'CH' }, { 'name': 'Suriname', 'value': 'SR' }, { 'name': 'Svalbard et île Jan Mayen', 'value': 'SJ' },
-          { 'name': 'Swaziland', 'value': 'SZ' }, { 'name': 'Tadjikistan', 'value': 'TJ' }, { 'name': 'Taïwan, Province de Chine', 'value': 'TW' },
-          { 'name': 'Tanzanie', 'value': 'TZ' }, { 'name': 'Tchad', 'value': 'TD' }, { 'name': 'Tchécoslovaquie', 'value': 'CS' }, { 'name': 'Tchèque, République', 'value': 'CZ' }, { 'name': 'Terres australes françaises', 'value': 'TF' },
-          { 'name': 'Thaïlande', 'value': 'TH' }, { 'name': 'Timor-Leste', 'value': 'TL' }, { 'name': 'Togo', 'value': 'TG' }, { 'name': 'Tokelau', 'value': 'TK' }, { 'name': 'Tonga', 'value': 'TO' },
-          { 'name': 'Trinité-et-Tobago', 'value': 'TT' }, { 'name': 'Tunisie', 'value': 'TN' }, { 'name': 'Turkménistan', 'value': 'TM' }, { 'name': 'Turks-et-Caïcos', 'value': 'TC' }, { 'name': 'Turquie', 'value': 'TR' }, { 'name': 'Tuvalu', 'value': 'TV' },
-          { 'name': 'Ukraine', 'value': 'UA' }, { 'name': 'URSS', 'value': 'SU' }, { 'name': 'Uruguay', 'value': 'UY' }, { 'name': 'Vanuatu', 'value': 'VU' },
-          { 'name': 'Venezuela', 'value': 'VE' }, { 'name': 'Viet Nam', 'value': 'VN' }, { 'name': 'Viet Nam (Sud)', 'value': 'VD' },
-          { 'name': 'Wallis et Futuna', 'value': 'WF' }, { 'name': 'Yémen', 'value': 'YE' }, { 'name': 'Yougoslavie', 'value': 'YU' },
-          { 'name': 'Zaïre', 'value': 'ZR' }, { 'name': 'Zambie', 'value': 'ZM' }, { 'name': 'Zimbabwe', 'value': 'ZW' }]
-        },
+
     }
 }

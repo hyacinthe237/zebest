@@ -31,7 +31,7 @@ const guestRoutes = [
 const authRoutes = [
   { path: '/create/profile', name: 'profile', component: UserProfile  },
   { path: '/choix/devise', name: 'choix-devise', component: ChoixDevise  },
-  { path: '/password/forgot', name: 'password-forgot', component: AuthPasswordForgot  },
+  { path: '/forgot/password', name: 'password-forgot', component: AuthPasswordForgot  },
 ]
 
 authRoutes.forEach(r => {
