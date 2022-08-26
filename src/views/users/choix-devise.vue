@@ -43,7 +43,7 @@
         </div>
       </section>
       <div v-show="isLoading" class="mt-60 loading">
-          <izy-hollow-loading loading />
+          <izy-hollow-loading loading :colour="'#46D465'" />
       </div>
     </div>
 </template>

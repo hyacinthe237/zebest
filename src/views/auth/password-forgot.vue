@@ -60,19 +60,19 @@ export default {
             const isValid = await this.$validator.validate()
             if (!isValid) return false
 
-            this.isLoading = true
+            this.startLoading()
 
             const response = await this.$api.post('/user-api/custom-password-reset/', this.ghost)
                 .catch(error => {
+                    this.stopLoading()
                     this.$swal.error('Erreur de validation', error.response.data.message)
                 })
 
             if (response) {
+                this.stopLoading()
                 this.$swal.success('Confirmation', this.message)
                 this.go('signin')
             }
-
-            this.isLoading = false
         },
     }
 }

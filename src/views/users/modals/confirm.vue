@@ -115,7 +115,7 @@ export default {
             let user = this.user
             let token = this.token
             let route = this.$router.resolve({ name: 'my-page', params: { id: user.username }, query: { ntk: token } })
-            window.open(`${this.payment_link}`, '_blank')
+            window.open(`${this.$config.get('front_url')}${route.href}`, '_blank')
         }
     }
 }

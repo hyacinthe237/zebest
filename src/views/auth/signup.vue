@@ -127,16 +127,16 @@ export default {
         async signup () {
             const isValid = await this.$validator.validate()
             if (!isValid) return false
-            this.isLoading = true
+            this.startLoading()
 
             const response = await this.$api.post('/registration/', this.ghost)
                 .catch(error => {
-                    this.isLoading = false
+                    this.stopLoading()
                     this.$swal.error('Erreur de création de compte', error.response.data.message)
                 })
 
             if (response) {
-                this.isLoading = false
+                this.stopLoading()
                 let data = response.data
                 this.$swal.success('Confirmation', this.message)
                 AuthService.setUser(data)

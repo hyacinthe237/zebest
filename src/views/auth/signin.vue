@@ -76,13 +76,13 @@ export default {
         async signin () {
             const isValid = await this.$validator.validate()
             if (!isValid) return false
-            this.isLoading = true
+            this.startLoading()
 
             const payload = { username: this.ghost.username, password: this.ghost.password }
 
             const response = await this.$api.post('/user-api/login', payload)
                 .catch(error => {
-                    this.isLoading = true
+                    this.stopLoading()
                     this.$swal.error('Erreur de connexion', error.response.data.message)
                 })
 
@@ -92,7 +92,7 @@ export default {
                 AuthService.setToken(data.token)
                 ApiService.setToken(data.token)
                 this.$router.push({ name: 'my-page', params: { id: data.username } })
-                this.isLoading = false
+                this.stopLoading()
             }
 
 

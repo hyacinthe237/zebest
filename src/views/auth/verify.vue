@@ -65,15 +65,16 @@ export default {
         async send () {
             const isValid = await this.$validator.validate()
             if (!isValid) return false
-            this.isLoading = true
+            this.startLoading()
 
             const response = await this.$api.post('/user-api/verify-otp', { "otp": this.ghost.otp })
                 .catch(error => {
-                    this.isLoading = true
+                    this.stopLoading()
                     this.$swal.error('Erreur vérification code', error.response.data.message)
                 })
 
             if (response) {
+                this.stopLoading()
                 let data = response.data
                 this.$swal.success('Confirmation', data.message)
                 AuthService.setUser(data)
@@ -81,8 +82,6 @@ export default {
                 ApiService.setToken(data.token)
                 this.go('profile')
             }
-
-            this.isLoading = false
         },
     }
 }
