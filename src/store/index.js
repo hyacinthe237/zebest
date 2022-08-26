@@ -11,6 +11,7 @@ export default new Vuex.Store({
         toggleIcon: false,
         showModal: false,
         showBancaireModal: false,
+        showshareModal: false,
         amount: 0
     },
 
@@ -25,6 +26,10 @@ export default new Vuex.Store({
 
         SET_SHOW_BANCAIRE_MODAL (state, value) {
             state.showBancaireModal = value
+        },
+
+        SET_SHOW_SHARE_MODAL (state, value) {
+            state.showshareModal = value
         },
 
         SET_BREADCRUMB (state, payload) {

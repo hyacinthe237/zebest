@@ -1,7 +1,7 @@
 <template lang="html">
     <div
         class="modal animated modal-backdrop"
-        tabindex="-1" role="dialog" id="confirmModal"
+        tabindex="-1" role="dialog" id="shareModal"
         aria-labelledby="confirmModalLabel" aria-hidden="true"
     >
         <div class="modal-dialog" role="document">
@@ -13,11 +13,11 @@
                 </div>
                 <div class="modal-body">
                     <div class="_head">
-                      <h2 class="mr-10">félicitations</h2>
+                      <h2 class="mr-10">Partage ta page avec ta communauté</h2>
                       <img :src="logoFete" width="30px" height="30px">
                     </div>
 
-                    <p>Ta page est prête. Tu peux à présent la partager avec ta communauté.</p>
+                    <!-- <p>Ta page est prête. Tu peux à présent la partager avec ta communauté.</p> -->
 
                     <div class="content-profile-photo">
                         <img :src="logo">
@@ -75,10 +75,6 @@ export default {
         logo () {
             return this.user.image
         },
-
-        token () {
-            return localStorage.getItem('zebest_token')
-        },
     },
 
     methods: {
@@ -102,8 +98,8 @@ export default {
         },
 
         closeM () {
-            window.$('#confirmModal').modal('hide')
-            this.$store.commit('SET_SHOW_MODAL', false)
+            window.$('#shareModal').modal('hide')
+            this.$store.commit('SET_SHOW_SHARE_MODAL', false)
         },
 
         tiktok () {

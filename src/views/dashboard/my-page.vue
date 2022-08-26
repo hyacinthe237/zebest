@@ -4,21 +4,11 @@
               <div class="block-h">
                   <div class="logo pointer" @click="go('home')">zebest</div>
                   <div class="buttons" v-if="isConnected">
-                      <input type="hidden" id="toCopy" :value="`${payment_link}`">
+                      <input type="hidden" id="toCopy" :value="`${ghost.payment_link}`">
                       <div class="item mr-2" @click="loadDatas()"><i class="feather icon-repeat"></i></div>
                       <div class="item mr-2" @click="displayModal()"><i class="feather icon-send"></i></div>
                       <div class="item mr-2" @click.stop.prevent="copyLink()"><i class="feather icon-copy"></i></div>
                       <div class="item mr-2" @click="logout()"><i class="feather icon-log-out"></i></div>
-                      <!-- <div class="dropdown">
-                          <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              <span>Bienvenue, {{ auth.username }}</span>
-                          </button>
-                          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                              <a class="dropdown-item" href="#">Action</a>
-                              <a class="dropdown-item" href="#">Another action</a>
-                              <a class="dropdown-item pointer" href="#">Se déconnecter</a>
-                          </div>
-                      </div> -->
                   </div>
               </div>
           </section>
@@ -482,7 +472,7 @@
         </div>
 
         <ConfirmModal v-if="showModal" :user="auth"></ConfirmModal>
-
+        <ShareModal v-if="showshareModal" :user="selected"></ShareModal>
         <BancaireModal v-if="showBancaireModal" :user="creator" :donation="donation"></BancaireModal>
     </div>
 </template>
@@ -491,6 +481,7 @@
 import AuthService from '@/services/auth'
 // import ApiService from '@/services/api'
 import ConfirmModal from '../users/modals/confirm'
+import ShareModal from '../users/modals/share'
 import BancaireModal from './modals/confirm'
 import DashboardMixins from './mixins'
 
@@ -517,10 +508,11 @@ export default {
         phost: {  new_password1: '', new_password2: '' },
         montant: 5,
         creator: {},
+        selected: {},
         chartData: { labels: [], datasets: [] },
     }),
 
-    components: { ConfirmModal, BancaireModal },
+    components: { ConfirmModal, BancaireModal, ShareModal },
 
     computed: {
         auth () {
@@ -547,6 +539,10 @@ export default {
 
         showModal () {
             return this.$store.state.showModal
+        },
+
+        showshareModal () {
+            return this.$store.state.showshareModal
         },
 
         showBancaireModal () {
@@ -635,7 +631,8 @@ export default {
 
     methods: {
         displayModal () {
-            this.$store.commit('SET_SHOW_MODAL', true)
+            this.$store.commit('SET_SHOW_SHARE_MODAL', true)
+            this.selected = this.ghost
         },
 
         loadDatas () {
