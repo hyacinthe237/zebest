@@ -625,6 +625,10 @@ export default {
         }
 
         if (this.isConnected) {
+            $('#nav-editer-tab').click()
+            $('#nav-editer').addClass("active")
+            $('#nav-editer-tab').focus()
+            this.selectFile()
             this.loadDatas()
         }
     },
@@ -644,11 +648,7 @@ export default {
             this.resetDhost()
             this.getDonations()
             this.getCreators()
-            this.selectFile()
             this.getTauxChange()
-            $('#nav-editer-tab').click()
-            $('#nav-editer').addClass("active")
-            $('#nav-editer-tab').focus()
         },
 
         copyLink () {
@@ -1014,7 +1014,7 @@ export default {
         logout () {
             AuthService.logout()
             this.go('home')
-            window.setTimeout(location.reload(), 50000)
+            // window.setTimeout(location.reload(), 50000)
         },
 
         async retrait () {
