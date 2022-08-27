@@ -7,14 +7,14 @@
                       <i class="feather icon-x"></i>
                   </button>
               </div>
-              <div class="modal-body" v-show="!isLoading">
-                  <div class="_img">
+              <div class="modal-body">
+                  <div class="_img" v-show="!isLoading">
                     <img :src="logo">
                   </div>
 
-                  <h2 class="mt-10">faire un don à <span>{{ user.username }}</span></h2>
+                  <h2 class="mt-10" v-show="!isLoading">faire un don à <span>{{ user.username }}</span></h2>
 
-                    <div class="form-group mt-10">
+                    <div class="form-group mt-10" v-show="!isLoading">
                         <stripe-element-payment
                             ref="paymentRef"
                             :pk="pk"
@@ -23,14 +23,14 @@
                         />
                     </div>
 
-                     <div class="mt-10">
+                     <div class="mt-10" v-show="!isLoading">
                          <button class="btn btn-block btn-primary br-100" @click="payer()">
                              Payer
                          </button>
                      </div>
-              </div>
-              <div v-show="isLoading" class="mt-40 pb-40 text-center">
-                  <izy-hollow-loading loading :colour="'#46D465'" />
+                     <div v-show="isLoading" class="mt-40 pb-40 text-center">
+                         <izy-hollow-loading loading :colour="'#46D465'" />
+                     </div>
               </div>
           </div>
       </div>

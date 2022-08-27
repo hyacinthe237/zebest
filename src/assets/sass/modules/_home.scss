@@ -201,6 +201,23 @@
     }
 }
 
+.balance {
+    display: flex;
+    justify-content: flex-end;
+    font-family: 'Ambit Black', 'Monument Extended Bold', Avenir, Calibri, sans-serif;
+    color: $brand-dark;
+    font-size: 18px;
+    margin-top: 20px;
+    text-align: right;
+
+    .message {
+
+        span {
+            color: $brand-primary;
+        }
+    }
+}
+
 @media (max-width: 560px) {
     .home {
         padding: 0;

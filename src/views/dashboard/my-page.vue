@@ -18,6 +18,10 @@
               <izy-hollow-loading loading :colour="'#46D465'" />
           </div>
 
+          <div class="balance">
+              <div class="message">Bonjour <span>{{ ghost.first_name }}</span>, </br>votre solde est de <span>{{ ghost.balance }}</span></div>
+          </div>
+
           <div class="container" v-if="isConnected && !isLoading">
               <div class="_tabs mt-20">
                   <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -51,7 +55,7 @@
 
                       <a class="nav-item nav-link" id="nav-don-tab"
                           data-toggle="tab" href="#nav-don" role="tab"
-                          aria-controls="nav-don" v-show="!is_creator">
+                          aria-controls="nav-don">
                           <i class="feather icon-dollar-sign"></i>
                           <span>Faire un don</span>
                       </a>
@@ -490,17 +494,12 @@ export default {
     components: { ConfirmModal, BancaireModal, ShareModal },
 
     mounted () {
-        this.dhost = {  amount: this.montant, receiver: '', sender_first_name: '', sender_last_name: '' }
         if (!this.isConnected) {
             this.getCreator()
             this.getTauxChange()
         }
 
         if (this.isConnected) {
-            $('#nav-editer-tab').click()
-            $('#nav-editer').addClass("active")
-            $('#nav-editer-tab').focus()
-            this.selectFile()
             this.loadDatas()
         }
     },
@@ -579,18 +578,6 @@ export default {
                 }
             }
 
-        },
-
-        selectFile () {
-            var fileSelect = document.getElementById("fileSelect")
-            var fileElem = document.getElementById("fileElem")
-
-            fileSelect.addEventListener("click", function (e) {
-                if (fileElem) {
-                    fileElem.click()
-                }
-                e.preventDefault()
-            }, false)
         },
 
         selectMontant (montant) {
@@ -710,7 +697,7 @@ export default {
 
                 if (response) {
                     this.stopLoading()
-                    this.creators = response.data.results.filter(c => c.is_creator == true)
+                    this.creators = response.data.results.filter(c => c.is_creator == true && this.auth.id == c.id)
                 }
         },
 
