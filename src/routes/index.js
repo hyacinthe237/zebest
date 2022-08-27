@@ -5,6 +5,7 @@ import UserProfile from '@/views/users/profile'
 import ChoixDevise from '@/views/users/choix-devise'
 import MyPage from '@/views/dashboard/my-page'
 import SuccessCheckout from '@/views/stripe/success'
+import NotFoundComponent from '@/views/notfound/notfound'
 
 import Guard from '@/services/middleware'
 import Signin from '@/views/auth/signin'
@@ -25,6 +26,7 @@ const guestRoutes = [
   { path: '/auth/password/forgot', name: 'password-forgot', component: PasswordForgot  },
   { path: '/auth/password/reset', name: 'password-reset', component: PasswordReset  },
   { path: '/success/checkout', name: 'success', component: SuccessCheckout  },
+  { path: '/:catchAll(.*)', name: 'NotFound', component: NotFoundComponent }
 ]
 
 /** Protected routes */
