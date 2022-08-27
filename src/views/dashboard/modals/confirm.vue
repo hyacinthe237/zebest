@@ -2,12 +2,12 @@
     <div class="modal animated fadeIn upload" id="confirmDonModal">
       <div class="modal-dialog" role="document">
           <div class="modal-content">
-              <div class="text-right">
+              <div class="text-right" v-show="!isLoading">
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="closeM()">
                       <i class="feather icon-x"></i>
                   </button>
               </div>
-              <div class="modal-body">
+              <div class="modal-body" v-show="!isLoading">
                   <div class="_img">
                     <img :src="logo">
                   </div>
@@ -29,11 +29,11 @@
                          </button>
                      </div>
               </div>
+              <div v-show="isLoading" class="mt-40 pb-40 text-center">
+                  <izy-hollow-loading loading :colour="'#46D465'" />
+              </div>
           </div>
       </div>
-        <!-- <div v-show="isLoading" class="mt-40 pb-40 text-center">
-            <izy-hollow-loading loading />
-        </div> -->
     </div>
 </template>
 
@@ -85,9 +85,7 @@ export default {
 
     methods: {
         payer () {
-            // window.$('#confirmDonModal').modal('hide')
-            // this.$store.commit('SET_SHOW_BANCAIRE_MODAL', false)
-            // this.$emit('infosBancaire', this.ghost)
+            this.startLoading()
             this.$refs.paymentRef.submit();
         },
 
