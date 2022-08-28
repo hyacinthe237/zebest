@@ -1,50 +1,45 @@
 <template>
     <div class="">
-          <section class="_header" v-show="!isLoading">
-              <div class="block-h">
-                  <div class="logo pointer" @click="go('home')">zebest</div>
-                  <div class="buttons" v-if="isConnected">
-                      <input type="hidden" id="toCopy" :value="`${ghost.payment_link}`">
-                      <div class="item mr-2" @click="loadDatas()"><i class="feather icon-repeat"></i></div>
-                      <div class="item mr-2" @click="displayModal()"><i class="feather icon-send"></i></div>
-                      <div class="item mr-2" @click.stop.prevent="copyLink()"><i class="feather icon-copy"></i></div>
-                      <div class="item mr-2" @click="logout()"><i class="feather icon-log-out"></i></div>
+          <div class="containser">
+              <section class="_header" v-show="!isLoading">
+                  <div class="block-h">
+                      <div class="logo pointer" @click="go('home')">zebest</div>
+                      <div class="buttons" v-if="isConnected">
+                          <input type="hidden" id="toCopy" :value="`${ghost.payment_link}`">
+                          <div class="item mr-2" @click="loadDatas()"><i class="feather icon-repeat"></i></div>
+                          <div class="item mr-2" @click="displayModal()"><i class="feather icon-send"></i></div>
+                          <div class="item mr-2" @click.stop.prevent="copyLink()"><i class="feather icon-copy"></i></div>
+                          <div class="item mr-2" @click="logout()"><i class="feather icon-log-out"></i></div>
+                      </div>
                   </div>
-              </div>
-          </section>
+              </section>
+          </div>
 
         <div class="mypage">
           <div v-show="isLoading" class="mt-60 loading">
               <izy-hollow-loading loading :colour="'#46D465'" />
           </div>
 
-          <div class="balance">
-              <div class="message">Bonjour <span>{{ ghost.first_name }}</span>, </br>votre solde est de <span>{{ ghost.balance }}</span></div>
-          </div>
-
           <div class="container" v-if="isConnected && !isLoading">
+              <div class="balance">
+                  <div class="message">Bienvenue <span>{{ ghost.first_name }}</span>, <br/>votre solde est de <span>{{ ghost.balance }} &euro;</span></div>
+              </div>
+
               <div class="_tabs mt-20">
                   <div class="nav nav-tabs" id="nav-tab" role="tablist">
                       <a class="nav-item nav-link" id="nav-editer-tab"
                           data-toggle="tab" href="#nav-editer" role="tab"
                           aria-controls="nav-editer">
                           <i class="feather icon-user"></i>
-                          <span>Editer mon compte</span>
+                          <span>Mon compte</span>
                       </a>
 
-                      <a class="nav-item nav-link" id="nav-password-tab"
-                          data-toggle="tab" href="#nav-password" role="tab"
-                          aria-controls="nav-password">
-                          <i class="feather icon-lock"></i>
-                          <span>Mot de passe</span>
-                      </a>
-
-                      <a class="nav-item nav-link" id="nav-stats-tab"
+                      <!-- <a class="nav-item nav-link" id="nav-stats-tab"
                           data-toggle="tab" href="#nav-stats" role="tab"
                           aria-controls="nav-stats">
-                          <i class="feather icon-activity"></i>
+                          <i class="feather icon-pie-chart"></i>
                           <span>Mes statistiques</span>
-                      </a>
+                      </a> -->
 
                       <a class="nav-item nav-link" id="nav-retrait-tab"
                           data-toggle="tab" href="#nav-retrait" role="tab"
@@ -56,7 +51,7 @@
                       <a class="nav-item nav-link" id="nav-don-tab"
                           data-toggle="tab" href="#nav-don" role="tab"
                           aria-controls="nav-don">
-                          <i class="feather icon-dollar-sign"></i>
+                          <i class="feather icon-award"></i>
                           <span>Faire un don</span>
                       </a>
 
@@ -72,6 +67,13 @@
                           aria-controls="nav-settings">
                           <i class="feather icon-settings"></i>
                           <span>Paramètres</span>
+                      </a>
+
+                      <a class="nav-item nav-link" id="nav-operations-tab"
+                          data-toggle="tab" href="#nav-operations" role="tab"
+                          aria-controls="nav-operations">
+                          <i class="feather icon-activity"></i>
+                          <span>Mes Opérations</span>
                       </a>
                   </div>
               </div>
@@ -152,40 +154,38 @@
                            </button>
                        </div>
                      </form>
-                  </div>
 
-                  <div class="tab-pane fade" id="nav-password" role="tabpanel" aria-labelledby="nav-password-tab">
-                      <h2>modification mot de passe</h2>
+                     <div class="divider"></div>
+                     <h3 class="mt-20">modification mot de passe</h3>
+                     <form class="_form mt-20" @submit.prevent>
+                        <div class="form-group">
+                           <input type="password"
+                               name="new_password1"
+                               placeholder="Nouveau mot de passe"
+                               class="form-control form-control-lg input"
+                               v-model="phost.new_password1"
+                               v-validate="'required|min:8'"
+                           >
+                             <span class="has-error">{{ errors.first('new_password1') }}</span>
+                        </div>
 
-                      <form class="_form mt-20" @submit.prevent>
-                         <div class="form-group">
-                            <input type="password"
-                                name="new_password1"
-                                placeholder="Nouveau mot de passe"
-                                class="form-control form-control-lg input"
-                                v-model="phost.new_password1"
-                                v-validate="'required|min:8'"
-                            >
-                              <span class="has-error">{{ errors.first('new_password1') }}</span>
-                         </div>
+                        <div class="form-group">
+                           <input type="password"
+                               name="new_password2"
+                               placeholder="Confirmation nouveau mot de passe"
+                               class="form-control form-control-lg input"
+                               v-model="phost.new_password2"
+                               v-validate="'required|min:8'"
+                           >
+                             <span class="has-error">{{ errors.first('new_password2') }}</span>
+                        </div>
 
-                         <div class="form-group">
-                            <input type="password"
-                                name="new_password2"
-                                placeholder="Confirmation nouveau mot de passe"
-                                class="form-control form-control-lg input"
-                                v-model="phost.new_password2"
-                                v-validate="'required|min:8'"
-                            >
-                              <span class="has-error">{{ errors.first('new_password2') }}</span>
-                         </div>
-
-                         <div class="mt-20">
-                             <button class="btn btn-block btn-primary br-100" @click="resetPassword()">
-                                 Je modifie mon mot de passe
-                             </button>
-                         </div>
-                       </form>
+                        <div class="mt-20">
+                            <button class="btn btn-block btn-primary br-100" @click="resetPassword()">
+                                Modifier
+                            </button>
+                        </div>
+                      </form>
                   </div>
 
                   <div class="tab-pane fade" id="nav-stats" role="tabpanel" aria-labelledby="nav-stats-tab">
@@ -227,10 +227,6 @@
                                   <div class="label">Total du transfert</div>
                                   <div class="value">{{ total_euro_amount }} EUR</div>
                               </div>
-                              <!-- <div class="recap-line">
-                                  <div class="label">Montant à débité</div>
-                                  <div class="value">{{ xaf_total_euro_amount }} FCFA</div>
-                              </div> -->
 
                               <div class="recap-line">
                                   <div class="label">Montant à reçevoir</div>
@@ -256,6 +252,7 @@
                       <h2>faire un don</h2>
 
                       <div class="list-ronds mt-20">
+                          <div :class="['rond-item', dhost.amount == 1 ? 'active' : '']" @click="selectMontant(1)">1 &euro;</div>
                           <div :class="['rond-item', dhost.amount == 5 ? 'active' : '']" @click="selectMontant(5)">5 &euro;</div>
                           <div :class="['rond-item', dhost.amount == 10 ? 'active' : '']" @click="selectMontant(10)">10 &euro;</div>
                           <div :class="['rond-item', dhost.amount == 50 ? 'active' : '']" @click="selectMontant(50)">50 &euro;</div>
@@ -268,21 +265,6 @@
                           <div class="divider"></div>
                       </div>
 
-                      <div class="recaps mt-20">
-                          <div class="recap-line">
-                              <div class="label">Frais de transfert</div>
-                              <div class="value">+ {{ donation_transfert_amount }} EUR</div>
-                          </div>
-                          <div class="recap-line">
-                              <div class="label">Total du transfert</div>
-                              <div class="value">{{ donation_total_euro_amount }} EUR</div>
-                          </div>
-                          <div class="recap-line">
-                              <div class="label">Montant à crédité</div>
-                              <div class="value">{{ donation_xaf_total_euro_amount }} FCFA</div>
-                          </div>
-                      </div>
-
                       <form class="_form mt-20" @submit.prevent>
                         <div class="form-group">
                            <select
@@ -290,7 +272,7 @@
                                v-model="dhost.receiver"
                                class="form-control form-control-lg input"
                            >
-                           <option vlaue="">Sélectionner un créateur de contenu</option>
+                           <option value="">Sélectionner un créateur de contenu</option>
                            <option
                                v-for="c in creators"
                                :key="c.id"
@@ -300,6 +282,7 @@
                         </div>
 
                         <div class="form-group mt-20">
+                           <label for="amount">Montant de la donation (en &euro;)</label>
                            <input type="number"
                                name="amount"
                                placeholder="Saisir le montant"
@@ -318,50 +301,46 @@
                   </div>
 
                   <div class="tab-pane fade" id="nav-social" role="tabpanel" aria-labelledby="nav-social-tab">
-                      <form class="_form mt-20 dark" @submit.prevent>
-                            <div class="form-group mt-20">
-                                <label for="name">Nom du réseau social</label>
-                                <input type="text"
-                                    name="name"
-                                    placeholder="Nom du réseau social"
-                                    class="form-control form-control-lg input"
-                                    v-model="shost.name"
-                                    v-validate="'required'"
-                                >
-                                <span class="has-error">{{ errors.first('name') }}</span>
-                            </div>
-                            <div class="form-group mt-20">
-                                <label for="link">Lien du réseau social</label>
-                                <input type="text"
-                                    name="link"
-                                    placeholder="Lien du réseau social"
-                                    class="form-control form-control-lg input"
-                                    v-model="shost.link"
-                                    v-validate="'required'"
-                                >
-                                <span class="has-error">{{ errors.first('link') }}</span>
-                            </div>
-
-                           <div class="mt-20 mb-20">
-                               <button class="btn btn-block btn-primary br-100" @click="saveSocialLink()">
-                                   Enregistrer
-                               </button>
-                           </div>
-                      </form>
-                      <div class="row">
-                         <div class="col-sm-12">
-                           <div class="social-box mt-20">
-                              <div class="tle bold">Liens de vos réseaux sociaux</div>
-                              <div
-                                  class="social-item pointer"
-                                  v-for="s in social_links"
-                                  :key="s.id"
+                    <form class="_form" @submit.prevent>
+                          <div class="form-group mt-20">
+                              <label for="name">Nom du réseau social</label>
+                              <input type="text"
+                                  name="name"
+                                  placeholder="Nom du réseau social"
+                                  class="form-control form-control-lg input"
+                                  v-model="shost.name"
+                                  v-validate="'required'"
                               >
-                                <a :href="s.link" target="_blank">{{ s.link }}</a>
-                              </div>
-                           </div>
+                              <span class="has-error">{{ errors.first('name') }}</span>
+                          </div>
+                          <div class="form-group mt-20">
+                              <label for="link">Lien du réseau social</label>
+                              <input type="text"
+                                  name="link"
+                                  placeholder="Lien du réseau social"
+                                  class="form-control form-control-lg input"
+                                  v-model="shost.link"
+                                  v-validate="'required'"
+                              >
+                              <span class="has-error">{{ errors.first('link') }}</span>
+                          </div>
+
+                         <div class="mt-20 mb-20">
+                             <button class="btn btn-block btn-primary br-100" @click="saveSocialLink()">
+                                 Enregistrer
+                             </button>
                          </div>
-                      </div>
+                    </form>
+                    <div class="social-box mt-20">
+                       <div class="tle bold">Liens de vos réseaux sociaux</div>
+                       <div
+                           class="social-item pointer"
+                           v-for="s in social_links"
+                           :key="s.id"
+                       >
+                         <a :href="s.link" target="_blank">{{ s.link }}</a>
+                       </div>
+                    </div>
                   </div>
 
                   <div class="tab-pane fade" id="nav-settings" role="tabpanel" aria-labelledby="nav-settings-tab">
@@ -402,13 +381,40 @@
                          </form>
                       </div>
                   </div>
+
+                  <div class="tab-pane fade" id="nav-operations" role="tabpanel" aria-labelledby="nav-operations-tab">
+                    <div class="profile-box">
+                        <div
+                            class="profile-item"
+                            v-for="t in transactions"
+                            :key="t.id"
+                        >
+                            <div :class="['icon-car', t.cash_flow]">
+                                <i :class="['feather', t.cash_flow == 'IN' ? 'icon-trending-up' : 'icon-trending-down']"></i>
+                            </div>
+                            <div class="label">
+                                <span class="wallet">{{ t.wallet != null ? t.wallet : 'Wallet' }}</span>
+                                <span class="fromnow">{{ displayFromNow(t.created_at) }}</span>
+                            </div>
+                            <div class="icon-cir">
+                              <span>{{ t.amount }} &euro;</span>
+                              <i class="feather icon-chevron-right"></i>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
               </div>
           </div>
           <div class="home" v-if="!isConnected && !isLoading">
             <div class="block">
-              <h2>faire un don à <span>{{ title_name }}</span></h2>
+              <div class="text-center">
+                  <h2>faire un don à</h2>
+                  <h2><span>{{ title_name }}</span></h2>
+              </div>
 
               <div class="list-ronds mt-20">
+                  <div :class="['rond-item', dhost.amount == 1 ? 'active' : '']" @click="selectMontant(1)">1 &euro;</div>
+                  <div :class="['rond-item', dhost.amount == 3 ? 'active' : '']" @click="selectMontant(3)">3 &euro;</div>
                   <div :class="['rond-item', dhost.amount == 5 ? 'active' : '']" @click="selectMontant(5)">5 &euro;</div>
                   <div :class="['rond-item', dhost.amount == 10 ? 'active' : '']" @click="selectMontant(10)">10 &euro;</div>
                   <div :class="['rond-item', dhost.amount == 50 ? 'active' : '']" @click="selectMontant(50)">50 &euro;</div>
@@ -421,23 +427,9 @@
                   <div class="divider"></div>
               </div>
 
-              <div class="recaps mt-20">
-                  <div class="recap-line">
-                      <div class="label">Frais de transfert</div>
-                      <div class="value">+ {{ donation_transfert_amount }} EUR</div>
-                  </div>
-                  <div class="recap-line">
-                      <div class="label">Total du transfert</div>
-                      <div class="value">{{ donation_total_euro_amount }} EUR</div>
-                  </div>
-                  <div class="recap-line">
-                      <div class="label">Montant à crédité</div>
-                      <div class="value">{{ donation_xaf_total_euro_amount }} FCFA</div>
-                  </div>
-              </div>
-
               <form class="_form mt-20" @submit.prevent>
                 <div class="form-group mt-20">
+                  <label for="amount">Montant de la donation (en &euro;)</label>
                    <input type="number"
                        name="amount"
                        placeholder="Saisir le montant"
@@ -521,6 +513,7 @@ export default {
             this.getDonations()
             this.getCreators()
             this.getTauxChange()
+            this.getTransactions()
         },
 
         copyLink () {
@@ -635,6 +628,20 @@ export default {
                 }
         },
 
+        async getTransactions () {
+            this.startLoading()
+            const response = await this.$api.get('/payment-api/wallet-transactions/')
+                .catch(error => {
+                    this.stopLoading()
+                    this.$swal.error('Erreur liste des transactions', error.response.data.message)
+                })
+
+                if (response) {
+                    this.stopLoading()
+                    this.transactions = response.data.results
+                }
+        },
+
         /**
          * Events listeners
          *
@@ -697,7 +704,7 @@ export default {
 
                 if (response) {
                     this.stopLoading()
-                    this.creators = response.data.results.filter(c => c.is_creator == true && this.auth.id == c.id)
+                    this.creators = response.data.results.filter(c => c.is_creator == true && this.auth.id != c.id)
                 }
         },
 
@@ -868,7 +875,8 @@ export default {
         },
 
         resetDhost () {
-              this.dhost = {  amount: this.montant, receiver: '' }
+              let obj = { amount: this.montant, receiver: '' }
+              this.dhost = Object.assign({}, obj)
         },
 
         logout () {
@@ -892,7 +900,7 @@ export default {
 
                   if (response) {
                       this.stopLoading()
-                      this.$swal.success('Confirmation', 'Retrait éffectué avec succès !')
+                      this.$swal.success('Confirmation', 'Retrait initié avec succès, vous recevrez un email de validation de votre retrait.')
                       this.rhost.amount = 0
                   }
             } else {

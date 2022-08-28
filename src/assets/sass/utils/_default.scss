@@ -31,6 +31,13 @@ body {
     font-weight: 300;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Ambit Black', 'Monument Extended Bold', Avenir, Calibri, sans-serif;
+  color: $brand-dark;
+  display: flex;
+  justify-content: center;
+}
+
 h1, h2 {
     font-family: 'Ambit Black', 'Monument Extended Bold', Avenir, Calibri, sans-serif;
     color: $brand-dark;
@@ -105,6 +112,12 @@ h5 { font-size: 1.1em }
 .fw-600 { font-weight: 600 }
 .pointer { cursor: pointer }
 .text-right { text-align: right }
+.text-center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 .capitalize { text-transform: capitalize }
 ._error-message { font-size: 14px; color: red; }
 .circle {

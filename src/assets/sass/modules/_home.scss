@@ -138,13 +138,13 @@
             text-align: left;
         }
     }
+}
 
-    .divider {
-        border-bottom: 1px solid $brand-dark;
-        margin-top: 20px;
-        margin-bottom: 20px;
-        width: 100%;
-    }
+.divider {
+    border-bottom: 1px solid $brand-dark;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 100%;
 }
 
 .list-ronds {
@@ -158,10 +158,10 @@
       align-items: center;
       background-color: $brand-dark;
       color: white;
-      height: 70px;
-      width: 70px;
-      border-radius: 70px;
-      margin-left: 20px;
+      height: 50px;
+      width: 50px;
+      border-radius: 50px;
+      margin-left: 5px;
       cursor: pointer;
 
       &.active {
@@ -187,9 +187,9 @@
     }
 
     .rond {
-        width: 70px;
-        height: 70px;
-        border-radius: 70px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50px;
         background-color: white;
         color: $brand-dark;
         display: flex;

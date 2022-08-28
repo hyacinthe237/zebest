@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import moment from 'moment'
 
 export default {
     data: () => ({
@@ -13,6 +14,7 @@ export default {
         devises: [],
         creators: [],
         social_links: [],
+        transactions: [],
 
         // Les Objets
         creator: {},
@@ -112,5 +114,9 @@ export default {
                 e.preventDefault()
             }, false)
         },
+
+        displayFromNow (date) {
+            return moment(date).fromNow()
+        }
     }
 }

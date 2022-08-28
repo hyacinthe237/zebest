@@ -18,7 +18,7 @@
 
                 <div class="mt-60 text-center">
                     <button class="btn btn-primary br-100" @click="nouvelle()">
-                        Faire une nouvelle donation
+                        Nouvelle donation
                     </button>
                 </div>
             </div>
