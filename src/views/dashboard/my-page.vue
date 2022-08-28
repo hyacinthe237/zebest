@@ -282,18 +282,34 @@
                         </div>
 
                         <div class="form-group mt-20">
-                           <label for="amount">Montant de la donation (en &euro;)</label>
+                           <label for="sender_country">Votre pays de résidence</label>
+                           <select
+                               name="sender_country"
+                               v-model="dhost.sender_country"
+                               class="form-control form-control-lg input"
+                           >
+                           <option value="">Sélectionner votre pays</option>
+                           <option
+                               v-for="(c, index) in countries"
+                               :key="index+1"
+                               :value="c.code"
+                           >{{ c.name }}</option>
+                           </select>
+                        </div>
+
+                        <div class="form-group mt-20">
+                           <label for="amount">Montant de la donation (en €)</label>
                            <input type="number"
                                name="amount"
-                               placeholder="Saisir le montant"
+                               placeholder="5 €"
                                class="form-control form-control-lg input"
                                v-model="dhost.amount"
                            >
                         </div>
 
                          <div class="mt-10 mb-20">
-                             <button class="btn btn-block btn-primary br-100" @click="faireundon()">
-                                 Ovations de {{ dhost.amount }} &euro;
+                             <button class="btn btn-block btn-primary br-100" @click="faireundon()" :disabled="dhost.amount==''">
+                                 Ovations de {{ dhost.amount != '' ? dhost.amount : 0 }} &euro;
                              </button>
                          </div>
                        </form>
@@ -432,7 +448,7 @@
                   <label for="amount">Montant de la donation (en &euro;)</label>
                    <input type="number"
                        name="amount"
-                       placeholder="Saisir le montant"
+                       placeholder="5 €"
                        class="form-control form-control-lg input"
                        v-model="dhost.amount"
                    >
@@ -456,9 +472,25 @@
                    >
                 </div>
 
+                <div class="form-group">
+                   <label for="sender_country">Votre pays de résidence</label>
+                   <select
+                       name="sender_country"
+                       v-model="dhost.sender_country"
+                       class="form-control form-control-lg input"
+                   >
+                   <option value="">Sélectionner votre pays</option>
+                   <option
+                       v-for="(c, index) in countries"
+                       :key="index+1"
+                       :value="c.code"
+                   >{{ c.name }}</option>
+                   </select>
+                </div>
+
                  <div class="mt-10 mb-20">
-                     <button class="btn btn-block btn-primary br-100" @click="faireundon()">
-                         Ovations de {{ dhost.amount }} &euro;
+                     <button class="btn btn-block btn-primary br-100" @click="faireundon()" :disabled="dhost.amount==''">
+                         Ovations de {{ dhost.amount != '' ? dhost.amount : 0 }} &euro;
                      </button>
                  </div>
                </form>
@@ -489,6 +521,7 @@ export default {
         if (!this.isConnected) {
             this.getCreator()
             this.getTauxChange()
+            this.dhost = {  amount: '', receiver: '', sender_first_name: '', sender_last_name: '', sender_country: '' }
         }
 
         if (this.isConnected) {
@@ -875,7 +908,7 @@ export default {
         },
 
         resetDhost () {
-              let obj = { amount: this.montant, receiver: '' }
+              let obj = { amount: '', receiver: '', sender_country: '', sender: this.auth.id }
               this.dhost = Object.assign({}, obj)
         },
 
