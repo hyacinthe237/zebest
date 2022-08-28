@@ -116,8 +116,8 @@ export default {
             }, false)
         },
 
-        displayFromNow (date) {
-            return moment(date).fromNow()
+        displayFromNow () {
+            return moment('2022-08-26T18:05:34.000000Z').fromNow()
         },
 
         initCountries () {

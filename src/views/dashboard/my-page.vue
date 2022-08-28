@@ -410,7 +410,7 @@
                             </div>
                             <div class="label">
                                 <span class="wallet">{{ t.wallet != null ? t.wallet : 'Wallet' }}</span>
-                                <span class="fromnow">{{ displayFromNow(t.created_at) }}</span>
+                                <span class="fromnow">{{ displayFromNow() }}</span>
                             </div>
                             <div class="icon-cir">
                               <span>{{ t.amount }} &euro;</span>
@@ -808,7 +808,7 @@ export default {
         },
 
         async faireundon () {
-          let payload = { amount: '', receiver: '', sender_first_name: '', sender_last_name: '' }
+          let payload = {}
           if (!this.isConnected && _.isEmpty(this.dhost.sender_last_name) && !_.isEmpty(this.dhost.sender_first_name)) {
               this.$swal.error('Validation', 'Bien vouloir saisir votre nom avant de valider')
           }
@@ -827,7 +827,8 @@ export default {
                   receiver: this.creator.id,
                   amount: this.donation_total_euro_amount,
                   sender_last_name: this.dhost.sender_last_name,
-                  sender_first_name: this.dhost.sender_first_name
+                  sender_first_name: this.dhost.sender_first_name,
+                  sender_country: this.dhost.sender_country,
               }
 
               const response = await this.$api.post('/payment-api/donations/', payload)
