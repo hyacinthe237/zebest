@@ -7,7 +7,7 @@
     .profile-item {
         display: flex;
         flex-direction: row;
-        justify-content: space-between;
+        justify-content: space-around;
         align-items: center;
         width: 100%;
         background-color: white;
@@ -27,14 +27,29 @@
             padding: 10px;
             font-size: 18px;
             color: white;
-            background-color: $brand-primary;
+            background-color: $brand-dark;
         }
 
         .label {
             display: flex;
             flex-direction: column;
-            justify-content: space-around;
             align-items: center;
+            max-width: 150px;
+            color: $brand-teal;
+            font-size: 12px;
+
+            .wallet {
+                padding-left: 5px;
+                width: 100%;
+                text-transform: uppercase;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .date {
+                font-style: oblique;
+            }
         }
 
         .icon-cir {
@@ -43,6 +58,10 @@
             justify-content: space-around;
             align-items: center;
             font-weight: bold;
+            min-width: 70px;
+            color: $brand-primary;
+            font-size: 12px;
+            padding-left: 5px;
         }
     }
 }

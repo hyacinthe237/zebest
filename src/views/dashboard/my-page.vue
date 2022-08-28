@@ -405,12 +405,12 @@
                             v-for="t in transactions"
                             :key="t.id"
                         >
-                            <div :class="['icon-car', t.cash_flow]">
+                            <div class="icon-car">
                                 <i :class="['feather', t.cash_flow == 'IN' ? 'icon-trending-up' : 'icon-trending-down']"></i>
                             </div>
                             <div class="label">
-                                <span class="wallet">{{ t.wallet != null ? t.wallet : 'Wallet' }}</span>
-                                <span class="fromnow">{{ displayFromNow() }}</span>
+                                <span class="wallet">{{ t.wallet != null ? t.wallet : 'Hyacinthe ABANDA' }}</span>
+                                <span class="date">{{ displayFromNow() }}</span>
                             </div>
                             <div class="icon-cir">
                               <span>{{ t.amount }} &euro;</span>
