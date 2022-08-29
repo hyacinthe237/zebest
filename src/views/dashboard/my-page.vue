@@ -1,6 +1,6 @@
 <template>
     <div class="">
-          <div class="containser">
+          <div class="container">
               <section class="_header" v-show="!isLoading">
                   <div class="block-h">
                       <div class="logo pointer" @click="go('home')">zebest</div>
@@ -25,229 +25,215 @@
                   <div class="message">Bienvenue <span>{{ ghost.first_name }}</span>, <br/>votre solde est de <span>{{ ghost.balance }} &euro;</span></div>
               </div>
 
-              <div class="_tabs mt-20">
-                  <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                      <a class="nav-item nav-link" id="nav-editer-tab"
-                          data-toggle="tab" href="#nav-editer" role="tab"
-                          aria-controls="nav-editer">
-                          <i class="feather icon-user"></i>
-                          <span>Mon compte</span>
-                      </a>
-
-                      <!-- <a class="nav-item nav-link" id="nav-stats-tab"
-                          data-toggle="tab" href="#nav-stats" role="tab"
-                          aria-controls="nav-stats">
-                          <i class="feather icon-pie-chart"></i>
-                          <span>Mes statistiques</span>
-                      </a> -->
-
-                      <a class="nav-item nav-link" id="nav-retrait-tab"
-                          data-toggle="tab" href="#nav-retrait" role="tab"
-                          aria-controls="nav-retrait" v-show="is_creator">
-                          <i class="feather icon-dollar-sign"></i>
-                          <span>Faire un retrait</span>
-                      </a>
-
-                      <a class="nav-item nav-link" id="nav-don-tab"
-                          data-toggle="tab" href="#nav-don" role="tab"
-                          aria-controls="nav-don">
-                          <i class="feather icon-award"></i>
-                          <span>Faire un don</span>
-                      </a>
-
-                      <a class="nav-item nav-link" id="nav-social-tab"
-                          data-toggle="tab" href="#nav-social" role="tab"
-                          aria-controls="nav-social">
-                          <i class="feather icon-globe"></i>
-                          <span>Réseaux sociaux</span>
-                      </a>
-
-                      <a class="nav-item nav-link" id="nav-settings-tab"
-                          data-toggle="tab" href="#nav-settings" role="tab"
-                          aria-controls="nav-settings">
-                          <i class="feather icon-settings"></i>
-                          <span>Paramètres</span>
-                      </a>
-
-                      <a class="nav-item nav-link" id="nav-operations-tab"
-                          data-toggle="tab" href="#nav-operations" role="tab"
-                          aria-controls="nav-operations">
-                          <i class="feather icon-activity"></i>
-                          <span>Mes Opérations</span>
-                      </a>
+              <div class="card mt-20">
+                  <div :class="['card-header', showTransactions? 'active' : '']" @click="displayTransactions()">
+                      <i class="feather icon-activity"></i>
+                      <span>Mes transactions</span>
+                  </div>
+                  <div class="card-body" v-if="showTransactions">
+                      <div class="profile-box">
+                          <div
+                              class="profile-item"
+                              v-for="t in transactions"
+                              :key="t.id"
+                          >
+                              <div class="icon-car">
+                                  <i :class="['feather', t.cash_flow == 'IN' ? 'icon-trending-up' : 'icon-trending-down']"></i>
+                              </div>
+                              <div class="label">
+                                  <span class="wallet">{{ t.wallet != null ? t.wallet : 'Hyacinthe ABANDA' }}</span>
+                                  <span class="date">{{ displayFromNow() }}</span>
+                              </div>
+                              <div class="icon-cir">
+                                <span>{{ t.amount }} &euro;</span>
+                                <i class="feather icon-chevron-right"></i>
+                              </div>
+                          </div>
+                      </div>
                   </div>
               </div>
 
-              <div class="tab-content mb-20" id="nav-tabContent" v-if="isConnected">
-                  <div class="tab-pane fade" id="nav-editer" role="tabpanel" aria-labelledby="nav-editer-tab">
-                    <form class="_form mt-20 dark" @submit.prevent>
-                        <div class="content-profile-photo photo">
-                            <input type="file" name='image' id="fileElem" accept="image/*" style="display:none" @change="handleFile">
-                            <!-- <div class="photo" id="fileSelect">
-                                <i class="feather icon-camera" v-if="displayIcon"></i>
-                                <img class="image" id="image" src="" v-else/>
-                            </div> -->
+              <div class="card">
+                  <div class="card-header" @click="displayMyAccount()">
+                      <i class="feather icon-user"></i>
+                      <span>Mon compte</span>
+                  </div>
+                  <div class="card-body" v-if="showMyAccount">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-6">
+                              <form class="_form mt-20 dark" @submit.prevent>
+                                  <div class="content-profile-photo photo">
+                                      <input type="file" name='image' id="fileElem" accept="image/*" style="display:none" @change="handleFile">
+                                      <!-- <div class="photo" id="fileSelect">
+                                          <i class="feather icon-camera" v-if="displayIcon"></i>
+                                          <img class="image" id="image" src="" v-else/>
+                                      </div> -->
 
-                            <div class="photo pointer" id="fileSelect">
-                                <img class="image" id="image" :src="ghost.image"/>
+                                      <div class="photo pointer" id="fileSelect">
+                                          <img class="image" id="image" :src="ghost.image"/>
+                                      </div>
+                                  </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group mt-20">
+                                           <label for="name">Nom</label>
+                                           <input type="text"
+                                               name="last_name"
+                                               placeholder="Nom"
+                                               class="form-control form-control-lg input"
+                                               v-model="ghost.last_name"
+                                               v-validate="'required'"
+                                           >
+                                             <span class="has-error">{{ errors.first('last_name') }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-group mt-20">
+                                           <label for="name">Prénom</label>
+                                           <input type="text"
+                                               name="first_name"
+                                               placeholder="Prénom"
+                                               class="form-control form-control-lg input"
+                                               v-model="ghost.first_name"
+                                               v-validate="'required'"
+                                           >
+                                             <span class="has-error">{{ errors.first('first_name') }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group mt-20">
+                                    <label for="url">Ton lien personnalisé</label>
+                                    <div class="content">
+                                        <div class="teal">zebest.com/</div>
+                                        <input type="text"
+                                            name="username"
+                                            placeholder="tonnomdecreateur"
+                                            class="form-control form-control-lg dark"
+                                            v-model="ghost.username"
+                                            v-validate="'required'"
+                                        >
+                                        <div class="check"><i class="feather icon-check primary"></i></div>
+                                    </div>
+                                    <span class="has-error">{{ errors.first('username') }}</span>
+                                </div>
+
+                                 <div class="form-group mt-20">
+                                    <label for="about">A propos</label>
+                                        <textarea
+                                            name="bio"
+                                            placeholder="Bonjour, j'ai créé cette page pour ceux qui veulent me soutenir."
+                                            class="form-control textarea form-control-lg"
+                                            v-model="ghost.bio" rows="5" cols="33" v-validate="'required'"
+                                        ></textarea>
+                                      <span class="has-error">{{ errors.first('bio') }}</span>
+                                 </div>
+                                 <div class="mt-20 mb-20">
+                                     <button class="btn btn-block btn-primary br-100" @click="saveProfile()">
+                                         Enregistrer
+                                     </button>
+                                 </div>
+                               </form>
                             </div>
-                            <!-- <span v-show="displayIcon">Ajouter une photo</span> -->
+                            <div class="col-sm-6">
+                              <h3 class="mt-20">Modification mot de passe</h3>
+                              <form class="_form mt-20" @submit.prevent>
+                                 <div class="form-group">
+                                    <input type="password"
+                                        name="new_password1"
+                                        placeholder="Nouveau mot de passe"
+                                        class="form-control form-control-lg input"
+                                        v-model="phost.new_password1"
+                                        v-validate="'required|min:8'"
+                                    >
+                                      <span class="has-error">{{ errors.first('new_password1') }}</span>
+                                 </div>
+
+                                 <div class="form-group">
+                                    <input type="password"
+                                        name="new_password2"
+                                        placeholder="Confirmation nouveau mot de passe"
+                                        class="form-control form-control-lg input"
+                                        v-model="phost.new_password2"
+                                        v-validate="'required|min:8'"
+                                    >
+                                      <span class="has-error">{{ errors.first('new_password2') }}</span>
+                                 </div>
+
+                                 <div class="mt-20 mb-20">
+                                     <button class="btn btn-block btn-primary br-100" @click="resetPassword()">
+                                         Modifier
+                                     </button>
+                                 </div>
+                               </form>
+                            </div>
                         </div>
-                      <div class="row">
-                          <div class="col-sm-12">
-                              <div class="form-group mt-20">
-                                 <label for="name">Nom</label>
-                                 <input type="text"
-                                     name="last_name"
-                                     placeholder="Nom"
-                                     class="form-control form-control-lg input"
-                                     v-model="ghost.last_name"
-                                     v-validate="'required'"
-                                 >
-                                   <span class="has-error">{{ errors.first('last_name') }}</span>
-                              </div>
-                          </div>
-                          <div class="col-sm-12">
-                              <div class="form-group mt-20">
-                                 <label for="name">Prénom</label>
-                                 <input type="text"
-                                     name="first_name"
-                                     placeholder="Prénom"
-                                     class="form-control form-control-lg input"
-                                     v-model="ghost.first_name"
-                                     v-validate="'required'"
-                                 >
-                                   <span class="has-error">{{ errors.first('first_name') }}</span>
-                              </div>
-                          </div>
+                    </div>
+                  </div>
+              </div>
+
+              <div class="card">
+                  <div class="card-header" @click="displayRetrait()">
+                      <i class="feather icon-dollar-sign"></i>
+                      <span>Faire un retrait</span>
+                  </div>
+                  <div class="card-body" v-if="showRetrait">
+                    <div class="block">
+                      <h2 class="mt-10">faire un retrait</h2>
+
+                      <div class="btns-block mt-20">
+                          <input
+                              class="b-r br-10"
+                              :placeholder="200"
+                              name="amount"
+                              v-model="rhost.amount"
+                              type="number"
+                          >
+                          <button class="rond">
+                              <i class="feather icon-repeat"></i>
+                          </button>
+                          <button class="btn btn-outline b-l br-10">
+                              {{ xaf_amount }} FCFA
+                          </button>
                       </div>
 
-                      <div class="form-group mt-20">
-                          <label for="url">Ton lien personnalisé</label>
-                          <div class="content">
-                              <div class="teal">zebest.com/</div>
-                              <input type="text"
-                                  name="username"
-                                  placeholder="tonnomdecreateur"
-                                  class="form-control form-control-lg dark"
-                                  v-model="ghost.username"
-                                  v-validate="'required'"
-                              >
-                              <div class="check"><i class="feather icon-check primary"></i></div>
+                      <div class="p mt-20">1.00 &euro; = {{ taux_xaf }} FCFA <br/> *Le taux de change varie en fonction du mode d'envoi et de paiement.</div>
+                      <div class="recaps">
+                          <div class="recap-line">
+                              <div class="label">Frais de transfert</div>
+                              <div class="value">+ {{ transfert_amount }} EUR</div>
                           </div>
-                          <span class="has-error">{{ errors.first('username') }}</span>
+                          <div class="recap-line">
+                              <div class="label">Total du transfert</div>
+                              <div class="value">{{ total_euro_amount }} EUR</div>
+                          </div>
+
+                          <div class="recap-line">
+                              <div class="label">Montant à reçevoir</div>
+                              <div class="value">{{ net_a_recevoir }} FCFA</div>
+                          </div>
+                          <div class="divider"></div>
+                          <div class="recap-line">
+                              <div class="label">Disponibilité</div>
+                              <div class="value">En quelques minutes</div>
+                          </div>
                       </div>
-
-                       <div class="form-group mt-20">
-                          <label for="about">A propos</label>
-                              <textarea
-                                  name="bio"
-                                  placeholder="Bonjour, j'ai créé cette page pour ceux qui veulent me soutenir."
-                                  class="form-control textarea form-control-lg"
-                                  v-model="ghost.bio" rows="5" cols="33" v-validate="'required'"
-                              ></textarea>
-                            <span class="has-error">{{ errors.first('bio') }}</span>
-                       </div>
-                       <div class="mt-20 mb-20">
-                           <button class="btn btn-block btn-primary br-100" @click="saveProfile()">
-                               Enregistrer
-                           </button>
-                       </div>
-                     </form>
-
-                     <div class="divider"></div>
-                     <h3 class="mt-20">modification mot de passe</h3>
-                     <form class="_form mt-20" @submit.prevent>
-                        <div class="form-group">
-                           <input type="password"
-                               name="new_password1"
-                               placeholder="Nouveau mot de passe"
-                               class="form-control form-control-lg input"
-                               v-model="phost.new_password1"
-                               v-validate="'required|min:8'"
-                           >
-                             <span class="has-error">{{ errors.first('new_password1') }}</span>
-                        </div>
-
-                        <div class="form-group">
-                           <input type="password"
-                               name="new_password2"
-                               placeholder="Confirmation nouveau mot de passe"
-                               class="form-control form-control-lg input"
-                               v-model="phost.new_password2"
-                               v-validate="'required|min:8'"
-                           >
-                             <span class="has-error">{{ errors.first('new_password2') }}</span>
-                        </div>
-
-                        <div class="mt-20">
-                            <button class="btn btn-block btn-primary br-100" @click="resetPassword()">
-                                Modifier
-                            </button>
-                        </div>
-                      </form>
-                  </div>
-
-                  <div class="tab-pane fade" id="nav-stats" role="tabpanel" aria-labelledby="nav-stats-tab">
-                      <IzyChart :chartData="chartData"></IzyChart>
-                  </div>
-
-                  <div class="tab-pane fade" id="nav-retrait" role="tabpanel" aria-labelledby="nav-retrait-tab">
-                      <div class="row">
-                        <div class="block">
-                          <h2 class="mt-10">faire un retrait</h2>
-
-                          <div class="btns-block mt-20">
-                              <!-- <button class="btn btn-outline b-r br-10">
-                                  200 &euro;
-                              </button> -->
-
-                              <input
-                                  class="b-r br-10"
-                                  :placeholder="200"
-                                  name="amount"
-                                  v-model="rhost.amount"
-                                  type="number"
-                              >
-                              <button class="rond">
-                                  <i class="feather icon-repeat"></i>
-                              </button>
-                              <button class="btn btn-outline b-l br-10">
-                                  {{ xaf_amount }} FCFA
-                              </button>
-                          </div>
-
-                          <div class="p mt-20">1.00 &euro; = {{ taux_xaf }} FCFA <br/> *Le taux de change varie en fonction du mode d'envoi et de paiement.</div>
-                          <div class="recaps">
-                              <div class="recap-line">
-                                  <div class="label">Frais de transfert</div>
-                                  <div class="value">+ {{ transfert_amount }} EUR</div>
-                              </div>
-                              <div class="recap-line">
-                                  <div class="label">Total du transfert</div>
-                                  <div class="value">{{ total_euro_amount }} EUR</div>
-                              </div>
-
-                              <div class="recap-line">
-                                  <div class="label">Montant à reçevoir</div>
-                                  <div class="value">{{ net_a_recevoir }} FCFA</div>
-                              </div>
-                              <div class="divider"></div>
-                              <div class="recap-line">
-                                  <div class="label">Disponibilité</div>
-                                  <div class="value">En quelques minutes</div>
-                              </div>
-                          </div>
-                          <div class="mt-20">
-                              <button class="btn btn-block btn-primary br-100" @click="retrait()">
-                                  Valider
-                              </button>
-                          </div>
-                        </div>
+                      <div class="mt-20">
+                          <button class="btn btn-block btn-primary br-100" @click="retrait()" :disabled="rhost.amount==0">
+                              Valider
+                          </button>
                       </div>
+                    </div>
                   </div>
+              </div>
 
-                  <div class="tab-pane fade" id="nav-don" role="tabpanel" aria-labelledby="nav-don-tab">
+              <div class="card">
+                  <div class="card-header" @click="displayDon()">
+                      <i class="feather icon-award"></i>
+                      <span>Faire un don</span>
+                  </div>
+                  <div class="card-body" v-if="showDon">
                     <div class="block">
                       <h2>faire un don</h2>
 
@@ -315,108 +301,106 @@
                        </form>
                     </div>
                   </div>
+              </div>
 
-                  <div class="tab-pane fade" id="nav-social" role="tabpanel" aria-labelledby="nav-social-tab">
-                    <form class="_form" @submit.prevent>
-                          <div class="form-group mt-20">
-                              <label for="name">Nom du réseau social</label>
-                              <input type="text"
-                                  name="name"
-                                  placeholder="Nom du réseau social"
-                                  class="form-control form-control-lg input"
-                                  v-model="shost.name"
-                                  v-validate="'required'"
-                              >
-                              <span class="has-error">{{ errors.first('name') }}</span>
-                          </div>
-                          <div class="form-group mt-20">
-                              <label for="link">Lien du réseau social</label>
-                              <input type="text"
-                                  name="link"
-                                  placeholder="Lien du réseau social"
-                                  class="form-control form-control-lg input"
-                                  v-model="shost.link"
-                                  v-validate="'required'"
-                              >
-                              <span class="has-error">{{ errors.first('link') }}</span>
-                          </div>
-
-                         <div class="mt-20 mb-20">
-                             <button class="btn btn-block btn-primary br-100" @click="saveSocialLink()">
-                                 Enregistrer
-                             </button>
-                         </div>
-                    </form>
-                    <div class="social-box mt-20">
-                       <div class="tle bold">Liens de vos réseaux sociaux</div>
-                       <div
-                           class="social-item pointer"
-                           v-for="s in social_links"
-                           :key="s.id"
-                       >
-                         <a :href="s.link" target="_blank">{{ s.link }}</a>
-                       </div>
-                    </div>
+              <div class="card">
+                  <div class="card-header" @click="displayRS()">
+                      <i class="feather icon-globe"></i>
+                      <span>Réseaux sociaux</span>
                   </div>
+                  <div class="card-body" v-if="showRS">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-6">
+                              <form class="_form" @submit.prevent>
+                                    <div class="form-group mt-20">
+                                        <label for="name">Nom du réseau social</label>
+                                        <input type="text"
+                                            name="name"
+                                            placeholder="Nom du réseau social"
+                                            class="form-control form-control-lg input"
+                                            v-model="shost.name"
+                                            v-validate="'required'"
+                                        >
+                                        <span class="has-error">{{ errors.first('name') }}</span>
+                                    </div>
+                                    <div class="form-group mt-20">
+                                        <label for="link">Lien du réseau social</label>
+                                        <input type="text"
+                                            name="link"
+                                            placeholder="Lien du réseau social"
+                                            class="form-control form-control-lg input"
+                                            v-model="shost.link"
+                                            v-validate="'required'"
+                                        >
+                                        <span class="has-error">{{ errors.first('link') }}</span>
+                                    </div>
 
-                  <div class="tab-pane fade" id="nav-settings" role="tabpanel" aria-labelledby="nav-settings-tab">
-                      <div class="block">
-                        <h2>Choix de la devise</h2>
-
-                        <form class="_form mt-20 dark" @submit.prevent>
-                           <div class="form-group">
-                              <label for="devise">En quelle devise souhaiterais-tu être payé(e) ?</label>
-                              <select
-                                  name="currency"
-                                  v-model="host.currency"
-                                  class="form-control form-control-lg input"
-                              >
-                              <option
-                                  v-for="r in devises"
-                                  :key="r.id"
-                                  :value="r.id"
-                              >{{ r.name }}</option>
-                              </select>
-                           </div>
-
-                           <div class="form-group mt-20">
-                               <label for="phone">Connecter votre numéro de portefeuille mobile</label>
-                               <input type="text"
-                                   name="phone"
-                                   placeholder="+237651545258"
-                                   class="form-control form-control-lg input"
-                                   v-model="host.phone"
-                               >
-                           </div>
-
-                           <div class="mt-20 text-center">
-                               <button class="btn btn-primary br-100" @click="saveWallet()">
-                                   Valider
-                               </button>
-                           </div>
-                         </form>
-                      </div>
-                  </div>
-
-                  <div class="tab-pane fade" id="nav-operations" role="tabpanel" aria-labelledby="nav-operations-tab">
-                    <div class="profile-box">
-                        <div
-                            class="profile-item"
-                            v-for="t in transactions"
-                            :key="t.id"
-                        >
-                            <div class="icon-car">
-                                <i :class="['feather', t.cash_flow == 'IN' ? 'icon-trending-up' : 'icon-trending-down']"></i>
+                                   <div class="mt-20 mb-20">
+                                       <button class="btn btn-block btn-primary br-100" @click="saveSocialLink()">
+                                           Enregistrer
+                                       </button>
+                                   </div>
+                              </form>
                             </div>
-                            <div class="label">
-                                <span class="wallet">{{ t.wallet != null ? t.wallet : 'Hyacinthe ABANDA' }}</span>
-                                <span class="date">{{ displayFromNow() }}</span>
-                            </div>
-                            <div class="icon-cir">
-                              <span>{{ t.amount }} &euro;</span>
-                              <i class="feather icon-chevron-right"></i>
+                            <div class="col-sm-6">
+                                <div class="social-box mt-20">
+                                   <div class="tle bold">Liens de vos réseaux sociaux</div>
+                                   <div
+                                       class="social-item pointer"
+                                       v-for="s in social_links"
+                                       :key="s.id"
+                                   >
+                                     <a :href="s.link" target="_blank">{{ s.link }}</a>
+                                   </div>
+                                </div>
                             </div>
                         </div>
+                    </div>
+                  </div>
+              </div>
+
+              <div class="card">
+                  <div class="card-header" @click="displaySettings()">
+                      <i class="feather icon-settings"></i>
+                      <span>Paramètres</span>
+                  </div>
+                  <div class="card-body" v-if="showSettings">
+                    <div class="block">
+                      <h2>Choix de la devise</h2>
+
+                      <form class="_form mt-20 dark" @submit.prevent>
+                         <div class="form-group">
+                            <label for="devise">En quelle devise souhaiterais-tu être payé(e) ?</label>
+                            <select
+                                name="currency"
+                                v-model="host.currency"
+                                class="form-control form-control-lg input"
+                            >
+                            <option
+                                v-for="r in devises"
+                                :key="r.id"
+                                :value="r.id"
+                            >{{ r.name }}</option>
+                            </select>
+                         </div>
+
+                         <div class="form-group mt-20">
+                             <label for="phone">Connecter votre numéro de portefeuille mobile</label>
+                             <input type="text"
+                                 name="phone"
+                                 placeholder="+237651545258"
+                                 class="form-control form-control-lg input"
+                                 v-model="host.phone"
+                             >
+                         </div>
+
+                         <div class="mt-20 text-center">
+                             <button class="btn btn-primary br-100" @click="saveWallet()">
+                                 Valider
+                             </button>
+                         </div>
+                       </form>
                     </div>
                   </div>
               </div>
@@ -496,7 +480,6 @@
                </form>
             </div>
           </div>
-          <!-- <LoadingModal/> -->
         </div>
 
         <ConfirmModal v-if="showModal" :user="auth"></ConfirmModal>

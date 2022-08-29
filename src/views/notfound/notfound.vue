@@ -12,7 +12,7 @@
 
                 <div class="content-profile-photo mt-20">
                     <div class="photo">
-                        <i class="feather icon-frown"></i>
+                        <i class="feather icon-info"></i>
                     </div>
                 </div>
             </div>

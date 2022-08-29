@@ -9,6 +9,12 @@ export default {
         interval: null,
         taux_retrait: 0.07,
         displayIcon: true,
+        showTransactions: true,
+        showMyAccount: false,
+        showDon: false,
+        showRetrait: false,
+        showRS: false,
+        showSettings: false,
 
         // les Tableaux
         devises: [],
@@ -118,6 +124,30 @@ export default {
 
         displayFromNow () {
             return moment('2022-08-26T18:05:34.000000Z').fromNow()
+        },
+
+        displayTransactions () {
+            this.showTransactions = !this.showTransactions
+        },
+
+        displayMyAccount () {
+            this.showMyAccount = !this.showMyAccount
+        },
+
+        displayRetrait () {
+            this.showRetrait = !this.showRetrait
+        },
+
+        displayDon () {
+            this.showDon = !this.showDon
+        },
+
+        displayRS () {
+            this.showRS = !this.showRS
+        },
+
+        displaySettings () {
+            this.showSettings = !this.showSettings
         },
 
         initCountries () {

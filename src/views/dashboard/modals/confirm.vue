@@ -12,7 +12,10 @@
                     <img :src="logo">
                   </div>
 
-                  <h2 class="mt-10" v-show="!isLoading">faire un don à <span>{{ user.username }}</span></h2>
+                  <div class="text-center mt-10">
+                      <h2>faire un don à</h2>
+                      <h2><span>{{ user.username }}</span></h2>
+                  </div>
 
                     <div class="form-group mt-10" v-show="!isLoading">
                         <stripe-element-payment
@@ -63,7 +66,7 @@ export default {
             handler: function (val) {
                 if (val) {
                     this.elementsOptions.clientSecret = val.client_secret
-                    this.confirmParams.return_url = `${this.$config.get('front_url')}success/checkout?user=${this.user.username}`
+                    this.confirmParams.return_url = `${this.$config.get('front_url')}checkout/success?user=${this.user.username}`
                 }
             }
         }

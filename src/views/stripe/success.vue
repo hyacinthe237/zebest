@@ -33,10 +33,15 @@
 
 export default {
     mounted () {
+        this.delQuery()
         this.chargeDonation()
     },
 
     methods: {
+        delQuery () {
+            this.$route.query.payment_intent == null
+            this.$route.query.payment_intent_client_secret == null
+        },
         async chargeDonation () {
             this.startLoading()
             let payload = {
@@ -55,10 +60,11 @@ export default {
         },
 
         nouvelle () {
-            let user = this.$route.query.user
-            this.$router.push({ name: 'my-page', params: { id: user } })
-            localStorage.clear()
-            this.$store.commit('SET_SHOW_BANCAIRE_MODAL', false)
+            // let user = this.$route.query.user
+            // this.$router.push({ name: 'my-page', params: { id: user } })
+            // localStorage.clear()
+            // this.$store.commit('SET_SHOW_BANCAIRE_MODAL', false)
+            console.log(this.$route.query)
         }
     },
 }
