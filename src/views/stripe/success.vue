@@ -8,9 +8,11 @@
 
         <section class="home mt-20" v-show="!isLoading">
             <div class="block">
-                <h2>merci pour votre donation</h2>
+                <div class="message text-justify bold">
+                  Hello {{ nom_user }}, je viens de recevoir ta donation.
+                  Merci pour ton soutien 🤜🏿😊</div>
 
-                <div class="content-profile-photo mt-20">
+                <div class="content-profile-photo mt-60">
                     <div class="photo">
                         <i class="feather icon-check"></i>
                     </div>
@@ -18,7 +20,7 @@
 
                 <div class="mt-60 text-center">
                     <button class="btn btn-primary br-100" @click="nouvelle()">
-                        Nouvelle donation
+                        Faire une donation
                     </button>
                 </div>
             </div>
@@ -32,6 +34,11 @@
 <script>
 
 export default {
+    computed: {
+        nom_user () {
+            return JSON.parse(localStorage.getItem('nom_user'))
+        }
+    },
     mounted () {
         this.delQuery()
         this.chargeDonation()
@@ -60,11 +67,10 @@ export default {
         },
 
         nouvelle () {
-            // let user = this.$route.query.user
-            // this.$router.push({ name: 'my-page', params: { id: user } })
-            // localStorage.clear()
-            // this.$store.commit('SET_SHOW_BANCAIRE_MODAL', false)
-            console.log(this.$route.query)
+            let user = this.$route.query.user
+            this.$router.push({ name: 'my-page', params: { id: user } })
+            localStorage.clear()
+            this.$store.commit('SET_SHOW_BANCAIRE_MODAL', false)
         }
     },
 }

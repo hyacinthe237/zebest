@@ -25,7 +25,7 @@ const guestRoutes = [
   { path: '/auth/verify', name: 'verify', component: Verify  },
   { path: '/auth/password/forgot', name: 'password-forgot', component: PasswordForgot  },
   { path: '/auth/password/reset', name: 'password-reset', component: PasswordReset  },
-  { path: '/success/checkout', name: 'success', component: SuccessCheckout },
+  { path: '/checkout/success', name: 'success', component: SuccessCheckout },
   // { path: '/checkout/success', redirect: to => { return `/success/checkout?user=${to.query.user}&redirect_status=${to.query.redirect_status}` } },
   { path: '/:catchAll(.*)', name: 'NotFound', component: NotFoundComponent }
 ]

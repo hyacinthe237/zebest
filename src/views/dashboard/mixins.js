@@ -100,12 +100,6 @@ export default {
     },
 
     mounted () {
-        if (this.isConnected) {
-            $('#nav-editer-tab').click()
-            $('#nav-editer').addClass("active")
-            $('#nav-editer-tab').focus()
-            this.selectFile()
-        }
         this.initCountries()
     },
 

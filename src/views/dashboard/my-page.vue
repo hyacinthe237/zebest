@@ -41,7 +41,7 @@
                                   <i :class="['feather', t.cash_flow == 'IN' ? 'icon-trending-up' : 'icon-trending-down']"></i>
                               </div>
                               <div class="label">
-                                  <span class="wallet">{{ t.wallet != null ? t.wallet : 'Hyacinthe ABANDA' }}</span>
+                                  <span class="wallet">{{ 'Nom donateur' }}</span>
                                   <span class="date">{{ displayFromNow() }}</span>
                               </div>
                               <div class="icon-cir">
@@ -50,126 +50,6 @@
                               </div>
                           </div>
                       </div>
-                  </div>
-              </div>
-
-              <div class="card">
-                  <div :class="['card-header', showMyAccount ? 'active' : '']" @click="displayMyAccount()">
-                      <i class="feather icon-user"></i>
-                      <span>Mon compte</span>
-                  </div>
-                  <div class="card-body" v-if="showMyAccount">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-sm-6">
-                              <form class="_form mt-20 dark" @submit.prevent>
-                                  <div class="content-profile-photo photo">
-                                      <input type="file" name='image' id="fileElem" accept="image/*" style="display:none" @change="handleFile">
-                                      <!-- <div class="photo" id="fileSelect">
-                                          <i class="feather icon-camera" v-if="displayIcon"></i>
-                                          <img class="image" id="image" src="" v-else/>
-                                      </div> -->
-
-                                      <div class="photo pointer" id="fileSelect">
-                                          <img class="image" id="image" :src="ghost.image"/>
-                                      </div>
-                                  </div>
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <div class="form-group mt-20">
-                                           <label for="name">Nom</label>
-                                           <input type="text"
-                                               name="last_name"
-                                               placeholder="Nom"
-                                               class="form-control form-control-lg input"
-                                               v-model="ghost.last_name"
-                                               v-validate="'required'"
-                                           >
-                                             <span class="has-error">{{ errors.first('last_name') }}</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <div class="form-group mt-20">
-                                           <label for="name">Prénom</label>
-                                           <input type="text"
-                                               name="first_name"
-                                               placeholder="Prénom"
-                                               class="form-control form-control-lg input"
-                                               v-model="ghost.first_name"
-                                               v-validate="'required'"
-                                           >
-                                             <span class="has-error">{{ errors.first('first_name') }}</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="form-group mt-20">
-                                    <label for="url">Ton lien personnalisé</label>
-                                    <div class="content">
-                                        <div class="teal">zebest.com/</div>
-                                        <input type="text"
-                                            name="username"
-                                            placeholder="tonnomdecreateur"
-                                            class="form-control form-control-lg dark"
-                                            v-model="ghost.username"
-                                            v-validate="'required'"
-                                        >
-                                        <div class="check"><i class="feather icon-check primary"></i></div>
-                                    </div>
-                                    <span class="has-error">{{ errors.first('username') }}</span>
-                                </div>
-
-                                 <div class="form-group mt-20">
-                                    <label for="about">A propos</label>
-                                        <textarea
-                                            name="bio"
-                                            placeholder="Bonjour, j'ai créé cette page pour ceux qui veulent me soutenir."
-                                            class="form-control textarea form-control-lg"
-                                            v-model="ghost.bio" rows="5" cols="33" v-validate="'required'"
-                                        ></textarea>
-                                      <span class="has-error">{{ errors.first('bio') }}</span>
-                                 </div>
-                                 <div class="mt-20 mb-20">
-                                     <button class="btn btn-block btn-primary br-100" @click="saveProfile()">
-                                         Enregistrer
-                                     </button>
-                                 </div>
-                               </form>
-                            </div>
-                            <div class="col-sm-6">
-                              <h3 class="mt-20">Modification mot de passe</h3>
-                              <form class="_form mt-20" @submit.prevent>
-                                 <div class="form-group">
-                                    <input type="password"
-                                        name="new_password1"
-                                        placeholder="Nouveau mot de passe"
-                                        class="form-control form-control-lg input"
-                                        v-model="phost.new_password1"
-                                        v-validate="'required|min:8'"
-                                    >
-                                      <span class="has-error">{{ errors.first('new_password1') }}</span>
-                                 </div>
-
-                                 <div class="form-group">
-                                    <input type="password"
-                                        name="new_password2"
-                                        placeholder="Confirmation nouveau mot de passe"
-                                        class="form-control form-control-lg input"
-                                        v-model="phost.new_password2"
-                                        v-validate="'required|min:8'"
-                                    >
-                                      <span class="has-error">{{ errors.first('new_password2') }}</span>
-                                 </div>
-
-                                 <div class="mt-20 mb-20">
-                                     <button class="btn btn-block btn-primary br-100" @click="resetPassword()">
-                                         Modifier
-                                     </button>
-                                 </div>
-                               </form>
-                            </div>
-                        </div>
-                    </div>
                   </div>
               </div>
 
@@ -199,7 +79,7 @@
                       </div>
 
                       <div class="p mt-20">1.00 &euro; = {{ taux_xaf }} FCFA <br/> *Le taux de change varie en fonction du mode d'envoi et de paiement.</div>
-                      <div class="recaps">
+                      <div class="recaps mt-20">
                           <div class="recap-line">
                               <div class="label">Frais de transfert</div>
                               <div class="value">+ {{ transfert_amount }} EUR</div>
@@ -293,8 +173,8 @@
                            >
                         </div>
 
-                         <div class="mt-10 mb-20">
-                             <button class="btn btn-block btn-primary br-100" @click="faireundon()" :disabled="dhost.amount==''">
+                         <div class="mt-10 mb-20 text-center">
+                             <button class="btn btn-primary br-100" @click="faireundon()" :disabled="dhost.amount==''">
                                  Ovations de {{ dhost.amount != '' ? dhost.amount : 0 }} &euro;
                              </button>
                          </div>
@@ -304,56 +184,115 @@
               </div>
 
               <div class="card">
-                  <div :class="['card-header', showRS ? 'active' : '']" @click="displayRS()">
-                      <i class="feather icon-globe"></i>
-                      <span>Réseaux sociaux</span>
+                  <div :class="['card-header', showMyAccount ? 'active' : '']" @click="displayMyAccount()">
+                      <i class="feather icon-user"></i>
+                      <span>Mon compte</span>
                   </div>
-                  <div class="card-body" v-if="showRS">
+                  <div class="card-body" v-if="showMyAccount">
                     <div class="container">
                         <div class="row">
                             <div class="col-sm-6">
-                              <form class="_form" @submit.prevent>
-                                    <div class="form-group mt-20">
-                                        <label for="name">Nom du réseau social</label>
-                                        <input type="text"
-                                            name="name"
-                                            placeholder="Nom du réseau social"
-                                            class="form-control form-control-lg input"
-                                            v-model="shost.name"
-                                            v-validate="'required'"
-                                        >
-                                        <span class="has-error">{{ errors.first('name') }}</span>
+                              <form class="_form mt-20 dark" @submit.prevent>
+                                  <div class="content-profile-photo photo">
+                                      <input type="file" name='image' id="fileElem" accept="image/*" style="display:none" @change="handleFile">
+                                      <div class="photo pointer">
+                                          <img class="image" id="image" :src="ghost.image"/>
+                                      </div>
+                                      <button class="btn btn-primary mt-20 br-100" id="fileSelect">Nouvelle photo</button>
+                                  </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group mt-20">
+                                           <label for="name">Nom</label>
+                                           <input type="text"
+                                               name="last_name"
+                                               placeholder="Nom"
+                                               class="form-control form-control-lg input"
+                                               v-model="ghost.last_name"
+                                               v-validate="'required'"
+                                           >
+                                             <span class="has-error">{{ errors.first('last_name') }}</span>
+                                        </div>
                                     </div>
-                                    <div class="form-group mt-20">
-                                        <label for="link">Lien du réseau social</label>
-                                        <input type="text"
-                                            name="link"
-                                            placeholder="Lien du réseau social"
-                                            class="form-control form-control-lg input"
-                                            v-model="shost.link"
-                                            v-validate="'required'"
-                                        >
-                                        <span class="has-error">{{ errors.first('link') }}</span>
+                                    <div class="col-sm-12">
+                                        <div class="form-group mt-20">
+                                           <label for="name">Prénom</label>
+                                           <input type="text"
+                                               name="first_name"
+                                               placeholder="Prénom"
+                                               class="form-control form-control-lg input"
+                                               v-model="ghost.first_name"
+                                               v-validate="'required'"
+                                           >
+                                             <span class="has-error">{{ errors.first('first_name') }}</span>
+                                        </div>
                                     </div>
+                                </div>
 
-                                   <div class="mt-20 mb-20">
-                                       <button class="btn btn-block btn-primary br-100" @click="saveSocialLink()">
-                                           Enregistrer
-                                       </button>
-                                   </div>
-                              </form>
+                                <div class="form-group mt-20">
+                                    <label for="url">Ton lien personnalisé</label>
+                                    <div class="content">
+                                        <div class="teal">zebest.com/</div>
+                                        <input type="text"
+                                            name="username"
+                                            placeholder="tonnomdecreateur"
+                                            class="form-control form-control-lg dark"
+                                            v-model="ghost.username"
+                                            v-validate="'required'"
+                                        >
+                                        <div class="check"><i class="feather icon-check primary"></i></div>
+                                    </div>
+                                    <span class="has-error">{{ errors.first('username') }}</span>
+                                </div>
+
+                                 <div class="form-group mt-20">
+                                    <label for="about">A propos</label>
+                                        <textarea
+                                            name="bio"
+                                            placeholder="Bonjour, j'ai créé cette page pour ceux qui veulent me soutenir."
+                                            class="form-control textarea form-control-lg"
+                                            v-model="ghost.bio" rows="5" cols="33" v-validate="'required'"
+                                        ></textarea>
+                                      <span class="has-error">{{ errors.first('bio') }}</span>
+                                 </div>
+                                 <div class="mt-20 mb-20 text-center">
+                                     <button class="btn btn-primary br-100" @click="saveProfile()">
+                                         Enregistrer
+                                     </button>
+                                 </div>
+                               </form>
                             </div>
                             <div class="col-sm-6">
-                                <div class="social-box mt-20">
-                                   <div class="tle bold">Liens de vos réseaux sociaux</div>
-                                   <div
-                                       class="social-item pointer"
-                                       v-for="s in social_links"
-                                       :key="s.id"
-                                   >
-                                     <a :href="s.link" target="_blank">{{ s.link }}</a>
-                                   </div>
-                                </div>
+                              <h3 class="mt-20">Modification mot de passe</h3>
+                              <form class="_form mt-20" @submit.prevent>
+                                 <div class="form-group">
+                                    <input type="password"
+                                        name="new_password1"
+                                        placeholder="Nouveau mot de passe"
+                                        class="form-control form-control-lg input"
+                                        v-model="phost.new_password1"
+                                        v-validate="'required|min:8'"
+                                    >
+                                      <span class="has-error">{{ errors.first('new_password1') }}</span>
+                                 </div>
+
+                                 <div class="form-group">
+                                    <input type="password"
+                                        name="new_password2"
+                                        placeholder="Confirmation nouveau mot de passe"
+                                        class="form-control form-control-lg input"
+                                        v-model="phost.new_password2"
+                                        v-validate="'required|min:8'"
+                                    >
+                                      <span class="has-error">{{ errors.first('new_password2') }}</span>
+                                 </div>
+
+                                 <div class="mt-20 mb-20 text-center">
+                                     <button class="btn btn-primary br-100" @click="resetPassword()">
+                                         Modifier
+                                     </button>
+                                 </div>
+                               </form>
                             </div>
                         </div>
                     </div>
@@ -401,6 +340,63 @@
                              </button>
                          </div>
                        </form>
+                    </div>
+                  </div>
+              </div>
+
+              <div class="card">
+                  <div :class="['card-header', showRS ? 'active' : '']" @click="displayRS()">
+                      <i class="feather icon-globe"></i>
+                      <span>Réseaux sociaux</span>
+                  </div>
+                  <div class="card-body" v-if="showRS">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-6">
+                              <form class="_form" @submit.prevent>
+                                    <div class="form-group mt-20">
+                                        <label for="name">Nom du réseau social</label>
+                                        <input type="text"
+                                            name="name"
+                                            placeholder="Nom du réseau social"
+                                            class="form-control form-control-lg input"
+                                            v-model="shost.name"
+                                            v-validate="'required'"
+                                        >
+                                        <span class="has-error">{{ errors.first('name') }}</span>
+                                    </div>
+                                    <div class="form-group mt-20">
+                                        <label for="link">Lien du réseau social</label>
+                                        <input type="text"
+                                            name="link"
+                                            placeholder="Lien du réseau social"
+                                            class="form-control form-control-lg input"
+                                            v-model="shost.link"
+                                            v-validate="'required'"
+                                        >
+                                        <span class="has-error">{{ errors.first('link') }}</span>
+                                    </div>
+
+                                   <div class="mt-20 mb-20 text-center">
+                                       <button class="btn btn-primary br-100" @click="saveSocialLink()">
+                                           Enregistrer
+                                       </button>
+                                   </div>
+                              </form>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="social-box mt-20">
+                                   <div class="tle bold">Liens de vos réseaux sociaux</div>
+                                   <div
+                                       class="social-item pointer"
+                                       v-for="s in social_links"
+                                       :key="s.id"
+                                   >
+                                     <a :href="s.link" target="_blank">{{ s.link }}</a>
+                                   </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                   </div>
               </div>
@@ -472,8 +468,8 @@
                    </select>
                 </div>
 
-                 <div class="mt-10 mb-20">
-                     <button class="btn btn-block btn-primary br-100" @click="faireundon()" :disabled="dhost.amount==''">
+                 <div class="mt-10 mt-20 mb-20">
+                     <button class="btn btn-primary br-100" @click="faireundon()" :disabled="dhost.amount==''">
                          Ovations de {{ dhost.amount != '' ? dhost.amount : 0 }} &euro;
                      </button>
                  </div>
@@ -509,6 +505,7 @@ export default {
 
         if (this.isConnected) {
             this.loadDatas()
+            this.selectFile()
         }
     },
 
@@ -813,6 +810,8 @@ export default {
                   sender_first_name: this.dhost.sender_first_name,
                   sender_country: this.dhost.sender_country,
               }
+              let name = this.dhost.sender_last_name + ' ' + this.dhost.sender_first_name
+              localStorage.setItem('nom_user', JSON.stringify(name))
 
               const response = await this.$api.post('/payment-api/donations/', payload)
                   .catch(error => {
