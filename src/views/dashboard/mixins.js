@@ -104,18 +104,6 @@ export default {
     },
 
     methods: {
-        selectFile () {
-            var fileSelect = document.getElementById("fileSelect")
-            var fileElem = document.getElementById("fileElem")
-
-            fileSelect.addEventListener("click", function (e) {
-                if (fileElem) {
-                    fileElem.click()
-                }
-                e.preventDefault()
-            }, false)
-        },
-
         displayFromNow () {
             return moment('2022-08-26T18:05:34.000000Z').fromNow()
         },

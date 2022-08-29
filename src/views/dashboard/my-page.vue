@@ -99,7 +99,7 @@
                               <div class="value">En quelques minutes</div>
                           </div>
                       </div>
-                      <div class="mt-20">
+                      <div class="mt-20 text-center">
                           <button class="btn btn-block btn-primary br-100" @click="retrait()" :disabled="rhost.amount==0">
                               Valider
                           </button>
@@ -468,7 +468,7 @@
                    </select>
                 </div>
 
-                 <div class="mt-10 mt-20 mb-20">
+                 <div class="mt-10 mt-20 mb-20 text-center">
                      <button class="btn btn-primary br-100" @click="faireundon()" :disabled="dhost.amount==''">
                          Ovations de {{ dhost.amount != '' ? dhost.amount : 0 }} &euro;
                      </button>
@@ -510,6 +510,18 @@ export default {
     },
 
     methods: {
+        selectFile () {
+            var fileSelect = document.getElementById("fileSelect")
+            var fileElem = document.getElementById("fileElem")
+
+            fileSelect.addEventListener("click", function (e) {
+                if (fileElem) {
+                    fileElem.click()
+                }
+                e.preventDefault()
+            }, false)
+        },
+
         displayModal () {
             this.$store.commit('SET_SHOW_SHARE_MODAL', true)
             this.selected = this.ghost
@@ -916,7 +928,7 @@ export default {
 
                   if (response) {
                       this.stopLoading()
-                      this.$swal.success('Confirmation', 'Retrait initié avec succès, vous recevrez un email de validation de votre retrait.')
+                      this.$swal.success('Confirmation', response.data.message)
                       this.rhost.amount = 0
                   }
             } else {
