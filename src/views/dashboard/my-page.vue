@@ -26,7 +26,7 @@
               </div>
 
               <div class="card mt-20">
-                  <div :class="['card-header', showTransactions? 'active' : '']" @click="displayTransactions()">
+                  <div :class="['card-header', showTransactions ? 'active' : '']" @click="displayTransactions()">
                       <i class="feather icon-activity"></i>
                       <span>Mes transactions</span>
                   </div>
@@ -54,7 +54,7 @@
               </div>
 
               <div class="card">
-                  <div class="card-header" @click="displayMyAccount()">
+                  <div :class="['card-header', showMyAccount ? 'active' : '']" @click="displayMyAccount()">
                       <i class="feather icon-user"></i>
                       <span>Mon compte</span>
                   </div>
@@ -174,7 +174,7 @@
               </div>
 
               <div class="card">
-                  <div class="card-header" @click="displayRetrait()">
+                  <div :class="['card-header', showRetrait ? 'active' : '']" @click="displayRetrait()">
                       <i class="feather icon-dollar-sign"></i>
                       <span>Faire un retrait</span>
                   </div>
@@ -229,7 +229,7 @@
               </div>
 
               <div class="card">
-                  <div class="card-header" @click="displayDon()">
+                  <div :class="['card-header', showDon ? 'active' : '']" @click="displayDon()">
                       <i class="feather icon-award"></i>
                       <span>Faire un don</span>
                   </div>
@@ -304,7 +304,7 @@
               </div>
 
               <div class="card">
-                  <div class="card-header" @click="displayRS()">
+                  <div :class="['card-header', showRS ? 'active' : '']" @click="displayRS()">
                       <i class="feather icon-globe"></i>
                       <span>Réseaux sociaux</span>
                   </div>
@@ -361,7 +361,7 @@
               </div>
 
               <div class="card">
-                  <div class="card-header" @click="displaySettings()">
+                  <div :class="['card-header', showSettings ? 'active' : '']" @click="displaySettings()">
                       <i class="feather icon-settings"></i>
                       <span>Paramètres</span>
                   </div>
