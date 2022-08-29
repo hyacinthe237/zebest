@@ -40,15 +40,11 @@ export default {
         }
     },
     mounted () {
-        this.delQuery()
+        this.$router.push({ name: 'success' , query: { user: this.$route.query.user, redirect_status: this.$route.query.redirect_status } })
         this.chargeDonation()
     },
 
     methods: {
-        delQuery () {
-            this.$route.query.payment_intent == null
-            this.$route.query.payment_intent_client_secret == null
-        },
         async chargeDonation () {
             this.startLoading()
             let payload = {
