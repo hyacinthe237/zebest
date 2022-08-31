@@ -170,6 +170,10 @@ export default {
             this.showRS = false
         },
 
+        openUploadFile () {
+            $('#OpenImgUpload').click(function(){ $('#imgupload').trigger('click'); });
+        },
+
         initCountries () {
             this.countries = [
                 {'name': 'Afghanistan', 'code': 'AF'},

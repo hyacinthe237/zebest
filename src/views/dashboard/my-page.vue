@@ -238,11 +238,11 @@
                             <div class="col-sm-6">
                               <form class="_form mt-20 dark" @submit.prevent>
                                   <div class="content-profile-photo photo">
-                                      <input type="file" name='image' id="fileElem" accept="image/*" style="display:none" @change="handleFile">
+                                      <input type="file" name='image' id="imgupload" accept="image/*" style="display:none" @change="handleFile">
                                       <div class="photo pointer">
                                           <img class="image" id="image" :src="ghost.image"/>
                                       </div>
-                                      <button class="btn btn-primary mt-20 br-100" id="fileSelect">Nouvelle photo</button>
+                                      <button class="btn btn-primary mt-20 br-100" id="OpenImgUpload" @click="openUploadFile()">Nouvelle photo</button>
                                   </div>
                                 <div class="row">
                                     <div class="col-sm-12">
@@ -306,6 +306,7 @@
                                  </div>
                                </form>
                             </div>
+
                             <div class="col-sm-6">
                               <h3 class="mt-20">Modification mot de passe</h3>
                               <form class="_form mt-20" @submit.prevent>
@@ -315,9 +316,9 @@
                                         placeholder="Nouveau mot de passe"
                                         class="form-control form-control-lg input"
                                         v-model="phost.new_password1"
-                                        v-validate="'required|min:8'"
+                                        v-validate="'min:8'"
                                     >
-                                      <span class="has-error">{{ errors.first('new_password1') }}</span>
+                                    <span class="has-error">{{ errors.first('new_password1') }}</span>
                                  </div>
 
                                  <div class="form-group">
@@ -326,7 +327,7 @@
                                         placeholder="Confirmation nouveau mot de passe"
                                         class="form-control form-control-lg input"
                                         v-model="phost.new_password2"
-                                        v-validate="'required|min:8'"
+                                        v-validate="'min:8'"
                                     >
                                       <span class="has-error">{{ errors.first('new_password2') }}</span>
                                  </div>
@@ -658,6 +659,7 @@ export default {
                 .catch(error => {
                     this.stopLoading()
                     // this.$swal.error('Erreur liste taux de change', error.response.data.message)
+                    console.log(error.response.data)
                 })
 
                 if (response) {
@@ -687,6 +689,7 @@ export default {
                 .catch(error => {
                     this.stopLoading()
                     // this.$swal.error('Erreur liste des paramètres', error.response.data.message)
+                    console.log(error.response.data)
                 })
 
                 if (response) {
@@ -701,6 +704,7 @@ export default {
                 .catch(error => {
                     this.stopLoading()
                     // this.$swal.error('Erreur liste des transactions', error.response.data.message)
+                    console.log(error.response.data)
                 })
 
                 if (response) {
@@ -732,6 +736,7 @@ export default {
                 .catch(error => {
                     this.stopLoading()
                     // this.$swal.error('Erreur chargement de votre profil', error.response.data.message)
+                    console.log(error.response.data)
                 })
 
                 if (response) {
@@ -753,6 +758,7 @@ export default {
                 .catch(error => {
                     this.stopLoading()
                     // this.$swal.error('Erreur chargement des données du créateur de contenu', error.response.data.message)
+                    console.log(error.response.data)
                 })
 
                 if (response) {
@@ -767,6 +773,7 @@ export default {
                 .catch(error => {
                     this.stopLoading()
                     // this.$swal.error('Erreur liste des créateurs des contenus', error.response.data.message)
+                    console.log(error.response.data)
                 })
 
                 if (response) {
@@ -784,6 +791,7 @@ export default {
                 .catch(error => {
                     this.stopLoading()
                     // this.$swal.error('Erreur liste des donations', error.response.data.message)
+                    console.log(error.response.data)
                 })
 
                 if (response) {
@@ -841,6 +849,7 @@ export default {
                         this.showErrors =  false
                         AuthService.setUser(response.data)
                         this.$swal.success('Confirmation', 'Compte modifié avec succès !')
+                        this.getProfile()
                     }
             }
         },
@@ -936,6 +945,7 @@ export default {
                 .catch(error => {
                     this.stopLoading()
                     // this.$swal.error('Erreur liste réseaux sociaux', error.response.data.message)
+                    console.log(error.response.data)
                 })
 
                 if (response) {
