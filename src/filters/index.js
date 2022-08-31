@@ -14,7 +14,7 @@ Vue.filter('date', function (value, formatted) {
         if (formatted) {
             return moment(String(value)).format(formatted)
         }
-        return moment(String(value)).format('DD/MM/YYYY')
+        return moment(String(value)).locale('fr').format('dddd MMMM YYYY')
     }
 })
 

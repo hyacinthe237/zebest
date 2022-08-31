@@ -104,32 +104,62 @@ export default {
     },
 
     methods: {
-        displayFromNow () {
-            return moment('2022-08-26T18:05:34.000000Z').fromNow()
+        displayFromNow (date) {
+            return moment(date).locale('fr').fromNow()
         },
 
         displayTransactions () {
             this.showTransactions = !this.showTransactions
+            this.showMyAccount = false
+            this.showRetrait = false
+            this.showDon = false
+            this.showRS = false
+            this.showSettings = false
         },
 
         displayMyAccount () {
             this.showMyAccount = !this.showMyAccount
+            this.showTransactions = false
+            this.showRetrait = false
+            this.showDon = false
+            this.showRS = false
+            this.showSettings = false
         },
 
         displayRetrait () {
             this.showRetrait = !this.showRetrait
+            this.showTransactions = false
+            this.showMyAccount = false
+            this.showDon = false
+            this.showRS = false
+            this.showSettings = false
         },
 
         displayDon () {
             this.showDon = !this.showDon
+            this.showTransactions = false
+            this.showMyAccount = false
+            this.showRetrait = false
+            this.showRS = false
+            this.showSettings = false
         },
 
         displayRS () {
             this.showRS = !this.showRS
+            this.showTransactions = false
+            this.showMyAccount = false
+            this.showRetrait = false
+            this.showDon = false
+            this.showSettings = false
         },
 
         displaySettings () {
             this.showSettings = !this.showSettings
+            this.showTransactions = false
+            this.showMyAccount = false
+            this.showRetrait = false
+            this.showDon = false
+            this.showRS = false
         },
 
         initCountries () {

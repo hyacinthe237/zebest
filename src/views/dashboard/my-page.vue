@@ -37,16 +37,24 @@
                               v-for="t in transactions"
                               :key="t.id"
                           >
-                              <div class="icon-car">
-                                  <i :class="['feather', t.cash_flow == 'IN' ? 'icon-trending-up' : 'icon-trending-down']"></i>
-                              </div>
-                              <div class="label">
-                                  <span class="wallet">{{ 'Nom donateur' }}</span>
-                                  <span class="date">{{ displayFromNow() }}</span>
-                              </div>
-                              <div class="icon-cir">
-                                <span>{{ t.amount }} &euro;</span>
-                                <i class="feather icon-chevron-right"></i>
+                              <div class="dat mt-20">{{ t.created_at | date }}</div>
+                              <div
+                                class="content"
+                                v-for="item in t.items"
+                                :key="item.id"
+                                v-if="t.items.length>0"
+                              >
+                                  <div class="icon-car">
+                                      <i :class="['feather', item.cash_flow == 'IN' ? 'icon-trending-up' : 'icon-trending-down']"></i>
+                                  </div>
+                                  <div class="label">
+                                      <span class="wallet">{{ item.cash_flow == 'IN' ? 'Donation' : 'Retrait' }}</span>
+                                      <span class="date">{{ displayFromNow(item.created_at) }}</span>
+                                  </div>
+                                  <div :class="['icon-cir', item.cash_flow == 'IN' ? 'in' : 'out']">
+                                    <span>{{ item.amount }} &euro;</span>
+                                    <i class="feather icon-chevron-right"></i>
+                                  </div>
                               </div>
                           </div>
                       </div>
@@ -655,7 +663,7 @@ export default {
 
         async getTransactions () {
             this.startLoading()
-            const response = await this.$api.get('/payment-api/wallet-transactions/')
+            const response = await this.$api.get('/payment-api/group-transactions/')
                 .catch(error => {
                     this.stopLoading()
                     this.$swal.error('Erreur liste des transactions', error.response.data.message)
