@@ -6,10 +6,8 @@
                     type="button"
                     class="page-link"
                     @click="previous()"
-                    v-show="page>1"
-                >
-                   Previous
-               </button>
+                    v-show="canClickedPrevious"
+                ><i class="feather icon-chevron-left"></i></button>
             </li>
 
             <li class="page-item">
@@ -28,9 +26,7 @@
                     class="page-link"
                     @click="next()"
                     v-show="canClickedNext"
-                >
-                    Next
-                </button>
+                ><i class="feather icon-chevron-right"></i></button>
             </li>
         </ul>
     </nav>
@@ -44,7 +40,12 @@ export default {
         canClickedNext: {
             type: Boolean,
             default: false
-        }
+        },
+
+        canClickedPrevious: {
+            type: Boolean,
+            default: false
+        },
     },
 
     data: () => ({

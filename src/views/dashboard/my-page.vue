@@ -42,9 +42,8 @@
                                 class="content"
                                 v-for="item in t.items"
                                 :key="item.id"
-                                v-if="t.items.length>0"
                               >
-                                  <div class="icon-car">
+                                  <div :class="['icon-car', item.cash_flow == 'IN' ? 'in' : 'out']">
                                       <i :class="['feather', item.cash_flow == 'IN' ? 'icon-trending-up' : 'icon-trending-down']"></i>
                                   </div>
                                   <div class="label">
@@ -122,71 +121,108 @@
                       <span>Faire un don</span>
                   </div>
                   <div class="card-body" v-if="showDon">
-                    <div class="block">
-                      <h2>faire un don</h2>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="block">
+                                  <h2>faire un don</h2>
 
-                      <div class="list-ronds mt-20">
-                          <div :class="['rond-item', dhost.amount == 1 ? 'active' : '']" @click="selectMontant(1)">1 &euro;</div>
-                          <div :class="['rond-item', dhost.amount == 5 ? 'active' : '']" @click="selectMontant(5)">5 &euro;</div>
-                          <div :class="['rond-item', dhost.amount == 10 ? 'active' : '']" @click="selectMontant(10)">10 &euro;</div>
-                          <div :class="['rond-item', dhost.amount == 50 ? 'active' : '']" @click="selectMontant(50)">50 &euro;</div>
-                          <div :class="['rond-item', dhost.amount == 100 ? 'active' : '']" @click="selectMontant(100)">100 &euro;</div>
-                      </div>
+                                  <div class="list-ronds mt-20">
+                                      <div :class="['rond-item', dhost.amount == 1 ? 'active' : '']" @click="selectMontant(1)">1 &euro;</div>
+                                      <div :class="['rond-item', dhost.amount == 5 ? 'active' : '']" @click="selectMontant(5)">5 &euro;</div>
+                                      <div :class="['rond-item', dhost.amount == 10 ? 'active' : '']" @click="selectMontant(10)">10 &euro;</div>
+                                      <div :class="['rond-item', dhost.amount == 50 ? 'active' : '']" @click="selectMontant(50)">50 &euro;</div>
+                                      <div :class="['rond-item', dhost.amount == 100 ? 'active' : '']" @click="selectMontant(100)">100 &euro;</div>
+                                  </div>
 
-                      <div class="diviseur">
-                          <div class="divider"></div>
-                          <div class="rond">Ou</div>
-                          <div class="divider"></div>
-                      </div>
+                                  <div class="diviseur">
+                                      <div class="divider"></div>
+                                      <div class="rond">Ou</div>
+                                      <div class="divider"></div>
+                                  </div>
 
-                      <form class="_form mt-20" @submit.prevent>
-                        <div class="form-group">
-                           <select
-                               name="receiver"
-                               v-model="dhost.receiver"
-                               class="form-control form-control-lg input"
-                           >
-                           <option value="">Sélectionner un créateur de contenu</option>
-                           <option
-                               v-for="c in creators"
-                               :key="c.id"
-                               :value="c.id"
-                           >{{ c.first_name }} {{ c.last_name }}</option>
-                           </select>
+                                  <form class="_form mt-20" @submit.prevent>
+                                    <div class="form-group">
+                                       <select
+                                           name="receiver"
+                                           v-model="dhost.receiver"
+                                           class="form-control form-control-lg input"
+                                       >
+                                       <option value="">Sélectionner un créateur de contenu</option>
+                                       <option
+                                           v-for="c in creators"
+                                           :key="c.id"
+                                           :value="c.id"
+                                       >{{ c.first_name }} {{ c.last_name }}</option>
+                                       </select>
+                                    </div>
+
+                                    <div class="form-group mt-20">
+                                       <label for="sender_country">Votre pays de résidence</label>
+                                       <select
+                                           name="sender_country"
+                                           v-model="dhost.sender_country"
+                                           class="form-control form-control-lg input"
+                                       >
+                                       <option value="">Sélectionner votre pays</option>
+                                       <option
+                                           v-for="(c, index) in countries"
+                                           :key="index+1"
+                                           :value="c.code"
+                                       >{{ c.name }}</option>
+                                       </select>
+                                    </div>
+
+                                    <div class="form-group mt-20">
+                                       <label for="amount">Montant de la donation (en €)</label>
+                                       <input type="number"
+                                           name="amount"
+                                           placeholder="5 €"
+                                           class="form-control form-control-lg input"
+                                           v-model="dhost.amount"
+                                       >
+                                    </div>
+
+                                     <div class="mt-10 mb-20 text-center">
+                                         <button class="btn btn-primary br-100" @click="faireundon()" :disabled="dhost.amount==''">
+                                             Ovations de {{ dhost.amount != '' ? dhost.amount : 0 }} &euro;
+                                         </button>
+                                     </div>
+                                   </form>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="text-center">
+                                  <izyPaginate
+                                      @nextPage="getDonations"
+                                      @previousPage="getDonations"
+                                      @currentPage="getDonations"
+                                      :canClickedNext="NextDonations"
+                                      :canClickedPrevious="PreviousDonations"
+                                  ></izyPaginate>
+                                </div>
+
+                                <div class="profile-box">
+                                    <div
+                                        class="profile-item"
+                                        v-for="item in donations"
+                                        :key="item.id"
+                                    >
+                                        <div class="content">
+                                            <!-- <div class="icon-car in">
+                                                <i class="feather icon-trending-up"></i>
+                                            </div> -->
+                                            <div class="label">
+                                                <span class="wallet">{{ displayDonateurName(item) }}</span>
+                                                <span class="date">{{ displayFromNow(item.created_at) }}</span>
+                                            </div>
+                                            <div class="icon-cir in">{{ item.amount }} &euro;</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-
-                        <div class="form-group mt-20">
-                           <label for="sender_country">Votre pays de résidence</label>
-                           <select
-                               name="sender_country"
-                               v-model="dhost.sender_country"
-                               class="form-control form-control-lg input"
-                           >
-                           <option value="">Sélectionner votre pays</option>
-                           <option
-                               v-for="(c, index) in countries"
-                               :key="index+1"
-                               :value="c.code"
-                           >{{ c.name }}</option>
-                           </select>
-                        </div>
-
-                        <div class="form-group mt-20">
-                           <label for="amount">Montant de la donation (en €)</label>
-                           <input type="number"
-                               name="amount"
-                               placeholder="5 €"
-                               class="form-control form-control-lg input"
-                               v-model="dhost.amount"
-                           >
-                        </div>
-
-                         <div class="mt-10 mb-20 text-center">
-                             <button class="btn btn-primary br-100" @click="faireundon()" :disabled="dhost.amount==''">
-                                 Ovations de {{ dhost.amount != '' ? dhost.amount : 0 }} &euro;
-                             </button>
-                         </div>
-                       </form>
                     </div>
                   </div>
               </div>
@@ -513,7 +549,7 @@ export default {
 
         if (this.isConnected) {
             this.loadDatas()
-            this.selectFile()
+            // this.selectFile()
         }
     },
 
@@ -606,9 +642,7 @@ export default {
 
         },
 
-        selectMontant (montant) {
-            this.dhost.amount = montant
-        },
+        selectMontant (montant) { this.dhost.amount = montant },
 
         initDevises() {
             this.devises = [
@@ -623,7 +657,7 @@ export default {
             const response = await this.$api.get('/payment-api/current-change/')
                 .catch(error => {
                     this.stopLoading()
-                    this.$swal.error('Erreur liste taux de change', error.response.data.message)
+                    // this.$swal.error('Erreur liste taux de change', error.response.data.message)
                 })
 
                 if (response) {
@@ -652,7 +686,7 @@ export default {
             const response = await this.$api.get('/payment-api/wallets/')
                 .catch(error => {
                     this.stopLoading()
-                    this.$swal.error('Erreur liste des paramètres', error.response.data.message)
+                    // this.$swal.error('Erreur liste des paramètres', error.response.data.message)
                 })
 
                 if (response) {
@@ -666,7 +700,7 @@ export default {
             const response = await this.$api.get('/payment-api/group-transactions/')
                 .catch(error => {
                     this.stopLoading()
-                    this.$swal.error('Erreur liste des transactions', error.response.data.message)
+                    // this.$swal.error('Erreur liste des transactions', error.response.data.message)
                 })
 
                 if (response) {
@@ -697,7 +731,7 @@ export default {
             const response = await this.$api.get(url)
                 .catch(error => {
                     this.stopLoading()
-                    this.$swal.error('Erreur chargement de votre profil', error.response.data.message)
+                    // this.$swal.error('Erreur chargement de votre profil', error.response.data.message)
                 })
 
                 if (response) {
@@ -718,7 +752,7 @@ export default {
             const response = await this.$api.post('/payment-api/user-infos/', payload)
                 .catch(error => {
                     this.stopLoading()
-                    this.$swal.error('Erreur chargement des données du créateur de contenu', error.response.data.message)
+                    // this.$swal.error('Erreur chargement des données du créateur de contenu', error.response.data.message)
                 })
 
                 if (response) {
@@ -732,7 +766,7 @@ export default {
             const response = await this.$api.get('/user-api/users/')
                 .catch(error => {
                     this.stopLoading()
-                    this.$swal.error('Erreur liste des créateurs des contenus', error.response.data.message)
+                    // this.$swal.error('Erreur liste des créateurs des contenus', error.response.data.message)
                 })
 
                 if (response) {
@@ -741,13 +775,15 @@ export default {
                 }
         },
 
-        async getDonations () {
+        async getDonations (page = 1) {
             this.startLoading()
 
-            const response = await this.$api.get('/payment-api/donations/')
+            let payload = { 'page': page }
+
+            const response = await this.$api.get('/payment-api/donations/', { params: payload })
                 .catch(error => {
                     this.stopLoading()
-                    this.$swal.error('Erreur liste des donations', error.response.data.message)
+                    // this.$swal.error('Erreur liste des donations', error.response.data.message)
                 })
 
                 if (response) {
@@ -755,6 +791,8 @@ export default {
                     this.$store.commit('donations/SET_DONATIONS', response.data.results)
                     this.chartData.labels = response.data.results.map(r => r.created_at)
                     this.chartData.datasets = [{ data: response.data.results.map(r => Number.parseInt(r.amount, 10)) }]
+                    this.NextDonations = !_.isEmpty(response.data.next)
+                    this.PreviousDonations = !_.isEmpty(response.data.previous)
                 }
         },
 
@@ -897,7 +935,7 @@ export default {
             const response = await this.$api.get('/user-api/social-links/')
                 .catch(error => {
                     this.stopLoading()
-                    this.$swal.error('Erreur liste réseaux sociaux', error.response.data.message)
+                    // this.$swal.error('Erreur liste réseaux sociaux', error.response.data.message)
                 })
 
                 if (response) {
@@ -906,9 +944,7 @@ export default {
                 }
         },
 
-        resetShost () {
-              this.shost = {  name: '', link: '' }
-        },
+        resetShost () { this.shost = {  name: '', link: '' } },
 
         resetDhost () {
               let obj = { amount: '', receiver: '', sender_country: '', sender: this.auth.id }

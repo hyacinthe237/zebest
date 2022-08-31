@@ -15,6 +15,8 @@ export default {
         showRetrait: false,
         showRS: false,
         showSettings: false,
+        NextDonations: false,
+        PreviousDonations: false,
 
         // les Tableaux
         devises: [],
@@ -39,7 +41,7 @@ export default {
         auth () { return JSON.parse(localStorage.getItem(this.$config.get('user'))) },
         is_creator () { return this.auth.is_creator },
         payment_link () { return this.auth.payment_link },
-        donations () { return this.$store.state.donations },
+        donations () { return this.$store.state.donations.donations },
         rates () { return this.$store.state.donations.rates },
         taux_xaf () { return this.rates.XAF - 5 },
         taux_usd () { return this.rates.USD },
@@ -106,6 +108,12 @@ export default {
     methods: {
         displayFromNow (date) {
             return moment(date).locale('fr').fromNow()
+        },
+
+        displayDonateurName (item) {
+            return item.sender_last_name != '' && item.sender_first_name != ''
+                ? item.sender_first_name
+                : ''
         },
 
         displayTransactions () {
