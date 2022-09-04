@@ -66,51 +66,87 @@
                       <span>Faire un retrait</span>
                   </div>
                   <div class="card-body" v-if="showRetrait">
-                    <div class="block">
-                      <h2 class="mt-10">faire un retrait</h2>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="block">
+                                  <h2 class="mt-10">faire un retrait</h2>
 
-                      <div class="btns-block mt-20">
-                          <input
-                              class="b-r br-10"
-                              :placeholder="200"
-                              name="amount"
-                              v-model="rhost.amount"
-                              type="number"
-                          >
-                          <button class="rond">
-                              <i class="feather icon-repeat"></i>
-                          </button>
-                          <button class="btn btn-outline b-l br-10">
-                              {{ xaf_amount }} FCFA
-                          </button>
-                      </div>
+                                  <div class="btns-block mt-20">
+                                      <input
+                                          class="b-r br-10"
+                                          :placeholder="200"
+                                          name="amount"
+                                          v-model="rhost.amount"
+                                          type="number"
+                                      >
+                                      <button class="rond">
+                                          <i class="feather icon-repeat"></i>
+                                      </button>
+                                      <button class="btn btn-outline b-l br-10">
+                                          {{ xaf_amount }} FCFA
+                                      </button>
+                                  </div>
 
-                      <div class="p mt-20">1.00 &euro; = {{ taux_xaf }} FCFA <br/> *Le taux de change varie en fonction du mode d'envoi et de paiement.</div>
-                      <div class="recaps mt-20">
-                          <div class="recap-line">
-                              <div class="label">Frais de transfert</div>
-                              <div class="value">+ {{ transfert_amount }} EUR</div>
-                          </div>
-                          <div class="recap-line">
-                              <div class="label">Total du transfert</div>
-                              <div class="value">{{ total_euro_amount }} EUR</div>
-                          </div>
+                                  <div class="p mt-20">1.00 &euro; = {{ taux_xaf }} FCFA <br/> *Le taux de change varie en fonction du mode d'envoi et de paiement.</div>
+                                  <div class="recaps mt-20">
+                                      <div class="recap-line">
+                                          <div class="label">Frais de transfert</div>
+                                          <div class="value">+ {{ transfert_amount }} EUR</div>
+                                      </div>
+                                      <div class="recap-line">
+                                          <div class="label">Total du transfert</div>
+                                          <div class="value">{{ total_euro_amount }} EUR</div>
+                                      </div>
 
-                          <div class="recap-line">
-                              <div class="label">Montant à reçevoir</div>
-                              <div class="value">{{ net_a_recevoir }} FCFA</div>
-                          </div>
-                          <div class="divider"></div>
-                          <div class="recap-line">
-                              <div class="label">Disponibilité</div>
-                              <div class="value">En quelques minutes</div>
-                          </div>
-                      </div>
-                      <div class="mt-20 text-center">
-                          <button class="btn btn-block btn-primary br-100" @click="retrait()" :disabled="rhost.amount==0">
-                              Valider
-                          </button>
-                      </div>
+                                      <div class="recap-line">
+                                          <div class="label">Montant à reçevoir</div>
+                                          <div class="value">{{ net_a_recevoir }} FCFA</div>
+                                      </div>
+                                      <div class="divider"></div>
+                                      <div class="recap-line">
+                                          <div class="label">Disponibilité</div>
+                                          <div class="value">En quelques minutes</div>
+                                      </div>
+                                  </div>
+                                  <div class="mt-20 text-center">
+                                      <button class="btn btn-block btn-primary br-100" @click="retrait()" :disabled="rhost.amount==0">
+                                          Valider
+                                      </button>
+                                  </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="text-center mt-20">
+                                  <izyPaginate
+                                      @nextPage="getMoneyRequests"
+                                      @previousPage="getMoneyRequests"
+                                      @currentPage="getMoneyRequests"
+                                      :canClickedNext="NextRetraits"
+                                      :canClickedPrevious="PreviousRetraits"
+                                  ></izyPaginate>
+                                </div>
+
+                                <div class="profile-box">
+                                    <div
+                                        class="profile-item"
+                                        v-for="item in retraits"
+                                        :key="item.id"
+                                    >
+                                        <div class="content">
+                                            <!-- <div class="icon-car in">
+                                                <i class="feather icon-trending-up"></i>
+                                            </div> -->
+                                            <div class="label">
+                                                <span class="date">{{ displayFromNow(item.created_at) }}</span>
+                                                <span class="date">{{ displayFromNow(item.validation_date) }}</span>
+                                            </div>
+                                            <div class="icon-cir in">{{ item.amount }} &euro;</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                   </div>
               </div>
@@ -550,7 +586,6 @@ export default {
 
         if (this.isConnected) {
             this.loadDatas()
-            // this.selectFile()
         }
     },
 
@@ -584,6 +619,7 @@ export default {
             this.getCreators()
             this.getTauxChange()
             this.getTransactions()
+            this.getMoneyRequests()
         },
 
         copyLink () {
@@ -801,6 +837,26 @@ export default {
                     this.chartData.datasets = [{ data: response.data.results.map(r => Number.parseInt(r.amount, 10)) }]
                     this.NextDonations = !_.isEmpty(response.data.next)
                     this.PreviousDonations = !_.isEmpty(response.data.previous)
+                }
+        },
+
+        async getMoneyRequests (page = 1) {
+            this.startLoading()
+
+            let payload = { 'page': page }
+
+            const response = await this.$api.get('/payment-api/money-requests/', { params: payload })
+                .catch(error => {
+                    this.stopLoading()
+                    // this.$swal.error('Erreur liste des donations', error.response.data.message)
+                    console.log(error.response.data)
+                })
+
+                if (response) {
+                    this.stopLoading()
+                    this.$store.commit('retraits/SET_RETRAITS', response.data.results)
+                    this.NextRetraits = !_.isEmpty(response.data.next)
+                    this.PreviousRetraits = !_.isEmpty(response.data.previous)
                 }
         },
 

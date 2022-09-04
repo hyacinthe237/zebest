@@ -13,7 +13,7 @@ import Signup from '@/views/auth/signup'
 import Verify from '@/views/auth/verify'
 import PasswordForgot from '@/views/auth/password-forgot'
 import PasswordReset from '@/views/auth/reset'
-import AuthPasswordForgot from '@/views/auth/password-forgot'
+// import AuthPasswordForgot from '@/views/auth/password-forgot'
 
 Vue.use(Router)
 /** Open rotues */
@@ -34,7 +34,7 @@ const guestRoutes = [
 const authRoutes = [
   { path: '/create/profile', name: 'profile', component: UserProfile  },
   { path: '/choix/devise', name: 'choix-devise', component: ChoixDevise  },
-  { path: '/forgot/password', name: 'password-forgot', component: AuthPasswordForgot  },
+  // { path: '/forgot/password', name: 'password-forgot', component: AuthPasswordForgot  },
 ]
 
 authRoutes.forEach(r => {

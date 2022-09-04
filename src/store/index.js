@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import UsersModule from './modules/users'
 import DonationsModule from './modules/donations'
+import RetraitsModule from './modules/retraits'
 
 Vue.use(Vuex)
 
@@ -44,5 +45,6 @@ export default new Vuex.Store({
     modules: {
         users: UsersModule,
         donations: DonationsModule,
+        retraits: RetraitsModule,
     }
 })
