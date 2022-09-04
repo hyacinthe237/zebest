@@ -559,7 +559,7 @@
           </div>
         </div>
 
-        <ConfirmModal v-if="showModal" :user="auth"></ConfirmModal>
+        <ConfirmModal v-if="showModal"></ConfirmModal>
         <ShareModal v-if="showshareModal" :user="selected"></ShareModal>
         <BancaireModal v-if="showBancaireModal" :user="creator" :donation="donation"></BancaireModal>
     </div>

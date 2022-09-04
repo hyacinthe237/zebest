@@ -49,14 +49,15 @@
 <script>
 import logoTiktok from '@/assets/images/logo-tiktok.png'
 import logoFete from '@/assets/images/fete.png'
-// import logoPlaceholder from '@/assets/images/placeholder.png'
+import _ from 'lodash'
 
 export default {
 
     data: () => ({
       logoTiktok,
       logoFete,
-      isNotCopied: true
+      isNotCopied: true,
+      user: {}
     }),
 
     props: {
@@ -65,7 +66,7 @@ export default {
 
     computed: {
         name () {
-            return this.user.first_name + ' ' + this.user.last_name
+            return this.user ? this.first_name + ' ' + this.user.last_name : ''
         },
 
         payment_link () {
@@ -79,6 +80,14 @@ export default {
         token () {
             return localStorage.getItem('zebest_token')
         },
+    },
+
+    mounted () {
+        window.eventBus.$on('previewUser', (result) => {
+            if (!_.isEmpty(result)) {
+                this.user = Object({}, result)
+            }
+        })
     },
 
     methods: {
