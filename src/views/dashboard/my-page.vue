@@ -138,10 +138,13 @@
                                                 <i class="feather icon-trending-up"></i>
                                             </div> -->
                                             <div class="label">
-                                                <span class="date">{{ displayFromNow(item.created_at) }}</span>
-                                                <span class="date">{{ displayFromNow(item.validation_date) }}</span>
+                                                <span :class="['wallet', item.status.toLowerCase()]" v-if="item.status.toLowerCase() == 'pending'">Retrait en cours</span>
+                                                <span :class="['wallet', item.status.toLowerCase()]" v-if="item.status.toLowerCase() == 'cancel'">Retrait annulé</span>
+                                                <span :class="['wallet', item.status.toLowerCase()]" v-if="item.status.toLowerCase() == 'done'">Retrait validé</span>
+                                                <span class="date" v-if="item.validation_date !== null">{{ displayFromNow(item.validation_date) }}</span>
+                                                <span class="date" v-if="item.validation_date == null">{{ displayFromNow(item.created_at) }}</span>
                                             </div>
-                                            <div class="icon-cir in">{{ item.amount }} &euro;</div>
+                                            <div class="icon-cir out">{{ item.amount }} &euro;</div>
                                         </div>
                                     </div>
                                 </div>
@@ -1040,6 +1043,7 @@ export default {
                       this.stopLoading()
                       this.$swal.success('Confirmation', response.data.message)
                       this.rhost.amount = 0
+                      this.getMoneyRequests()
                   }
             } else {
               this.$swal.error('Validation', 'Bien vouloir saisir le montant à retirer !')
