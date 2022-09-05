@@ -40,9 +40,6 @@ export default {
     }),
 
     computed: {
-        auth () { return JSON.parse(localStorage.getItem(this.$config.get('user'))) },
-        is_creator () { return this.auth.is_creator },
-        payment_link () { return this.auth.payment_link },
         donations () { return this.$store.state.donations.donations },
         retraits () { return this.$store.state.retraits.retraits },
         rates () { return this.$store.state.donations.rates },
@@ -53,7 +50,6 @@ export default {
         showshareModal () { return this.$store.state.showshareModal },
         showBancaireModal () { return this.$store.state.showBancaireModal },
         title_name () { return this.$route.params.id },
-        isConnected () { return !_.isEmpty(this.auth) },
         host_amount () { return !_.isEmpty(this.rhost.amount) ? this.rhost.amount : 0 },
 
         xaf_amount () {

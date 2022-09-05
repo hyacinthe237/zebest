@@ -142,6 +142,7 @@ export default {
                 AuthService.setUser(data)
                 this.go('verify')
                 localStorage.removeItem('username')
+                localStorage.setItem('wallet', response.data.wallet)
             }
         },
     }

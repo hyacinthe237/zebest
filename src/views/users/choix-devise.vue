@@ -67,6 +67,10 @@ export default {
         auth () {
             return JSON.parse(localStorage.getItem(this.$config.get('user')))
         },
+
+        wallet_id () {
+            return Number.parseInt(localStorage.getItem('wallet'), 10)
+        },
     },
 
     methods: {
@@ -84,7 +88,7 @@ export default {
             } else {
                 this.startLoading()
 
-                const response = await this.$api.post('/payment-api/wallets/', this.ghost)
+                const response = await this.$api.put(`/payment-api/wallets/${this.wallet_id}/`, this.ghost)
                     .catch(error => {
                         this.stopLoading()
                         this.$swal.error('Erreur choix de devise', error.response.data.message)
@@ -102,7 +106,6 @@ export default {
             let user = this.auth
             this.$router.push({ name: 'my-page', params: { id: user.username } })
             this.$store.commit('SET_SHOW_MODAL', true)
-            window.eventBus.$emit('previewUser', user)
         }
 
     }

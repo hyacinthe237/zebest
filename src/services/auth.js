@@ -26,6 +26,7 @@ export default {
 
     logout () {
         localStorage.clear()
+        // window.setTimeout(location.reload(), 50000)
     },
 
     check () {

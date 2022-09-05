@@ -562,7 +562,7 @@
           </div>
         </div>
 
-        <ConfirmModal v-if="showModal"></ConfirmModal>
+        <ConfirmModal v-if="showModal" :user="auth"></ConfirmModal>
         <ShareModal v-if="showshareModal" :user="selected"></ShareModal>
         <BancaireModal v-if="showBancaireModal" :user="creator" :donation="donation"></BancaireModal>
     </div>
@@ -579,6 +579,13 @@ export default {
     mixins: [DashboardMixins],
 
     components: { ConfirmModal, BancaireModal, ShareModal },
+
+    computed: {
+        auth () { return JSON.parse(localStorage.getItem(this.$config.get('user'))) },
+        is_creator () { return this.auth.is_creator },
+        payment_link () { return this.auth.payment_link },
+        isConnected () { return !_.isEmpty(this.auth) },
+    },
 
     mounted () {
         if (!this.isConnected) {
