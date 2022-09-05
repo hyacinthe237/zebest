@@ -106,6 +106,7 @@ export default {
             let user = this.auth
             this.$router.push({ name: 'my-page', params: { id: user.username } })
             this.$store.commit('SET_SHOW_MODAL', true)
+            localStorage.removeItem('wallet')
         }
 
     }
