@@ -21,6 +21,11 @@
             background-color: $brand-primary;
             cursor: pointer;
         }
+        &.no-cursor {
+            pointer-events: none;
+            background-color: $brand-teal;
+            cursor: not-allowed;
+        }
 
         i {
             padding-right: 10px;

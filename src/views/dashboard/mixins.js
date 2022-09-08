@@ -43,7 +43,7 @@ export default {
         donations () { return this.$store.state.donations.donations },
         retraits () { return this.$store.state.retraits.retraits },
         rates () { return this.$store.state.donations.rates },
-        taux_xaf () { return this.rates.XAF - 5 },
+        taux_xaf () { return this.rates.XAF - 20 },
         taux_usd () { return this.rates.USD },
         taux_gbp () { return this.rates.GBP },
         showModal () { return this.$store.state.showModal },

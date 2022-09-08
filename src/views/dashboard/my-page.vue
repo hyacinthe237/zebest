@@ -37,7 +37,7 @@
                               v-for="t in transactions"
                               :key="t.id"
                           >
-                              <div class="dat mt-20">{{ t.created_at | date }}</div>
+                              <div class="dat mt-20 text-center">{{ t.created_at | date }}</div>
                               <div
                                 class="content"
                                 v-for="item in t.items"
@@ -66,91 +66,54 @@
                       <span>Faire un retrait</span>
                   </div>
                   <div class="card-body" v-if="showRetrait">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="block">
-                                  <h2 class="mt-10">faire un retrait</h2>
 
-                                  <div class="btns-block mt-20">
-                                      <input
-                                          class="b-r br-10"
-                                          :placeholder="200"
-                                          name="amount"
-                                          v-model="rhost.amount"
-                                          type="number"
-                                      >
-                                      <button class="rond">
-                                          <i class="feather icon-repeat"></i>
-                                      </button>
-                                      <button class="btn btn-outline b-l br-10">
-                                          {{ xaf_amount }} FCFA
-                                      </button>
-                                  </div>
+                      <div class="block">
+                        <h2 class="mt-10">faire un retrait</h2>
 
-                                  <div class="p mt-20">1.00 &euro; = {{ taux_xaf }} FCFA <br/> *Le taux de change varie en fonction du mode d'envoi et de paiement.</div>
-                                  <div class="recaps mt-20">
-                                      <div class="recap-line">
-                                          <div class="label">Frais de transfert</div>
-                                          <div class="value">+ {{ transfert_amount }} EUR</div>
-                                      </div>
-                                      <div class="recap-line">
-                                          <div class="label">Total du transfert</div>
-                                          <div class="value">{{ total_euro_amount }} EUR</div>
-                                      </div>
+                        <div class="btns-block mt-20">
+                            <input
+                                class="b-r br-10"
+                                :placeholder="200"
+                                name="amount"
+                                v-model="rhost.amount"
+                                type="number"
+                            >
+                            <button class="rond">
+                                <i class="feather icon-repeat"></i>
+                            </button>
+                            <button class="btn btn-outline b-l br-10">
+                                {{ xaf_amount }} FCFA
+                            </button>
+                        </div>
 
-                                      <div class="recap-line">
-                                          <div class="label">Montant à reçevoir</div>
-                                          <div class="value">{{ net_a_recevoir }} FCFA</div>
-                                      </div>
-                                      <div class="divider"></div>
-                                      <div class="recap-line">
-                                          <div class="label">Disponibilité</div>
-                                          <div class="value">En quelques minutes</div>
-                                      </div>
-                                  </div>
-                                  <div class="mt-20 text-center">
-                                      <button class="btn btn-block btn-primary br-100" @click="retrait()" :disabled="rhost.amount==0">
-                                          Valider
-                                      </button>
-                                  </div>
-                                </div>
+                        <div class="p mt-20">1.00 &euro; = {{ taux_xaf }} FCFA <br/> *Le taux de change varie en fonction du mode d'envoi et de paiement.</div>
+                        <div class="recaps mt-20">
+                            <div class="recap-line">
+                                <div class="label">Frais de transfert</div>
+                                <div class="value">+ {{ transfert_amount }} EUR</div>
                             </div>
-                            <div class="col-sm-6">
-                                <div class="text-center mt-20">
-                                  <izyPaginate
-                                      @nextPage="getMoneyRequests"
-                                      @previousPage="getMoneyRequests"
-                                      @currentPage="getMoneyRequests"
-                                      :canClickedNext="NextRetraits"
-                                      :canClickedPrevious="PreviousRetraits"
-                                  ></izyPaginate>
-                                </div>
+                            <div class="recap-line">
+                                <div class="label">Total du transfert</div>
+                                <div class="value">{{ total_euro_amount }} EUR</div>
+                            </div>
 
-                                <div class="profile-box">
-                                    <div
-                                        class="profile-item"
-                                        v-for="item in retraits"
-                                        :key="item.id"
-                                    >
-                                        <div class="content">
-                                            <!-- <div class="icon-car in">
-                                                <i class="feather icon-trending-up"></i>
-                                            </div> -->
-                                            <div class="label">
-                                                <span :class="['wallet', item.status.toLowerCase()]" v-if="item.status.toLowerCase() == 'pending'">Retrait en cours</span>
-                                                <span :class="['wallet', item.status.toLowerCase()]" v-if="item.status.toLowerCase() == 'cancel'">Retrait annulé</span>
-                                                <span :class="['wallet', item.status.toLowerCase()]" v-if="item.status.toLowerCase() == 'done'">Retrait validé</span>
-                                                <span class="date" v-if="item.validation_date !== null">{{ displayFromNow(item.validation_date) }}</span>
-                                                <span class="date" v-if="item.validation_date == null">{{ displayFromNow(item.created_at) }}</span>
-                                            </div>
-                                            <div class="icon-cir out">{{ item.amount }} &euro;</div>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="recap-line">
+                                <div class="label">Montant à reçevoir</div>
+                                <div class="value">{{ net_a_recevoir }} FCFA</div>
+                            </div>
+                            <div class="divider"></div>
+                            <div class="recap-line">
+                                <div class="label">Disponibilité</div>
+                                <div class="value">En quelques minutes</div>
                             </div>
                         </div>
-                    </div>
+                        <div class="mt-20 text-center">
+                            <button class="btn btn-block btn-primary br-100" @click="retrait()" :disabled="rhost.amount==0">
+                                Valider
+                            </button>
+                        </div>
+                      </div>
+
                   </div>
               </div>
 
@@ -160,108 +123,71 @@
                       <span>Faire un don</span>
                   </div>
                   <div class="card-body" v-if="showDon">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="block">
-                                  <h2>faire un don</h2>
+                    <div class="block">
+                      <h2>faire un don</h2>
 
-                                  <div class="list-ronds mt-20">
-                                      <div :class="['rond-item', dhost.amount == 1 ? 'active' : '']" @click="selectMontant(1)">1 &euro;</div>
-                                      <div :class="['rond-item', dhost.amount == 5 ? 'active' : '']" @click="selectMontant(5)">5 &euro;</div>
-                                      <div :class="['rond-item', dhost.amount == 10 ? 'active' : '']" @click="selectMontant(10)">10 &euro;</div>
-                                      <div :class="['rond-item', dhost.amount == 50 ? 'active' : '']" @click="selectMontant(50)">50 &euro;</div>
-                                      <div :class="['rond-item', dhost.amount == 100 ? 'active' : '']" @click="selectMontant(100)">100 &euro;</div>
-                                  </div>
+                      <div class="list-ronds mt-20">
+                          <div :class="['rond-item', dhost.amount == 1 ? 'active' : '']" @click="selectMontant(1)">1 &euro;</div>
+                          <div :class="['rond-item', dhost.amount == 5 ? 'active' : '']" @click="selectMontant(5)">5 &euro;</div>
+                          <div :class="['rond-item', dhost.amount == 10 ? 'active' : '']" @click="selectMontant(10)">10 &euro;</div>
+                          <div :class="['rond-item', dhost.amount == 50 ? 'active' : '']" @click="selectMontant(50)">50 &euro;</div>
+                          <div :class="['rond-item', dhost.amount == 100 ? 'active' : '']" @click="selectMontant(100)">100 &euro;</div>
+                      </div>
 
-                                  <div class="diviseur">
-                                      <div class="divider"></div>
-                                      <div class="rond">Ou</div>
-                                      <div class="divider"></div>
-                                  </div>
+                      <div class="diviseur">
+                          <div class="divider"></div>
+                          <div class="rond">Ou</div>
+                          <div class="divider"></div>
+                      </div>
 
-                                  <form class="_form mt-20" @submit.prevent>
-                                    <div class="form-group">
-                                       <select
-                                           name="receiver"
-                                           v-model="dhost.receiver"
-                                           class="form-control form-control-lg input"
-                                       >
-                                       <option value="">Sélectionner un créateur de contenu</option>
-                                       <option
-                                           v-for="c in creators"
-                                           :key="c.id"
-                                           :value="c.id"
-                                       >{{ c.first_name }} {{ c.last_name }}</option>
-                                       </select>
-                                    </div>
-
-                                    <div class="form-group mt-20">
-                                       <label for="sender_country">Votre pays de résidence</label>
-                                       <select
-                                           name="sender_country"
-                                           v-model="dhost.sender_country"
-                                           class="form-control form-control-lg input"
-                                       >
-                                       <option value="">Sélectionner votre pays</option>
-                                       <option
-                                           v-for="(c, index) in countries"
-                                           :key="index+1"
-                                           :value="c.code"
-                                       >{{ c.name }}</option>
-                                       </select>
-                                    </div>
-
-                                    <div class="form-group mt-20">
-                                       <label for="amount">Montant de la donation (en €)</label>
-                                       <input type="number"
-                                           name="amount"
-                                           placeholder="5 €"
-                                           class="form-control form-control-lg input"
-                                           v-model="dhost.amount"
-                                       >
-                                    </div>
-
-                                     <div class="mt-10 mb-20 text-center">
-                                         <button class="btn btn-primary br-100" @click="faireundon()" :disabled="dhost.amount==''">
-                                             Ovations de {{ dhost.amount != '' ? dhost.amount : 0 }} &euro;
-                                         </button>
-                                     </div>
-                                   </form>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-6">
-                                <div class="text-center">
-                                  <izyPaginate
-                                      @nextPage="getDonations"
-                                      @previousPage="getDonations"
-                                      @currentPage="getDonations"
-                                      :canClickedNext="NextDonations"
-                                      :canClickedPrevious="PreviousDonations"
-                                  ></izyPaginate>
-                                </div>
-
-                                <div class="profile-box">
-                                    <div
-                                        class="profile-item"
-                                        v-for="item in donations"
-                                        :key="item.id"
-                                    >
-                                        <div class="content">
-                                            <!-- <div class="icon-car in">
-                                                <i class="feather icon-trending-up"></i>
-                                            </div> -->
-                                            <div class="label">
-                                                <span class="wallet">{{ displayDonateurName(item) }}</span>
-                                                <span class="date">{{ displayFromNow(item.created_at) }}</span>
-                                            </div>
-                                            <div class="icon-cir in">{{ item.amount }} &euro;</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                      <form class="_form mt-20" @submit.prevent>
+                        <div class="form-group">
+                           <select
+                               name="receiver"
+                               v-model="dhost.receiver"
+                               class="form-control form-control-lg input"
+                           >
+                           <option value="">Sélectionner un créateur de contenu</option>
+                           <option
+                               v-for="c in creators"
+                               :key="c.id"
+                               :value="c.id"
+                           >{{ c.first_name }} {{ c.last_name }}</option>
+                           </select>
                         </div>
+
+                        <div class="form-group mt-20">
+                           <label for="sender_country">Votre pays de résidence</label>
+                           <select
+                               name="sender_country"
+                               v-model="dhost.sender_country"
+                               class="form-control form-control-lg input"
+                           >
+                           <option value="">Sélectionner votre pays</option>
+                           <option
+                               v-for="(c, index) in countries"
+                               :key="index+1"
+                               :value="c.code"
+                           >{{ c.name }}</option>
+                           </select>
+                        </div>
+
+                        <div class="form-group mt-20">
+                           <label for="amount">Montant de la donation (en €)</label>
+                           <input type="number"
+                               name="amount"
+                               placeholder="5 €"
+                               class="form-control form-control-lg input"
+                               v-model="dhost.amount"
+                           >
+                        </div>
+
+                         <div class="mt-10 mb-20 text-center">
+                             <button class="btn btn-primary br-100" @click="faireundon()" :disabled="dhost.amount==''">
+                                 Ovations de {{ dhost.amount != '' ? dhost.amount : 0 }} &euro;
+                             </button>
+                         </div>
+                       </form>
                     </div>
                   </div>
               </div>
@@ -383,8 +309,8 @@
                   </div>
               </div>
 
-              <div class="card">
-                  <div :class="['card-header', showSettings ? 'active' : '']" @click="displaySettings()">
+              <div class="card"><!-- @click="displaySettings()" -->
+                  <div :class="['card-header', showSettings ? 'active' : 'no-cursor']">
                       <i class="feather icon-settings"></i>
                       <span>Paramètres</span>
                   </div>
