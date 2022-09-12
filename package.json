@@ -8,7 +8,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "postinstall": "npm rebuild node-sass && npm install --unsafe-perm -f node-sass"
   },
   "dependencies": {
     "@vue-stripe/vue-stripe": "^4.4.4",
