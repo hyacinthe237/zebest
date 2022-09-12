@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "engines": {
-    "node": "18.x"
+    "node": "16.x"
   },
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "export NODE_OPTIONS=--openssl-legacy-provider; vue-cli-service build",
+    "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "postinstall": "npm rebuild node-sass && npm install --unsafe-perm -f node-sass"
   },
@@ -28,7 +28,7 @@
     "moment": "^2.24.0",
     "moment-range": "^4.0.2",
     "moment-timezone": "^0.5.26",
-    "node-sass": "npm:null@*",
+    "node-sass": "*",
     "particles-bg-vue": "^1.3.5",
     "pdfjs": "^2.4.3",
     "popper.js": "^1.16.1",
