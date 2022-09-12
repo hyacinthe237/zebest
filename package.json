@@ -6,8 +6,8 @@
     "node": "18.x"
   },
   "scripts": {
-    "serve": "vue-cli-service serve --openssl-legacy-provider",
-    "build": "vue-cli-service build --openssl-legacy-provider",
+    "serve": "vue-cli-service serve",
+    "build": "export NODE_OPTIONS=--openssl-legacy-provider; vue-cli-service build",
     "lint": "vue-cli-service lint",
     "postinstall": "npm rebuild node-sass && npm install --unsafe-perm -f node-sass"
   },
