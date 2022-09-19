@@ -49,7 +49,7 @@
             <div class="form-group mt-20">
                 <label for="url">Ton lien personnalisé</label>
                 <div class="content">
-                    <div class="teal">zebest.com/</div>
+                    <div class="teal">getzebest.com/</div>
                     <input type="text"
                         name="username"
                         placeholder="tonnomdecreateur"
