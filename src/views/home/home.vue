@@ -39,7 +39,7 @@
           <form class="_form mt-20" @submit.prevent v-if="!isConnected">
              <div class="form-group mt-20">
                  <div class="content bs pl-100">
-                     <div class="dark">zebest.com/</div>
+                     <div class="dark">getzebest.com/</div>
                      <input type="text"
                          name="username"
                          placeholder="tonnom"

@@ -8,19 +8,20 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "postinstall": "npm rebuild node-sass && npm install --unsafe-perm -f node-sass"
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "@vue-stripe/vue-stripe": "^4.4.4",
     "@vue/cli": "^5.0.8",
     "axios": "^0.19.0",
     "bootstrap": "^4.3.1",
+    "bootstrap-datetimepicker": "^0.0.7",
     "chart.js": "^3.9.1",
     "collect.js": "^4.16.6",
     "core-js": "^2.6.5",
     "curl": "^0.1.4",
     "epic-spinners": "^1.1.0",
+    "express": "^4.18.1",
     "file-saver": "^2.0.5",
     "flag-icons": "^6.6.2",
     "jquery": "^3.4.1",
@@ -29,8 +30,10 @@
     "moment": "^2.24.0",
     "moment-range": "^4.0.2",
     "moment-timezone": "^0.5.26",
-    "node-sass": "^4.0.0",
+    "node-gyp": "^9.1.0",
+    "node-sass": "^7.0.3",
     "particles-bg-vue": "^1.3.5",
+    "pc-bootstrap4-datetimepicker": "^4.17.51",
     "pdfjs": "^2.4.3",
     "popper.js": "^1.16.1",
     "qs": "^6.9.4",
@@ -69,6 +72,7 @@
     "babel-eslint": "^10.0.1",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
+    "sass": "^1.54.9",
     "sass-loader": "^7.1.0",
     "vue-template-compiler": "^2.6.10"
   }
