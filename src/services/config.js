@@ -8,7 +8,7 @@ export default {
         user: process.env.VUE_APP_USER || 'zebest_user',
         api_version: process.env.VUE_APP_API_VERSION || 'api/v1',
         app_key: process.env.VUE_APP_KEY || 'base64:qfqr3qV0NU2R3/4VX11vwREaPpQbKfzyxxYbWKTFZFE=',
-        stripe_key: process.env.VUE_APP_STRIPE_KEY || 'pk_test_51LTyiCAvIRwTcFP0XGOOe8m3WNPQe3pnuNoSddjzVS722ZKg5T1iueOl3Zla4RKoDMEj02nrLwWozmeFZD5jILfh00XsTj7Vdv',
+        stripe_key: process.env.VUE_APP_STRIPE_KEY || 'pk_live_51LTyiCAvIRwTcFP0twHv98tHndjxIhxELkd6MAc4TtetTs83hj2KUS0a81LY5BLyxBcxoompV7MjPM06mECcmXKr00bDyYzOZN',
         stripe_account: process.env.VUE_APP_STRIPE_ACCOUNT || 'acct_1LTyiCAvIRwTcFP0',
         fixer_key: process.env.VUE_APP_FIXER_KEY || 'b0cd596ebb5d7e6a5e0a3aee12022b51',
     },
