@@ -1,6 +1,6 @@
 export default {
     keys: {
-        domain: process.env.VUE_APP_DOMAIN || '/',
+        domain: process.env.VUE_APP_DOMAIN || 'https://zebest-api.herokuapp.com/',
         root_url: `${process.env.VUE_APP_ROOT_URL}` || 'https://zebest-api.herokuapp.com/',
         base_url: `${process.env.VUE_APP_ROOT_URL}/` || 'https://zebest-api.herokuapp.com/',
         front_url: `${process.env.VUE_APP_FRONT_SERVER}/` || `https://getzebest.com/`,
