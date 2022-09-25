@@ -933,7 +933,7 @@ export default {
         async getSocialLinks () {
             this.startLoading()
 
-            const response = await this.$api.get('/user-api/social-links/')
+            const response = await this.$api.get('/user-api/get-my-social-links')
                 .catch(error => {
                     this.stopLoading()
                     // this.$swal.error('Erreur liste réseaux sociaux', error.response.data.message)
