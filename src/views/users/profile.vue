@@ -162,7 +162,13 @@ export default {
                         this.stopLoading()
                         this.showErrors =  false
                         AuthService.setUser(response.data)
-                        this.saveSocialLink()
+                        if (this.ghost.social_link !== '') {
+                            this.saveSocialLink()
+                        }
+                        
+                        if (this.ghost.social_link == '') {
+                            this.go('choix-devise')
+                        }
                     }
             }
         },
