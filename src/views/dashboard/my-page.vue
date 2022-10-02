@@ -412,7 +412,7 @@
               </div>
           </div>
           <div class="home" v-if="!isConnected && !isLoading">
-            <div class="block">
+            <div class="block" v-if="!isAvailable">
               <div class="text-center">
                   <h2>faire un don à</h2>
                   <h2><span>{{ title_name }}</span></h2>
@@ -484,6 +484,13 @@
                      </button>
                  </div>
                </form>
+            </div>
+
+            <div class="block" v-if="isAvailable">
+              <div class="text-center">
+                  <h2>Aucun compte associé à</h2>
+                  <h2><span>{{ title_name }}</span></h2>
+              </div>
             </div>
           </div>
         </div>
@@ -730,12 +737,14 @@ export default {
                 .catch(error => {
                     this.stopLoading()
                     // this.$swal.error('Erreur chargement des données du créateur de contenu', error.response.data.message)
+                    this.isAvailable = true
                     console.log(error.response.data)
                 })
 
                 if (response) {
                     this.stopLoading()
                     this.creator = Object.assign({}, response.data)
+                    this.isAvailable = false
                 }
         },
 

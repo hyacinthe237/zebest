@@ -19,6 +19,7 @@ export default {
         PreviousDonations: false,
         NextRetraits: false,
         PreviousRetraits: false,
+        isAvailable: false,
 
         // les Tableaux
         devises: [],
