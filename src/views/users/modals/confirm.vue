@@ -21,7 +21,7 @@
 
                     <div class="content-profile-photo">
                         <img :src="logo">
-                        <span class="mt-10">{{ name }}</span>
+                        <span class="mt-10">Bienvenue {{ name }}</span>
                     </div>
 
                     <div class="primary underline mt-10 pointer" @click="openLink()" target="_blank">{{ payment_link }}</div>

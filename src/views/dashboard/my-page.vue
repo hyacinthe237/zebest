@@ -540,7 +540,7 @@ export default {
 
         displayModal () {
             this.$store.commit('SET_SHOW_SHARE_MODAL', true)
-            this.selected = this.ghost
+            this.selected = Object.assign({}, this.ghost)
         },
 
         loadDatas () {
