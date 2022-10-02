@@ -28,17 +28,6 @@
                   <span class="has-error">{{ errors.first('email') }}</span>
              </div>
 
-             <div class="form-group mt-20">
-                <select
-                    name="is_creator"
-                    v-model="ghost.is_creator"
-                    class="form-control form-control-lg input"
-                >
-                <option :value="true">Je suis un créateur de contenu</option>
-                <option :value="false">Je ne suis pas un créateur de contenu</option>
-                </select>
-             </div>
-
              <div class="form-group">
                  <div class="content bs pl-100">
                      <div class="dark">getzebest.com/</div>
@@ -99,7 +88,7 @@ export default {
 
     data: () => ({
         message: 'Merci de vérifier votre email. Un code de vérification vous a été envoyé.',
-        ghost: { email: '', username: '', password1: '', password2: '', is_creator: false }
+        ghost: { email: '', username: '', password1: '', password2: '', is_creator: true }
     }),
 
     mounted () {
