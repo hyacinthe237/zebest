@@ -80,9 +80,7 @@
                     placeholder="https://"
                     class="form-control form-control-lg input"
                     v-model="ghost.social_link"
-                    v-validate="'required'"
                 >
-                  <span class="has-error">{{ errors.first('social_link') }}</span>
              </div>
 
              <div class="mt-20 mb-20">
