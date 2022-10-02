@@ -310,7 +310,7 @@
               </div>
 
               <div class="card"><!-- @click="displaySettings()" -->
-                  <div :class="['card-header', showSettings ? 'active' : 'no-cursor']">
+                  <div :class="['card-header', showSettings ? 'active' : '']">
                       <i class="feather icon-settings"></i>
                       <span>Paramètres</span>
                   </div>
