@@ -41,11 +41,8 @@ import IzyChart from '@/components/commons/chartjs/chart'
 import globalMixins from '@/mixins/global'
 import messagesFr from 'vee-validate/dist/locale/fr.js'
 import TawkMessengerVue from '@tawk.to/tawk-messenger-vue-2';
-
-Vue.use(TawkMessengerVue, {
-  propertyId: 'property_id',
-  widgetId: 'widget_id'
-});
+import Vue from 'vue'
+import Hotjar from 'vue-hotjar'
 
 global.$ = $
 window.eventBus = new Vue()
@@ -66,6 +63,14 @@ Vue.locales({ french })
 Vue.mixin(globalMixins)
 Vue.use(VuePageTransition)
 Vue.use(VeeValidate, { locale: 'fr', dictionary: { fr: messagesFr } })
+Vue.use(TawkMessengerVue, {
+  propertyId: process.env.VUE_APP_TAWK_TO_PROPERTY_ID || '63417cfd54f06e12d89916da',
+  widgetId: process.env.VUE_APP_TAWK_TO_WIDGET_ID || 'https://tawk.to/chat/63417cfd54f06e12d89916da/1gert0fs0'
+})
+Vue.use(Hotjar, {
+  id: process.env.VUE_APP_HOTJAR_SITE_ID || '3193020',
+  isProduction: true
+})
 
 Vue.config.productionTip = false
 Vue.component('OfflineFooter', OfflineFooter)

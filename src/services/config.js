@@ -12,7 +12,8 @@ export default {
         stripe_account: process.env.VUE_APP_STRIPE_ACCOUNT || 'acct_1LTyiCAvIRwTcFP0',
         fixer_key: process.env.VUE_APP_FIXER_KEY || 'b0cd596ebb5d7e6a5e0a3aee12022b51',
         tawk_to_property_id: process.env.VUE_APP_TAWK_TO_PROPERTY_ID || '63417cfd54f06e12d89916da',
-        tawk_to_property_id: process.env.VUE_APP_TAWK_TO_WIDGET_ID || 'https://tawk.to/chat/63417cfd54f06e12d89916da/1gert0fs0',
+        tawk_to_widget_id: process.env.VUE_APP_TAWK_TO_WIDGET_ID || 'https://tawk.to/chat/63417cfd54f06e12d89916da/1gert0fs0',
+        hotjar_site_id: process.env.VUE_APP_HOTJAR_SITE_ID || '3193020'
     },
 
     get(key) {
