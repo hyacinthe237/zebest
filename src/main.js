@@ -42,6 +42,7 @@ import globalMixins from '@/mixins/global'
 import messagesFr from 'vee-validate/dist/locale/fr.js'
 //import TawkMessengerVue from '@tawk.to/tawk-messenger-vue-2';
 import Hotjar from 'vue-hotjar'
+import Tawk from 'vue-echo'
 
 global.$ = $
 window.eventBus = new Vue()
