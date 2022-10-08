@@ -42,7 +42,7 @@ import globalMixins from '@/mixins/global'
 import messagesFr from 'vee-validate/dist/locale/fr.js'
 //import TawkMessengerVue from '@tawk.to/tawk-messenger-vue-2';
 import Hotjar from 'vue-hotjar'
-import Tawk from 'vue-tawk'
+//import Tawk from 'vue-tawk'
 
 global.$ = $
 window.eventBus = new Vue()
@@ -67,10 +67,10 @@ Vue.use(VeeValidate, { locale: 'fr', dictionary: { fr: messagesFr } })
 /* Vue.use(TawkMessengerVue, {
   propertyId: process.env.VUE_APP_TAWK_TO_PROPERTY_ID || '63417cfd54f06e12d89916da',
   widgetId: process.env.VUE_APP_TAWK_TO_WIDGET_ID || 'https://tawk.to/chat/63417cfd54f06e12d89916da/1gert0fs0'
-}) */
+}) 
 Vue.use(Tawk, {
   tawkSrc: process.env.VUE_APP_TAWK_TO_WIDGET_ID || 'https://tawk.to/chat/63417cfd54f06e12d89916da/1gert0fs0'
-})
+})*/
 Vue.use(Hotjar, {
   id: process.env.VUE_APP_HOTJAR_SITE_ID || '3193020',
   isProduction: true
