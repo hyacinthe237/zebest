@@ -40,7 +40,7 @@ import IzyChart from '@/components/commons/chartjs/chart'
 // eslint-disable-next-line
 import globalMixins from '@/mixins/global'
 import messagesFr from 'vee-validate/dist/locale/fr.js'
-import TawkMessengerVue from '@tawk.to/tawk-messenger-vue-2';
+//import TawkMessengerVue from '@tawk.to/tawk-messenger-vue-2';
 import Hotjar from 'vue-hotjar'
 
 global.$ = $
@@ -62,9 +62,13 @@ Vue.locales({ french })
 Vue.mixin(globalMixins)
 Vue.use(VuePageTransition)
 Vue.use(VeeValidate, { locale: 'fr', dictionary: { fr: messagesFr } })
-Vue.use(TawkMessengerVue, {
+
+/* Vue.use(TawkMessengerVue, {
   propertyId: process.env.VUE_APP_TAWK_TO_PROPERTY_ID || '63417cfd54f06e12d89916da',
   widgetId: process.env.VUE_APP_TAWK_TO_WIDGET_ID || 'https://tawk.to/chat/63417cfd54f06e12d89916da/1gert0fs0'
+}) */
+Vue.use(Tawk, {
+  tawkSrc: process.env.VUE_APP_TAWK_TO_WIDGET_ID || 'https://tawk.to/chat/63417cfd54f06e12d89916da/1gert0fs0'
 })
 Vue.use(Hotjar, {
   id: process.env.VUE_APP_HOTJAR_SITE_ID || '3193020',
