@@ -40,6 +40,12 @@ import IzyChart from '@/components/commons/chartjs/chart'
 // eslint-disable-next-line
 import globalMixins from '@/mixins/global'
 import messagesFr from 'vee-validate/dist/locale/fr.js'
+import TawkMessengerVue from '@tawk.to/tawk-messenger-vue-2';
+
+Vue.use(TawkMessengerVue, {
+  propertyId: 'property_id',
+  widgetId: 'widget_id'
+});
 
 global.$ = $
 window.eventBus = new Vue()
