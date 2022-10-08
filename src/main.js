@@ -41,7 +41,6 @@ import IzyChart from '@/components/commons/chartjs/chart'
 import globalMixins from '@/mixins/global'
 import messagesFr from 'vee-validate/dist/locale/fr.js'
 import TawkMessengerVue from '@tawk.to/tawk-messenger-vue-2';
-import Vue from 'vue'
 import Hotjar from 'vue-hotjar'
 
 global.$ = $
