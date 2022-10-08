@@ -3,7 +3,7 @@ export default {
         domain: process.env.VUE_APP_DOMAIN || 'https://zebest-api.herokuapp.com/',
         root_url: `${process.env.VUE_APP_ROOT_URL}` || 'https://zebest-api.herokuapp.com/',
         base_url: `${process.env.VUE_APP_ROOT_URL}/` || 'https://zebest-api.herokuapp.com/',
-        front_url: `${process.env.VUE_APP_FRONT_SERVER}/` || `https://getzebest.com/`,
+        front_url: `${process.env.VUE_APP_FRONT_SERVER}/` || `https://getzebest.com`,
         token: process.env.VUE_APP_TOKEN || 'zebest_token',
         user: process.env.VUE_APP_USER || 'zebest_user',
         api_version: process.env.VUE_APP_API_VERSION || 'api/v1',
